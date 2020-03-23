@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/03/23 13:53:53 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/03/23 14:32:15 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,14 +115,20 @@ bonus:
 %.a:
 	make -C $(@D)
 
-libft.a:
-	make bonuc -C $(@D)
+lib/libft/libft.a:
+	make bonus -C $(@D)
 
 # Rules for cleaning files
 clean:
+	make clean -C lib/libft
+	make clean -C lib/libftprintf
+	make clean -C lib/libgnl
 	rm -f $(OFILES) $(BONUS_OFILES) src/main.o
 
 fclean: clean
+	make fclean -C lib/libft
+	make fclean -C lib/libftprintf
+	make fclean -C lib/libgnl
 	rm -f $(NAME)
 	rm -f bonus
 
