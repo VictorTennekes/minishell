@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/03/23 13:07:21 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/03/23 13:53:53 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,12 @@ NAME			=	minishell
 all: $(NAME)
 
 # All source of the application
-SRCS			=	\
+SRCS			=	builtin/builtin_echo\
+					error\
+					get_cmd\
+					main\
+					prompt\
+					run_cmd\
 
 # Sources which are just needed for the bonus part
 BONUS_SRCS		=	\
@@ -35,9 +40,14 @@ BONUS_RECOMP_O	=	$(BONUS_RECOMP:%=src/%.o)
 
 # Paths to the headeres which are needed
 INCLUDES		=	-I include\
+					-I lib/libft\
+					-I lib/libgnl\
+					-I lib/libftprintf\
 
 # The location of al libraries
-LIB_SRCS		=	\
+LIB_SRCS		=	lib/libft/libft.a\
+					lib/libftprintf/libftprintf.a\
+					lib/libgnl/libgnl.a\
 
 FLAGS			=	-Wall -Werror -Wextra
 
@@ -104,6 +114,9 @@ bonus:
 # Generic rule for compiling libraries
 %.a:
 	make -C $(@D)
+
+libft.a:
+	make bonuc -C $(@D)
 
 # Rules for cleaning files
 clean:

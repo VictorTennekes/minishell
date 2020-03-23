@@ -1,0 +1,7 @@
+*.a
+*.o
+.ccls*
+subject.pdf
+minishell
+test
+bonus

@@ -1,0 +1,9 @@
+[submodule "libgnl"]
+	path = libgnl
+	url = https://github.com/abeaugustijn/libgnl
+[submodule "lib/libft"]
+	path = lib/libft
+	url = https://github.com/abeaugustijn/libft
+[submodule "lib/libftprintf"]
+	path = lib/libftprintf
+	url = https://github.com/abeaugustijn/ft_printf
