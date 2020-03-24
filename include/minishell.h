@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:15:57 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/23 19:04:19 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/24 16:49:36 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdint.h>
+
+#define ARGV_INIT_CAP (10)
 
 /*
 **	Builtin functions.
@@ -30,13 +32,21 @@ void	builtin_echo(uint32_t argc, char *argv[]);
 
 typedef struct	s_cmd {
 	char		*cmd;
-	int32_t		maxargs;
+	int32_t		maxargc;
 	void		(*func)(uint32_t argc, char *argv[]);
 }				t_cmd;
 
+char	**lex(char *cmd, uint32_t *argc);
 char	*get_cmd(void);
 void	error(char *msg);
 void	prompt(void);
 void	run_cmd(char *cmd);
+
+/*
+**	Utils
+*/
+
+char	*str_replace(char *str, char *to_find, char *replace);
+int		file_wapper(char *filename, int (*func)(int fd));
 
 #endif

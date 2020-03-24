@@ -1,0 +1,11 @@
+# Every line represents one input for the lexer to test against bash
+# Lines starting with an '#' and empty lines are ignored.
+
+test
+test test
+test "test"
+test 'test'
+ja"test" nee
+ja    test
+ja' test' nee
+nee       "'test'   "

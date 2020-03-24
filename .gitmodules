@@ -10,3 +10,6 @@
 [submodule "lib/libgnl"]
 	path = lib/libgnl
 	url = https://github.com/abeaugustijn/libgnl
+[submodule "lib/libvla"]
+	path = lib/libvla
+	url = https://github.com/abeaugustijn/libvla

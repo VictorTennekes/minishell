@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/03/23 14:32:15 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/03/24 16:55:00 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,11 @@ all: $(NAME)
 SRCS			=	builtin/builtin_echo\
 					error\
 					get_cmd\
-					main\
 					prompt\
 					run_cmd\
+					lexer\
+					utils/file_wrapper\
+					utils/str_replace\
 
 # Sources which are just needed for the bonus part
 BONUS_SRCS		=	\
@@ -28,14 +30,17 @@ BONUS_SRCS		=	\
 # These are files that need to be recompiled when the bonus is made
 BONUS_RECOMP	=	\
 
+TEST_SRCS		=	lexer/lexer\
+					lexer/lexer_file\
+					lexer/lexer_rand\
+					lexer/lexer_single\
+					str_replace/str_replace\
 
-CFILES			=	$(SRCS:%=src/%.c)
+
 OFILES			=	$(SRCS:%=src/%.o)
-
-BONUS_CFILES	=	$(BONUS_SRCS:%=src/%.c)
 BONUS_OFILES	=	$(BONUS_SRCS:%=src/%.o)
-
 BONUS_RECOMP_O	=	$(BONUS_RECOMP:%=src/%.o)
+TEST_OFILES		=	$(TEST_SRCS:%=tests/%.o)
 
 
 # Paths to the headeres which are needed
@@ -43,11 +48,13 @@ INCLUDES		=	-I include\
 					-I lib/libft\
 					-I lib/libgnl\
 					-I lib/libftprintf\
+					-I lib/libvla\
 
 # The location of al libraries
 LIB_SRCS		=	lib/libft/libft.a\
 					lib/libftprintf/libftprintf.a\
 					lib/libgnl/libgnl.a\
+					lib/libvla/libvla.a\
 
 FLAGS			=	-Wall -Werror -Wextra
 
@@ -95,8 +102,11 @@ clean_bonus:
 	rm -f bonus
 
 
-$(NAME): $(TARGETS_EXTRA) $(TARGETS)
-	$(CC) $(TARGETS) $(DYLIB) $(FLAGS) $(LIBS) -o $(NAME) -g
+$(NAME): $(TARGETS_EXTRA) $(TARGETS) src/main.o
+	$(CC) $(TARGETS) src/main.o $(FLAGS) $(LIBS) -o $(NAME) -g
+
+test: $(NAME) $(TEST_OFILES) tests/main.o
+	$(CC) $(TARGETS) $(TEST_OFILES) tests/main.o $(FLAGS) $(LIBS) -o test -g lib/libft/libft.a
 
 # Rule for compiling the bonus part of the program. We just remove the existing
 # executable and recompile the normal program with the BONUS env. variable set
@@ -123,12 +133,14 @@ clean:
 	make clean -C lib/libft
 	make clean -C lib/libftprintf
 	make clean -C lib/libgnl
+	make clean -C lib/libvla
 	rm -f $(OFILES) $(BONUS_OFILES) src/main.o
 
 fclean: clean
 	make fclean -C lib/libft
 	make fclean -C lib/libftprintf
 	make fclean -C lib/libgnl
+	make fclean -C lib/libvla
 	rm -f $(NAME)
 	rm -f bonus
 

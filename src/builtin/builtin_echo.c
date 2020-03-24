@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:47:25 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/23 19:19:22 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/23 22:25:25 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ static char		*echo_cat(uint32_t word_count, char *words[])
 	j = 0;
 	while (i < word_count)
 	{
-		j += echo_cpy(&res[j], words[i]) + 1;
-		res[j - 1] = (i + 1 < word_count) ? ' ' : '\0';
+		j += echo_cpy(&res[j], words[i]);
+		res[j] = (i + 1 < word_count) ? ' ' : '\0';
+		j++;
 		i++;
 	}
 	return (res);
@@ -104,8 +105,8 @@ void			builtin_echo(uint32_t argc, char *argv[])
 		ft_putchar_fd('\n', 1);
 		return ;
 	}
-	has_n = !ft_strcmp(argv[0], "-n");
-	str = echo_cat(argc - has_n - 1, &argv[has_n]);
+	has_n = !ft_strcmp(argv[1], "-n");
+	str = echo_cat(argc - has_n - 1, &argv[has_n + 1]);
 	ft_putstr_fd(str, 1);
 	free(str);
 	if (!has_n)
