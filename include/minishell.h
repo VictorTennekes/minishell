@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:15:57 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/24 19:58:13 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/30 13:17:39 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	run_cmd(char *cmd);
 **	Utils
 */
 
-char	*str_replace(char *str, char *to_find, char *replace, bool do_free);
 int		file_wapper(char *filename, int (*func)(int fd));
 
 #endif

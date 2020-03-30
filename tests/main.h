@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:12:07 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/24 16:39:43 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/30 13:13:43 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdint.h>
 
 int				mshell_lexer(char *filename);
-int				mshell_str_replace(char *filename);
 
 typedef struct	s_test {
 	char	*label;
@@ -28,8 +27,7 @@ typedef struct	s_test {
 
 t_test			g_tests[] = {
 	{ "lexer",			mshell_lexer,		false },
-	{ "str_replace",	mshell_str_replace,	true },
-	{ NULL,				NULL,				false},
+	{ NULL,				NULL,				false },
 };
 
 #endif
