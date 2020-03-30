@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:09:52 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/24 17:15:28 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/24 19:58:03 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,19 @@ static int32_t	str_replace_len(char *str, char *to_find, uint32_t replace_len,
 **	@param {char *} str - must be malloced
 **	@param {char *} to_find -  the string to replace
 **	@param {char *} replace
+**	@param {bool} do_free - true if str should be free'd
 **
 **	@return {char *} new
 */
 
-char	*str_replace(char *str, char *to_find, char *replace)
+char	*str_replace(char *str, char *to_find, char *replace, bool do_free)
 {
 	char		*res;
 	int32_t		new_len;
 	uint32_t	i;
 	uint32_t	j;
-	uint32_t	to_find_len;
 	uint32_t	replace_len;
+	uint32_t	to_find_len;
 
 	if (!str || !*to_find)
 		return (NULL);
@@ -94,6 +95,7 @@ char	*str_replace(char *str, char *to_find, char *replace)
 		j++;
 	}
 	res[new_len] = 0;
-	free(str);
+	if (do_free)
+		free(str);
 	return (res);
 }

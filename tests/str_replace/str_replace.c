@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:37:52 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/24 17:14:55 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/24 20:07:05 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,27 @@
 #define REPLACE (2)
 #define EXPECTED (3)
 
+static void	arrfree(char ***arr)
+{
+	ft_arrfree(*arr);
+}
+
 static int	mshell_str_replace_single(char *line)
 {
-	char	**split;
+	char	**split			__attribute__ ((__cleanup__(arrfree)));
 	char	*replace_res;
 	size_t	split_len;
 
-	ft_printf("testing [%s]: ", str_replace(line, "\t", " "));
+	ft_printf("testing [%s]: ", str_replace(line, "\t", " ", true));
 	split = ft_split(line, '\t');
 	if (!split)
 		return (ft_printf("ft_split returned NULL\n"));
 	split_len = ft_arrlen(split);
 	if (split_len == 3)
-		replace_res = str_replace(split[STR], split[TO_FIND], "");
+		replace_res = str_replace(split[STR], split[TO_FIND], "", false);
 	else if (split_len == 4)
-		replace_res = str_replace(split[STR], split[TO_FIND], split[REPLACE]);
+		replace_res = str_replace(split[STR], split[TO_FIND], split[REPLACE],
+				false);
 	else
 		return (ft_printf("invalid line\n"));
 	if (!replace_res)
@@ -72,7 +78,6 @@ static int	mshell_str_replace_test(int fd)
 		}
 		if (*line && *line != '#')
 			fail_count += (mshell_str_replace_single(line) ? 1 : 0);
-		free(line);
 	}
 }
 

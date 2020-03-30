@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/03/24 16:55:00 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/03/24 19:53:55 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,7 +134,7 @@ clean:
 	make clean -C lib/libftprintf
 	make clean -C lib/libgnl
 	make clean -C lib/libvla
-	rm -f $(OFILES) $(BONUS_OFILES) src/main.o
+	rm -f $(OFILES) $(BONUS_OFILES) $(TEST_OFILES) src/main.o
 
 fclean: clean
 	make fclean -C lib/libft
@@ -145,3 +145,5 @@ fclean: clean
 	rm -f bonus
 
 re: fclean all
+
+testre: fclean test

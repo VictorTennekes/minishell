@@ -1,5 +1,5 @@
 # Test cases. Fields are delimited by tabs.
 #STR			TO_FIND				REPLACE					EXPECTED
 abcdef			b					c						accdef
-abcdef			bc					b						abdef
-testatest		test				a						aaa
+#abcdef			bc					b						abdef
+#testatest		test				a						aaa
