@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:47:25 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:00:25 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 16:40:54 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ void			builtin_echo(uint32_t argc, t_string argv[])
 	bool		has_n;
 	t_string	str;
 
-	if (argc == 1)
+	has_n = argc > 1 && !ft_strcmp(argv[1].str, "-n");
+	if (argc == 1 || (argc == 2 && has_n))
 	{
-		ft_putchar_fd('\n', 1);
+		if (!has_n)
+			ft_putchar_fd('\n', 1);
 		return ;
 	}
-	has_n = !ft_strcmp(argv[1].str, "-n");
 	if (string_join(&argv[has_n + 1], argc - has_n - 1, " ", &str))
 		error(E_ALLOC "'builtin_echo'");
 	ft_putstr_fd(str.str, 1);
