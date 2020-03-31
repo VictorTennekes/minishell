@@ -16,3 +16,6 @@
 [submodule "lib/libstring"]
 	path = lib/libstring
 	url = https://github.com/abeaugustijn/libstring
+[submodule "lib/liblist"]
+	path = lib/liblist
+	url = https://github.com/abeaugustijn/liblist

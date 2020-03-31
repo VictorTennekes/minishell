@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:47:25 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:51:50 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 19:26:10 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@
 **	The echo function built into the shell. Should function the same as in
 **	bash, except it only has to handle the '-n' flag.
 **
+**	@param {t_mshell *} mshell - not used
 **	@param {uint32_t} argc
 **	@param {t_string []} argv
 */
 
-bool	builtin_echo(uint32_t argc, t_string argv[])
+bool	builtin_echo(t_mshell *mshell, uint32_t argc, t_string argv[])
 {
 	bool		has_n;
 	t_string	str;
 
+	(void)mshell;
 	has_n = argc > 1 && !ft_strcmp(argv[1].str, "-n");
 	if (argc == 1 || (argc == 2 && has_n))
 	{

@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/23 13:14:58 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 19:30:12 by aaugusti         ###   ########.fr       */
+/*   Created: 2020/03/31 19:16:29 by aaugusti          #+#    #+#             */
+/*   Updated: 2020/03/31 21:27:27 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <bssert.h>
+#include <env.h>
 #include <libftprintf.h>
 #include <minishell.h>
-#include <stdlib.h>
 
-int	main(void)
+/*
+**	Print the current working directory.
+**
+**	@param {t_mshell *} mshell
+**	@param {uint32_t} argc
+**	@param {t_string[]} argv - not used
+*/
+
+bool	builtin_pwd(t_mshell *mshell, uint32_t argc, t_string argv[])
 {
-	t_mshell	mshell;
-	t_string	cmd;
+	t_env	*pwd_env;
 
-	init(&mshell);
-	while (1)
-	{
-		prompt();
-		cmd = get_cmd();
-		run_cmd(&mshell, &cmd);
-		string_free(&cmd);
-	}
+	(void)argv;
+	if (argc != 1)
+		//TODO: set error message
+		return (true);
+	pwd_env = env_get(mshell, "PWD");
+	bssert(pwd_env);
+	ft_printf("%s\n", pwd_env->value.str);
+	return (false);
 }

@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   bssert.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/23 13:14:58 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 19:30:12 by aaugusti         ###   ########.fr       */
+/*   Created: 2020/03/31 19:20:43 by aaugusti          #+#    #+#             */
+/*   Updated: 2020/03/31 19:24:51 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libftprintf.h>
-#include <minishell.h>
 #include <stdlib.h>
 
-int	main(void)
-{
-	t_mshell	mshell;
-	t_string	cmd;
+#ifdef DEBUG
 
-	init(&mshell);
-	while (1)
-	{
-		prompt();
-		cmd = get_cmd();
-		run_cmd(&mshell, &cmd);
-		string_free(&cmd);
-	}
+void	bssert(void *val)
+{
+	if (val)
+		return ;
+	ft_printf("bssert failed\n");
+	exit(1);
 }
+
+#else
+
+void	bssert(void *val)
+{
+	(void)val;
+	return ;
+}
+
+#endif

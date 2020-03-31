@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   bssert.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/23 13:14:58 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 19:30:12 by aaugusti         ###   ########.fr       */
+/*   Created: 2020/03/31 19:23:02 by aaugusti          #+#    #+#             */
+/*   Updated: 2020/03/31 19:24:39 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
-#include <minishell.h>
-#include <stdlib.h>
+#ifndef BSSERT_H
+# define BSSERT_H
 
-int	main(void)
-{
-	t_mshell	mshell;
-	t_string	cmd;
+void	bssert(void *val);
 
-	init(&mshell);
-	while (1)
-	{
-		prompt();
-		cmd = get_cmd();
-		run_cmd(&mshell, &cmd);
-		string_free(&cmd);
-	}
-}
+#endif

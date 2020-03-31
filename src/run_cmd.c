@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:54:10 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 19:29:42 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 t_cmd	g_cmds[] = {
 	{ "echo", 	builtin_echo },
 	{ "exit", 	builtin_exit },
+	{ "pwd", 	builtin_pwd },
 	{ NULL , 	NULL },
 };
 
@@ -33,7 +34,7 @@ static void	free_args(uint32_t argc, t_string argv[])
 	free(argv);
 }
 
-void		run_cmd(t_string *cmd)
+void		run_cmd(t_mshell *mshell, t_string *cmd)
 {
 	t_string	*argv;
 	uint32_t	argc;
@@ -53,7 +54,7 @@ void		run_cmd(t_string *cmd)
 			continue;
 		}
 		//TODO handle a 'true' return
-		g_cmds[i].func(argc, argv);
+		g_cmds[i].func(mshell, argc, argv);
 		i++;
 	}
 	free_args(argc, argv);

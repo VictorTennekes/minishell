@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 16:43:29 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:57:37 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 19:26:37 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@
 /*
 **	Exit the shell.
 **
+**	@param {t_mshell *} mshell - not used
 **	@param {uint32_t} argc
 **	@param {t_string []} argv
 */
 
-bool	builtin_exit(uint32_t argc, t_string argv[])
+bool	builtin_exit(t_mshell *mshell, uint32_t argc, t_string argv[])
 {
 	int		tmp;
 	uint8_t	exit_status;
 
+	(void)mshell;
 	if (argc > 2)
 	{
 		//TODO: set error message

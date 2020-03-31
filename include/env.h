@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/23 13:14:58 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 19:30:12 by aaugusti         ###   ########.fr       */
+/*   Created: 2020/03/31 17:19:26 by aaugusti          #+#    #+#             */
+/*   Updated: 2020/03/31 18:57:15 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
-#include <minishell.h>
-#include <stdlib.h>
+#ifndef ENV_H
+# define ENV_H
 
-int	main(void)
-{
-	t_mshell	mshell;
-	t_string	cmd;
+# include <minishell.h>
 
-	init(&mshell);
-	while (1)
-	{
-		prompt();
-		cmd = get_cmd();
-		run_cmd(&mshell, &cmd);
-		string_free(&cmd);
-	}
-}
+typedef struct	s_env {
+	bool		read_only;
+	t_string	name;
+	t_string	value;
+}				t_env;
+
+t_env	*env_get(t_mshell *mshell, char *name);
+bool	env_set(t_mshell *mshell, char *name, char *value, bool read_only);
+
+#endif

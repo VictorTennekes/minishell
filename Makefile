@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/03/31 16:53:53 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/03/31 21:44:21 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,14 +18,20 @@ all: $(NAME)
 SRCS			=	\
 					builtin/builtin_echo\
 					builtin/builtin_exit\
+					builtin/builtin_pwd\
+					env/env\
 					error\
 					get_cmd\
+					init\
 					parser/parser\
 					parser/parser_cases\
 					parser/parser_functions\
 					prompt\
 					run_cmd\
+					utils/bssert\
 					utils/file_wrapper\
+					utils/get_cwd\
+					utils/zalloc\
 
 # Sources which are just needed for the bonus part
 BONUS_SRCS		=	\
@@ -34,6 +40,7 @@ BONUS_SRCS		=	\
 BONUS_RECOMP	=	\
 
 TEST_SRCS		=	\
+					env/env\
 					parser/parser\
 					parser/parser_file\
 					parser/parser_rand\
@@ -52,6 +59,7 @@ INCLUDES		=	\
 					-I lib/libft\
 					-I lib/libftprintf\
 					-I lib/libgnl\
+					-I lib/liblist\
 					-I lib/libstring\
 					-I lib/libvla\
 
@@ -60,10 +68,11 @@ LIB_SRCS		=	\
 					lib/libft/libft.a\
 					lib/libftprintf/libftprintf.a\
 					lib/libgnl/libgnl.a\
+					lib/liblist/liblist.a\
 					lib/libstring/libstring.a\
 					lib/libvla/libvla.a\
 
-FLAGS			=	-Wall -Werror -Wextra
+FLAGS			=	-Wall -Werror -Wextra -DNOLIST
 
 # Ability to compile with maximum optimization
 ifeq ($(DEBUG),1)
@@ -140,6 +149,7 @@ clean:
 	make clean -C lib/libft
 	make clean -C lib/libftprintf
 	make clean -C lib/libgnl
+	make clean -C lib/liblist
 	make clean -C lib/libstring
 	make clean -C lib/libvla
 	rm -f $(OFILES) $(BONUS_OFILES) $(TEST_OFILES) src/main.o tests/main.o
@@ -148,6 +158,7 @@ fclean: clean
 	make fclean -C lib/libft
 	make fclean -C lib/libftprintf
 	make fclean -C lib/libgnl
+	make fclean -C lib/liblist
 	make fclean -C lib/libstring
 	make fclean -C lib/libvla
 	rm -f $(NAME) test
