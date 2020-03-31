@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/03/30 13:17:19 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/03/31 16:15:39 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,11 @@ SRCS			=	\
 					builtin/builtin_echo\
 					error\
 					get_cmd\
+					parser/parser\
+					parser/parser_cases\
+					parser/parser_functions\
 					prompt\
 					run_cmd\
-					lexer\
 					utils/file_wrapper\
 
 # Sources which are just needed for the bonus part
@@ -31,10 +33,10 @@ BONUS_SRCS		=	\
 BONUS_RECOMP	=	\
 
 TEST_SRCS		=	\
-					lexer/lexer\
-					lexer/lexer_file\
-					lexer/lexer_rand\
-					lexer/lexer_single\
+					parser/parser\
+					parser/parser_file\
+					parser/parser_rand\
+					parser/parser_single\
 
 
 OFILES			=	$(SRCS:%=src/%.o)
@@ -63,10 +65,10 @@ LIB_SRCS		=	\
 FLAGS			=	-Wall -Werror -Wextra
 
 # Ability to compile with maximum optimization
-ifeq ($(FAST),1)
-FLAGS			+= -Ofast
+ifeq ($(DEBUG),1)
+FLAGS			+= -g -Og -fsanitize=address -fno-stack-protector
 else
-FLAGS			+= -O0
+FLAGS			+= -Ofast
 endif
 
 # OS detection for libs and headers
@@ -107,10 +109,10 @@ clean_bonus:
 
 
 $(NAME): $(TARGETS_EXTRA) $(TARGETS) src/main.o
-	$(CC) $(TARGETS) src/main.o $(FLAGS) $(LIBS) -o $(NAME) -g
+	$(CC) $(TARGETS) src/main.o $(FLAGS) -o $(NAME)
 
-test: $(NAME) $(TEST_OFILES) tests/main.o
-	$(CC) $(TARGETS) $(TEST_OFILES) tests/main.o $(FLAGS) $(LIBS) -o test -g lib/libft/libft.a
+test: $(NAME) $(LIB_SRCS) $(TEST_OFILES) tests/main.o
+	$(CC) $(TARGETS) $(TEST_OFILES) $(LIB_SRCS) tests/main.o $(FLAGS) -o test lib/libft/libft.a
 
 # Rule for compiling the bonus part of the program. We just remove the existing
 # executable and recompile the normal program with the BONUS env. variable set
@@ -123,7 +125,7 @@ bonus:
 
 # Generic rule for compiling any C-file into an object file
 %.o: %.c
-	$(CC) -o $@ -c $< $(FLAGS) $(INCLUDES) $(LIBS) -g
+	$(CC) -o $@ -c $< $(FLAGS) $(INCLUDES)
 
 # Generic rule for compiling libraries
 %.a:
@@ -139,7 +141,7 @@ clean:
 	make clean -C lib/libgnl
 	make clean -C lib/libstring
 	make clean -C lib/libvla
-	rm -f $(OFILES) $(BONUS_OFILES) $(TEST_OFILES) src/main.o
+	rm -f $(OFILES) $(BONUS_OFILES) $(TEST_OFILES) src/main.o tests/main.o
 
 fclean: clean
 	make fclean -C lib/libft
@@ -147,7 +149,7 @@ fclean: clean
 	make fclean -C lib/libgnl
 	make fclean -C lib/libstring
 	make fclean -C lib/libvla
-	rm -f $(NAME)
+	rm -f $(NAME) test
 	rm -f bonus
 
 re: fclean all

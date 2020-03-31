@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_file.c                                       :+:      :+:    :+:   */
+/*   parser_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 09:29:03 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/24 09:31:09 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 16:18:06 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "parser.h"
 #include <get_next_line.h>
 #include <libftprintf.h>
 #include <minishell.h>
 #include <stdlib.h>
 
-static int	mshell_lexer_file_func(int fd)
+static int	mshell_parser_file_func(int fd)
 {
-	char	*line;
-	int		gnl_ret;
-	int		fail_count;
+	char		*line;
+	t_string	line_str;
+	int			gnl_ret;
+	int			fail_count;
 
 	fail_count = 0;
 	while (1)
@@ -28,7 +29,7 @@ static int	mshell_lexer_file_func(int fd)
 		gnl_ret = get_next_line(fd, &line);
 		if (gnl_ret == -1)
 		{
-			ft_printf("mshell_lexer_file: get_next_line returned -1\n");
+			ft_printf("mshell_parser_file: get_next_line returned -1\n");
 			return (-1);
 		}
 		if (gnl_ret == 0)
@@ -37,12 +38,21 @@ static int	mshell_lexer_file_func(int fd)
 			return (fail_count);
 		}
 		if (*line && *line != '#')
-			fail_count += mshell_lexer_single(line);
+		{
+			if (string_from("echo ", &line_str) || string_push(&line_str, line))
+			{
+				ft_printf("mshell_parser_file: allocation failed\n");
+				return (-1);
+			}
+			string_shrink(&line_str);
+			fail_count += mshell_parser_single(&line_str);
+			string_free(&line_str);
+		}
 		free(line);
 	}
 }
 
-int			mshell_lexer_file(char *filename)
+int			mshell_parser_file(char *filename)
 {
-	return (file_wapper(filename, mshell_lexer_file_func));
+	return (file_wapper(filename, mshell_parser_file_func));
 }

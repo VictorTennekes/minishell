@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:14:58 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/23 13:31:24 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 15:30:31 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 
 int	main(void)
 {
+	t_string	cmd;
+
 	while (1)
 	{
-		char	*cmd;
-
 		prompt();
 		cmd = get_cmd();
-		run_cmd(cmd);
-		free(cmd);
+		run_cmd(&cmd);
+		string_free(&cmd);
 	}
 }

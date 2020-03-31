@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/24 17:23:53 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 16:19:49 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,34 @@ t_cmd	g_cmds[] = {
 	{ NULL , 0, NULL },
 };
 
-static void	free_args(uint32_t argc, char *argv[])
+static void	free_args(uint32_t argc, t_string argv[])
 {
 	uint32_t	i;
 
 	i = 0;
 	while (i < argc)
 	{
-		free(argv[i]);
+		string_free(&argv[i]);
 		i++;
 	}
 	free(argv);
 }
 
-void		run_cmd(char *cmd)
+void		run_cmd(t_string *cmd)
 {
-	char		**argv;
+	t_string	*argv;
 	uint32_t	argc;
 	uint32_t	i;
 
-	if (!*cmd)
+	if (!*cmd->str)
 		exit(0);
 	i = 0;
-	argv = lex(cmd, &argc);
+	argv = parser(cmd, &argc);
 	if (!argv)
-		error("Allocation failed in 'run_cmd'");
+		error(E_ALLOC "'run_cmd'");
 	while (g_cmds[i].cmd)
 	{
-		if (ft_strcmp(argv[0], g_cmds[i].cmd))
+		if (ft_strcmp(argv[0].str, g_cmds[i].cmd))
 		{
 			i++;
 			continue;

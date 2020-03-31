@@ -6,86 +6,13 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:47:25 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/23 22:25:25 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 16:00:25 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <minishell.h>
 #include <stdlib.h>
-
-/*
-**	Copy the given src string to dst until the '\0' char. Does not terminate
-**	it.
-**
-**	@param {char *} dst
-**	@param {char *} src
-*/
-
-static uint32_t echo_cpy(char *dst, char *src)
-{
-	uint32_t	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	return (i);
-}
-
-/*
-**	Calculate the length of the total string which echo will output.
-**
-**	@param {uint32_t} word_count
-**	@param {char *[]} words
-*/
-
-static uint32_t	echo_cat_len(uint32_t word_count, char *words[])
-{
-	uint32_t	res;
-	uint32_t	i;
-
-	i = 0;
-	res = 0;
-	while (i < word_count)
-	{
-		res += ft_strlen(words[i]) + 1;
-		i--;
-	}
-	return (res);
-}
-
-/*
-**	Concatenate all of the arguments of the echo call into one string,
-**	seperated by spaces (' '). The returned pointer is to an allocated
-**	string.
-**
-**	@param {uint32_t} word_count - the amount of words in the array
-**	@param {char *[]} words
-*/
-
-static char		*echo_cat(uint32_t word_count, char *words[])
-{
-	char		*res;
-	uint32_t	i;
-	uint32_t	j;
-
-	res = malloc(echo_cat_len(word_count, words));
-	if (!res)
-		error("Allocation failed in 'echo_cat'");
-	i = 0;
-	j = 0;
-	while (i < word_count)
-	{
-		j += echo_cpy(&res[j], words[i]);
-		res[j] = (i + 1 < word_count) ? ' ' : '\0';
-		j++;
-		i++;
-	}
-	return (res);
-}
 
 /*
 **	The echo function built into the shell. Should function the same as in
@@ -95,20 +22,21 @@ static char		*echo_cat(uint32_t word_count, char *words[])
 **	@param {char *[]} argv
 */
 
-void			builtin_echo(uint32_t argc, char *argv[])
+void			builtin_echo(uint32_t argc, t_string argv[])
 {
-	bool	has_n;
-	char	*str;
+	bool		has_n;
+	t_string	str;
 
 	if (argc == 1)
 	{
 		ft_putchar_fd('\n', 1);
 		return ;
 	}
-	has_n = !ft_strcmp(argv[1], "-n");
-	str = echo_cat(argc - has_n - 1, &argv[has_n + 1]);
-	ft_putstr_fd(str, 1);
-	free(str);
+	has_n = !ft_strcmp(argv[1].str, "-n");
+	if (string_join(&argv[has_n + 1], argc - has_n - 1, " ", &str))
+		error(E_ALLOC "'builtin_echo'");
+	ft_putstr_fd(str.str, 1);
+	string_free(&str);
 	if (!has_n)
 		ft_putchar_fd('\n', 1);
 }
