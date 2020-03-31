@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/03/31 16:15:39 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/03/31 16:53:53 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ all: $(NAME)
 # All source of the application
 SRCS			=	\
 					builtin/builtin_echo\
+					builtin/builtin_exit\
 					error\
 					get_cmd\
 					parser/parser\

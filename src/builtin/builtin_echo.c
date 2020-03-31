@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:47:25 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:40:54 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 16:51:50 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 **	bash, except it only has to handle the '-n' flag.
 **
 **	@param {uint32_t} argc
-**	@param {char *[]} argv
+**	@param {t_string []} argv
 */
 
-void			builtin_echo(uint32_t argc, t_string argv[])
+bool	builtin_echo(uint32_t argc, t_string argv[])
 {
 	bool		has_n;
 	t_string	str;
@@ -32,7 +32,7 @@ void			builtin_echo(uint32_t argc, t_string argv[])
 	{
 		if (!has_n)
 			ft_putchar_fd('\n', 1);
-		return ;
+		return (false);;
 	}
 	if (string_join(&argv[has_n + 1], argc - has_n - 1, " ", &str))
 		error(E_ALLOC "'builtin_echo'");
@@ -40,4 +40,5 @@ void			builtin_echo(uint32_t argc, t_string argv[])
 	string_free(&str);
 	if (!has_n)
 		ft_putchar_fd('\n', 1);
+	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:19:49 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 16:54:10 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <stdlib.h>
 
 t_cmd	g_cmds[] = {
-	{ "echo", -1, builtin_echo },
-	//{ "exit", 0, builtin_exit },
-	{ NULL , 0, NULL },
+	{ "echo", 	builtin_echo },
+	{ "exit", 	builtin_exit },
+	{ NULL , 	NULL },
 };
 
 static void	free_args(uint32_t argc, t_string argv[])
@@ -52,8 +52,7 @@ void		run_cmd(t_string *cmd)
 			i++;
 			continue;
 		}
-		if (g_cmds[i].maxargc != -1 && argc > (uint32_t)g_cmds[i].maxargc)
-			error("Invalid amount of arguments");
+		//TODO handle a 'true' return
 		g_cmds[i].func(argc, argv);
 		i++;
 	}
