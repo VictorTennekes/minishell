@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:15:57 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 19:29:52 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 22:12:21 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_mshell {
 */
 
 bool		builtin_echo(t_mshell *mshell, uint32_t argc, t_string argv[]);
+bool		builtin_env(t_mshell *mshell, uint32_t argc, t_string argv[]);
 bool		builtin_exit(t_mshell *mshell, uint32_t argc, t_string argv[]);
 bool		builtin_pwd(t_mshell *mshell, uint32_t argc, t_string argv[]);
 

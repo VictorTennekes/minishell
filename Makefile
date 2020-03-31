@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/03/31 21:44:21 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/03/31 22:13:00 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ all: $(NAME)
 # All source of the application
 SRCS			=	\
 					builtin/builtin_echo\
+					builtin/builtin_env\
 					builtin/builtin_exit\
 					builtin/builtin_pwd\
 					env/env\

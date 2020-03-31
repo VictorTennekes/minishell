@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 17:19:26 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 18:57:15 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 22:08:32 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define ENV_H
 
 # include <minishell.h>
+
+# define ENV_PRINT_INIT_CAP (2000)
 
 typedef struct	s_env {
 	bool		read_only;

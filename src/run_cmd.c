@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 19:29:42 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 22:12:34 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 t_cmd	g_cmds[] = {
 	{ "echo", 	builtin_echo },
+	{ "env", 	builtin_env },
 	{ "exit", 	builtin_exit },
 	{ "pwd", 	builtin_pwd },
 	{ NULL , 	NULL },
