@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 19:04:58 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 21:23:20 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/01 21:12:59 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*get_cwd_shrink(char *cwd)
 	size_t	real_len;
 
 	real_len = ft_strlen(cwd);
-	res = malloc(real_len);
+	res = malloc(real_len + 1);
 	if (!res)
 		error(E_ALLOC "'get_cwd_shrink'");
 	ft_memcpy(res, cwd, real_len + 1);
