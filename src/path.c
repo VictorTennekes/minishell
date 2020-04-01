@@ -6,13 +6,14 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 20:15:16 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/01 20:54:17 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/01 21:37:59 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <env.h>
 #include <libft.h>
 #include <minishell.h>
+#include <sys/stat.h>
 
 /*
 **	Update the PATH env variable so it mathes the mshell->path list. This will
@@ -39,6 +40,39 @@ static void	path_update_env(t_mshell *mshell)
 	}
 	env_set(mshell, "PATH", path.str, false);
 	string_free(&path);
+}
+
+/*
+**	Searches for an executable file in all of the defined path directories.
+**	Will return the first valid file, in order of the path variables.
+**
+**	@param {t_mshell *} mshell
+**	@param {char *} name - name of the file, e.g. "bash"
+**
+**	@return {char *} - either an allocated string, or NULL if no executable
+**		file is found.
+*/
+
+char	*path_find_file(t_mshell *mshell, char *name)
+{
+	char		*cur_path;
+	struct stat	statbuf;
+	t_list		*cur;
+	t_string	cur_file;
+
+	cur = mshell->path;
+	while (cur)
+	{
+		cur_path = cur->content;
+		if (string_from(cur_path, &cur_file) || string_pushc(&cur_file, '/')
+				|| string_push(&cur_file, name))
+			error(E_ALLOC "'path_find_file'");
+		if (stat(cur_file.str, &statbuf) == 0)
+			return (cur_file.str);
+		string_free(&cur_file);
+		cur = cur->next;
+	}
+	return (NULL);
 }
 
 /*
