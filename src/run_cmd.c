@@ -6,12 +6,13 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/01 20:13:39 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/01 22:33:49 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <minishell.h>
+#include <path.h>
 #include <stdlib.h>
 
 t_builtin	g_builtins[] = {
@@ -36,6 +37,25 @@ static void	free_args(uint32_t argc, t_string argv[])
 	free(argv);
 }
 
+	//TODO: temp
+	#include <libftprintf.h>
+	#include <unistd.h>
+
+static bool	run_cmd_exec(t_mshell *mshell, uint32_t argc, t_string argv[])
+{
+	char	*filename;
+
+	(void)argc;
+	filename = path_find_file(mshell, argv[0].str, true);
+	ft_printf("%s\n", filename ? filename : "not found");
+	if (!filename)
+		//TODO: set error message
+		return(true) ;
+	system(filename); // TODO: this is cheating. Just for testing
+	free(filename);
+	return (false);
+}
+
 void		run_cmd(t_mshell *mshell, t_string *cmd)
 {
 	t_string	*argv;
@@ -57,7 +77,10 @@ void		run_cmd(t_mshell *mshell, t_string *cmd)
 		}
 		//TODO handle a 'true' return
 		g_builtins[i].func(mshell, argc, argv);
-		i++;
+		free_args(argc, argv);
+		return ;
 	}
+	//TODO handle a 'true' return
+	run_cmd_exec(mshell, argc, argv);
 	free_args(argc, argv);
 }

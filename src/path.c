@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 20:15:16 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/01 21:37:59 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/01 22:26:12 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,31 @@ static void	path_update_env(t_mshell *mshell)
 }
 
 /*
+**	Checks wheter a file is valid.
+**
+**	@param {char *} filename - absolue path to the file
+**	@param {bool} executable - true if the files must be executable
+**
+**	@return {bool} - true if valid
+*/
+
+static bool	path_check_file(char *filename, bool executable)
+{
+	struct stat	statbuf;
+
+	if (stat(filename, &statbuf) != 0)
+		return (false);
+	if (!(((statbuf.st_mode) & S_IFMT) == S_IFREG))
+		return (false);
+	if (!executable)
+		return (true);
+	//TODO: check if the executing user has rights to execute
+	if (!(statbuf.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)))
+		return (false);
+	return (true);
+}
+
+/*
 **	Searches for an executable file in all of the defined path directories.
 **	Will return the first valid file, in order of the path variables.
 **
@@ -53,10 +78,9 @@ static void	path_update_env(t_mshell *mshell)
 **		file is found.
 */
 
-char	*path_find_file(t_mshell *mshell, char *name)
+char	*path_find_file(t_mshell *mshell, char *name, bool executable)
 {
 	char		*cur_path;
-	struct stat	statbuf;
 	t_list		*cur;
 	t_string	cur_file;
 
@@ -67,7 +91,7 @@ char	*path_find_file(t_mshell *mshell, char *name)
 		if (string_from(cur_path, &cur_file) || string_pushc(&cur_file, '/')
 				|| string_push(&cur_file, name))
 			error(E_ALLOC "'path_find_file'");
-		if (stat(cur_file.str, &statbuf) == 0)
+		if (path_check_file(cur_file.str, executable))
 			return (cur_file.str);
 		string_free(&cur_file);
 		cur = cur->next;
