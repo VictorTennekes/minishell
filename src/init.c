@@ -6,34 +6,66 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 17:12:22 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 21:20:18 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/01 20:51:56 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <env.h>
 #include <libft.h>
 #include <minishell.h>
-#include <utils.h>
+#include <path.h>
+#include <stdlib.h>
 
-static void	init_env(t_mshell *mshell, char *cwd)
+/*
+**	Initialize the environment variable linked list. To initialize the list,
+**	we need to add an environment variable to the list. We choose PWD for this.
+**
+**	@param {t_mshell *} mshell
+*/
+
+static void	init_env(t_mshell *mshell)
 {
+	char	*cwd;
 	t_env	*env;
 
 	env = malloc(sizeof(t_env));
+	cwd = get_cwd();
 	if (!env ||
 			string_from("PWD", &env->name) || string_from(cwd, &env->value))
 		error(E_ALLOC "'init_env'");
+	free(cwd);
 	env->read_only = true;
 	if (lst_new_back(&mshell->env, env) == NULL)
 		error(E_ALLOC "'init_env'");
 }
 
-void	init(t_mshell *mshell)
-{
-	char	*cwd;
+char	*g_path_init[] = {
+	"/bin",
+	"/usr/bin",
+	NULL,
+};
 
+/*
+**	Initialize the path variable.
+**
+**	@param {t_mshell *} mshell
+*/
+
+static void	init_path(t_mshell *mshell)
+{
+	uint32_t	i;
+
+	i = 0;
+	while (g_path_init[i])
+	{
+		path_new(mshell, g_path_init[i], g_path_init[i + 1] == NULL);
+		i++;
+	}
+}
+
+void		init(t_mshell *mshell)
+{
 	ft_bzero(mshell, sizeof(t_mshell));
-	cwd = get_cwd();
-	init_env(mshell, cwd);
-	free(cwd);
+	init_env(mshell);
+	init_path(mshell);
 }

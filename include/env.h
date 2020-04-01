@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 17:19:26 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 22:08:32 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/01 19:59:19 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ typedef struct	s_env {
 }				t_env;
 
 t_env	*env_get(t_mshell *mshell, char *name);
-bool	env_set(t_mshell *mshell, char *name, char *value, bool read_only);
+t_env	*env_set(t_mshell *mshell, char *name, char *value, bool read_only);
 
 #endif

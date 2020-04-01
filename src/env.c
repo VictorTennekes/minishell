@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 18:22:43 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 21:21:27 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/01 19:58:56 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,18 @@ t_env			*env_get(t_mshell *mshell, char *name)
 **	@param {char *} value
 **	@param {bool} read_only - only used when creating a new variable
 **
-**	@return {bool} - true if there was an attempt to set a read_only variable
+**	@return {t_env} - pointer to the set variable
 */
 
-bool			env_set(t_mshell *mshell, char *name, char *value, bool read_only)
+t_env			*env_set(t_mshell *mshell, char *name, char *value, bool read_only)
 {
 	t_env	*env;
 
 	env = env_get(mshell, name);
 	if (!env)
-	{
-		env_new(mshell, name, value, read_only);
-		return (false);
-	}
-	if (env->read_only)
-		return (true);
+		return (env_new(mshell, name, value, read_only));
 	string_reset(&env->value, false);
 	if (string_push(&env->value, value) || string_shrink(&env->value))
 		error(E_ALLOC "'env_set'");
-	return (false);
+	return (env);
 }

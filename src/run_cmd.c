@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 22:12:34 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/01 20:13:39 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include <minishell.h>
 #include <stdlib.h>
 
-t_cmd	g_cmds[] = {
+t_builtin	g_builtins[] = {
+	{ "cd", 	builtin_cd },
 	{ "echo", 	builtin_echo },
 	{ "env", 	builtin_env },
 	{ "exit", 	builtin_exit },
@@ -47,15 +48,15 @@ void		run_cmd(t_mshell *mshell, t_string *cmd)
 	argv = parser(cmd, &argc);
 	if (!argv)
 		error(E_ALLOC "'run_cmd'");
-	while (g_cmds[i].cmd)
+	while (g_builtins[i].cmd)
 	{
-		if (ft_strcmp(argv[0].str, g_cmds[i].cmd))
+		if (ft_strcmp(argv[0].str, g_builtins[i].cmd))
 		{
 			i++;
 			continue;
 		}
 		//TODO handle a 'true' return
-		g_cmds[i].func(mshell, argc, argv);
+		g_builtins[i].func(mshell, argc, argv);
 		i++;
 	}
 	free_args(argc, argv);

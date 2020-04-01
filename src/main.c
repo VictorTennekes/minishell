@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:14:58 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 19:30:12 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/03/31 22:49:44 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 	init(&mshell);
 	while (1)
 	{
-		prompt();
+		prompt(&mshell);
 		cmd = get_cmd();
 		run_cmd(&mshell, &cmd);
 		string_free(&cmd);

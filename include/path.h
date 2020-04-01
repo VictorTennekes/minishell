@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   path.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/23 13:26:37 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 22:49:26 by aaugusti         ###   ########.fr       */
+/*   Created: 2020/04/01 20:35:11 by aaugusti          #+#    #+#             */
+/*   Updated: 2020/04/01 20:35:45 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
-#include <minishell.h>
-#include <env.h>
+#ifndef PATH_H
+# define PATH_H
 
-/*
-**	Prints the prompt to stdout.
-*/
+# include <minishell.h>
 
-void	prompt(t_mshell *mshell)
-{
-	ft_printf("%s > ", env_get(mshell, "PWD")->value.str);
-}
+char	*path_new(t_mshell *mshell, char *value, bool update_env);
+
+#endif

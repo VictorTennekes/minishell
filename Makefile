@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/03/31 22:13:00 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/04/01 20:52:15 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,17 +16,19 @@ all: $(NAME)
 
 # All source of the application
 SRCS			=	\
+					builtin/builtin_cd\
 					builtin/builtin_echo\
 					builtin/builtin_env\
 					builtin/builtin_exit\
 					builtin/builtin_pwd\
-					env/env\
+					env\
 					error\
 					get_cmd\
 					init\
 					parser/parser\
 					parser/parser_cases\
 					parser/parser_functions\
+					path\
 					prompt\
 					run_cmd\
 					utils/bssert\
@@ -77,7 +79,10 @@ FLAGS			=	-Wall -Werror -Wextra -DNOLIST
 
 # Ability to compile with maximum optimization
 ifeq ($(DEBUG),1)
-FLAGS			+= -g -Og -fsanitize=address -fno-stack-protector
+FLAGS			+= -g -Og -fno-stack-protector
+ifneq ($(NOASAN),1)
+FLAGS			+= -fsanitize=address
+endif
 else
 FLAGS			+= -Ofast
 endif
