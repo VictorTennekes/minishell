@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 18:22:43 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/01 19:58:56 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/02 16:26:58 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 #include <env.h>
 #include <libft.h>
 #include <stdlib.h>
+
+/*
+**	Used to free an envirnoment variable.
+**
+**	@param {t_env *} env
+*/
+
+static void		env_free(t_env *env)
+{
+	string_free(&env->name);
+	string_free(&env->value);
+	free(env);
+}
 
 /*
 **	Add a new environment variable. Throws an error is any allocation fails.
@@ -89,4 +102,31 @@ t_env			*env_set(t_mshell *mshell, char *name, char *value, bool read_only)
 	if (string_push(&env->value, value) || string_shrink(&env->value))
 		error(E_ALLOC "'env_set'");
 	return (env);
+}
+
+/*
+**	Remove (or 'unset') an environment variable.
+**
+**	@param {t_mshell *} mshell
+**	@param {char *} name - the name of the variable to unset
+**	@param {bool} enforce_ro - true if the variable should only be removed if
+**		it is not read_only.
+**
+**	@return {bool} - true if the variable be not unset because of read_only.
+*/
+
+bool			env_unset(t_mshell *mshell, char *name, bool enforce_ro)
+{
+	t_env	*env;
+	t_list	*parent;
+
+	env = env_get(mshell, name);
+	if (!env)
+		return (false);
+	if (env->read_only && enforce_ro)
+		return (true);
+	parent = lst_find_parent(env, mshell->env);
+	//assert(parent);
+	lst_remove(parent, (void(*)(void *))env_free);
+	return (false);
 }

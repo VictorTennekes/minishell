@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/04/01 20:52:15 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/04/02 16:27:50 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS			=	\
 					builtin/builtin_env\
 					builtin/builtin_exit\
 					builtin/builtin_pwd\
+					builtin/builtin_unset\
 					env\
 					error\
 					get_cmd\
