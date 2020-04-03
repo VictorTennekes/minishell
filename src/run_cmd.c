@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/02 16:28:14 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/03 15:33:08 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_builtin	g_builtins[] = {
 	{ "echo", 	builtin_echo },
 	{ "env", 	builtin_env },
 	{ "exit", 	builtin_exit },
+	{ "export", builtin_export },
 	{ "pwd", 	builtin_pwd },
 	{ "unset", 	builtin_unset },
 	{ NULL , 	NULL },

@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/04/02 16:27:50 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/04/03 15:33:06 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS			=	\
 					builtin/builtin_echo\
 					builtin/builtin_env\
 					builtin/builtin_exit\
+					builtin/builtin_export\
 					builtin/builtin_pwd\
 					builtin/builtin_unset\
 					env\

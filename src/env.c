@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 18:22:43 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/02 16:26:58 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/03 15:58:12 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,23 @@ static void		env_free(t_env *env)
 	string_free(&env->name);
 	string_free(&env->value);
 	free(env);
+}
+
+static int32_t		env_check_name(char *name)
+{
+	int32_t	i;
+
+	i = 0;
+	while (name[i])
+	{
+		if (!((name[i] >= 'a' && name[i] <= 'z') ||
+			(name[i] >= 'A' && name[i] <= 'Z') ||
+			(i != 0 && (name[i] >= '0' && name[i] <= '9')) ||
+			name[i] == '_'))
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 /*
@@ -88,20 +105,22 @@ t_env			*env_get(t_mshell *mshell, char *name)
 **	@param {char *} value
 **	@param {bool} read_only - only used when creating a new variable
 **
-**	@return {t_env} - pointer to the set variable
+**	@return {bool} - true if an error occured. ms_errno will be set.
 */
 
-t_env			*env_set(t_mshell *mshell, char *name, char *value, bool read_only)
+bool			env_set(t_mshell *mshell, char *name, char *value, bool read_only)
 {
 	t_env	*env;
 
+	if (env_check_name(name) != -1)
+		return (true);
 	env = env_get(mshell, name);
 	if (!env)
 		return (env_new(mshell, name, value, read_only));
 	string_reset(&env->value, false);
 	if (string_push(&env->value, value) || string_shrink(&env->value))
 		error(E_ALLOC "'env_set'");
-	return (env);
+	return (false);
 }
 
 /*

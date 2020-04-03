@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:15:57 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/02 16:27:38 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/03 15:33:01 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ bool		builtin_cd(t_mshell *mshell, uint32_t argc, t_string argv[]);
 bool		builtin_echo(t_mshell *mshell, uint32_t argc, t_string argv[]);
 bool		builtin_env(t_mshell *mshell, uint32_t argc, t_string argv[]);
 bool		builtin_exit(t_mshell *mshell, uint32_t argc, t_string argv[]);
+bool		builtin_export(t_mshell *mshell, uint32_t argc, t_string argv[]);
 bool		builtin_pwd(t_mshell *mshell, uint32_t argc, t_string argv[]);
 bool		builtin_unset(t_mshell *mshell, uint32_t argc, t_string argv[]);
 
@@ -63,5 +64,6 @@ void		run_cmd(t_mshell *mshell, t_string *cmd);
 char		*get_cwd(void);
 int			file_wapper(char *filename, int (*func)(int fd));
 void		*zalloc(size_t size);
+void		print_env(t_mshell *mshell, char *prefix);
 
 #endif
