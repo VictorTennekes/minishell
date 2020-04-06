@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:47:25 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 19:26:10 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 12:08:28 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	builtin_echo(t_mshell *mshell, uint32_t argc, t_string argv[])
 	{
 		if (!has_n)
 			ft_putchar_fd('\n', 1);
-		return (false);;
+		return (false);
 	}
 	if (string_join(&argv[has_n + 1], argc - has_n - 1, " ", &str))
 		error(E_ALLOC "'builtin_echo'");

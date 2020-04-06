@@ -6,31 +6,44 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 22:26:06 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 22:51:28 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 11:45:43 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <env.h>
+#include <libft.h>
 #include <minishell.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static bool	builtin_cd_home(t_mshell *mshell, t_string arg, t_string *path)
+static bool	builtin_cd_home(t_mshell *mshell, t_string *path)
 {
 	t_env		*home;
 
-	(void)arg;
 	home = env_get(mshell, "HOME");
 	if (!home)
-		//TODO: set error message
-		return (true);
+		return (ms_set_error(mshell, ENO_HOME, "cd"));
 	if (string_from(home->value.str, path))
 		error(E_ALLOC "'builtin_cd_home'");
 	return (false);
 }
 
+static bool	builtin_cd_old(t_mshell *mshell, t_string *path)
+{
+	t_env	*old_pwd;
+
+	old_pwd = env_get(mshell, "OLDPWD");
+	if (!old_pwd)
+		return (ms_set_error(mshell, ENO_OLDPWD, "cd"));
+	if (string_from(old_pwd->value.str, path))
+		error(E_ALLOC "'builtin_cd_old'");
+	return (false);
+}
+
 static bool	builtin_cd_other(t_mshell *mshell, t_string arg, t_string *path)
 {
+	if (!ft_strcmp(arg.str, "-"))
+		return (builtin_cd_old(mshell, path));
 	if (arg.str[0] != '/')
 	{
 		if (string_from(env_get(mshell, "PWD")->value.str, path))
@@ -64,16 +77,19 @@ bool	builtin_cd(t_mshell *mshell, uint32_t argc, t_string argv[])
 	t_string	path;
 
 	if (argc > 2)
-		//TODO: set error message
-		return (1);
-	if ((argc == 1 ? builtin_cd_home : builtin_cd_other)
-			(mshell, argv[1], &path))
+		return (ms_set_error(mshell, ENO_TMA, "cd"));
+	if (argc == 1)
+	{
+		if (builtin_cd_home(mshell, &path))
+			return (true);
+	}
+	else if (builtin_cd_other(mshell, argv[1], &path))
 		return (true);
+	env_set(mshell, "OLDPWD", env_get(mshell, "PWD")->value.str, false);
 	chdir_ret = chdir(path.str);
 	string_free(&path);
 	if (chdir_ret != 0)
-		//TODO: set error message
-		return (1);
+		return (ms_set_error_from_no(mshell, "cd", argv[1].str));
 	cwd = get_cwd();
 	env_set(mshell, "PWD", cwd, false);
 	free(cwd);

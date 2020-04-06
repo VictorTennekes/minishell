@@ -6,16 +6,23 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 16:49:01 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 09:16:59 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 12:05:18 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include <errno.h>
 #include <libftprintf.h>
+#include <minishell.h>
+#include <stdlib.h>
+#include <string.h>
 
 char				*g_ermsgs[] = {
 	[ENO_INVID] = "not a valid identifier",
 	[ENO_INVCMD] = "command not found",
+	[ENO_TMA] = "too many arguments",
+	[ENO_HOME] = "HOME not set",
+	[ENO_OLDPWD] = "OLDPWD not set",
+	[ENO_USET] = "cannot unset: readonly variable",
 };
 
 static t_string	ms_strerror(t_errno ms_errno)
@@ -45,15 +52,40 @@ void			ms_set_procname_err(t_mshell *mshell, char *procname,
 		error(E_ALLOC "'ms_set_procname'");
 }
 
+bool			ms_set_error(t_mshell *mshell, t_errno ms_errno,
+		char *procname)
+{
+	ms_set_procname(mshell, procname);
+	mshell->ms_errno = ms_errno;
+	return (true);
+}
+
+bool			ms_set_error_from_no(t_mshell *mshell, char *procname,
+		char *err)
+{
+	ms_set_procname_err(mshell, procname, err);
+	mshell->ms_stderrno = true;
+	return (true);
+}
+
 void			ms_perror(t_mshell *mshell)
 {
+	char	*errstr;
+
 	//TODO: stderr
+	if (mshell->ms_stderrno)
+		errstr = strerror(errno);
+	else
+		errstr = ms_strerror(mshell->ms_errno).str;
 	if (mshell->ms_err_procname.len > 0)
 	{
-		ft_printf("%s: %s: %s\n", SHELL, mshell->ms_err_procname.str,
-					ms_strerror(mshell->ms_errno).str);
+		ft_printf("%s: %s: %s\n", SHELL, mshell->ms_err_procname.str, errstr);
 		string_free(&mshell->ms_err_procname);
 	}
 	else
-		ft_printf("%s: %s\n", SHELL, ms_strerror(mshell->ms_errno).str);
+		ft_printf("%s: %s\n", SHELL, errstr);
+	if (!mshell->ms_stderrno)
+		free(errstr);
+	else
+		mshell->ms_stderrno = false;
 }

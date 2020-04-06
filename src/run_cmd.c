@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 09:31:57 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 10:50:43 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void		run_cmd(t_mshell *mshell, t_string *cmd)
 			continue;
 		}
 		//TODO handle a 'true' return
-		g_builtins[i].func(mshell, argc, argv);
+		if (g_builtins[i].func(mshell, argc, argv))
+			ms_perror(mshell);
 		free_args(argc, argv);
 		return ;
 	}

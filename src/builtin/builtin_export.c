@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 17:36:49 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 09:19:19 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 11:47:54 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static bool	export_single(t_mshell *mshell, t_string arg)
 	env_set_ret = env_set(mshell, name.str, value.str, false);
 	if (env_set_ret && mshell->ms_errno == ENO_INVID)
 		ms_set_procname_err(mshell, "export", arg.str);
+	string_free(&name);
 	string_free(&value);
 	return (env_set_ret);
 }

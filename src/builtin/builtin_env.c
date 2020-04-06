@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 22:00:32 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/03 15:31:16 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 10:59:21 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ bool	builtin_env(t_mshell *mshell, uint32_t argc, t_string argv[])
 {
 	(void)argv;
 	if (argc != 1)
-		//TODO: set error message
-		return (true);
+		return (ms_set_error(mshell, ENO_TMA, "env"));
 	print_env(mshell, NULL);
 	return (false);
 }

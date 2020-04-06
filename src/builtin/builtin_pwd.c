@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 19:16:29 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 21:27:27 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 10:51:57 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ bool	builtin_pwd(t_mshell *mshell, uint32_t argc, t_string argv[])
 {
 	t_env	*pwd_env;
 
+	(void)argc;
 	(void)argv;
-	if (argc != 1)
-		//TODO: set error message
-		return (true);
 	pwd_env = env_get(mshell, "PWD");
 	bssert(pwd_env);
 	ft_printf("%s\n", pwd_env->value.str);

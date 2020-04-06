@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 18:22:43 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 08:57:32 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 12:07:36 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,10 @@ bool			env_set(t_mshell *mshell, char *name, char *value, bool read_only)
 	}
 	env = env_get(mshell, name);
 	if (!env)
-		return (env_new(mshell, name, value, read_only));
+	{
+		env_new(mshell, name, value, read_only);
+		return (false);
+	}
 	string_reset(&env->value, false);
 	if (string_push(&env->value, value) || string_shrink(&env->value))
 		error(E_ALLOC "'env_set'");

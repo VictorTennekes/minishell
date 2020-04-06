@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 17:12:22 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/01 20:51:56 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 11:42:51 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	init_env(t_mshell *mshell)
 	env->read_only = true;
 	if (lst_new_back(&mshell->env, env) == NULL)
 		error(E_ALLOC "'init_env'");
+	env_set(mshell, "OLDPWD", env->value.str, false);
 }
 
 char	*g_path_init[] = {
