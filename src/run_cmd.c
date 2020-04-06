@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/03 15:33:08 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 09:31:57 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,16 @@ static bool	run_cmd_exec(t_mshell *mshell, uint32_t argc, t_string argv[])
 
 	(void)argc;
 	filename = path_find_file(mshell, argv[0].str, true);
-	ft_printf("%s\n", filename ? filename : "not found");
 	if (!filename)
-		//TODO: set error message
-		return(true) ;
-	system(filename); // TODO: this is cheating. Just for testing
+	{
+		ms_set_procname(mshell, argv[0].str);
+		mshell->ms_errno = ENO_INVCMD;
+		ms_perror(mshell);
+	}
+	else
+		system(filename); // TODO: this is cheating. Just for testing
 	free(filename);
-	return (false);
+	return (filename ? true : false);
 }
 
 void		run_cmd(t_mshell *mshell, t_string *cmd)

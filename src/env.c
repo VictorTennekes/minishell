@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 18:22:43 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/03 15:58:12 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 08:57:32 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ bool			env_set(t_mshell *mshell, char *name, char *value, bool read_only)
 	t_env	*env;
 
 	if (env_check_name(name) != -1)
+	{
+		mshell->ms_errno = ENO_INVID;
 		return (true);
+	}
 	env = env_get(mshell, name);
 	if (!env)
 		return (env_new(mshell, name, value, read_only));

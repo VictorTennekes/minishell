@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/04/03 15:33:06 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/04/03 17:18:40 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS			=	\
 					parser/parser_cases\
 					parser/parser_functions\
 					path\
+					perror\
 					prompt\
 					run_cmd\
 					utils/bssert\

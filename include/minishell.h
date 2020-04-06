@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:15:57 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/03 15:33:01 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 09:29:47 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,24 @@
 # include <stddef.h>
 # include <stdint.h>
 
+# define SHELL "minishell"
 # define E_ALLOC "Allocation failed in "
 # define E_READ "Read failed in "
-# define CWD_INIT_SIZE (100)
+# define CWD_INIT_CAP (100)
+# define MS_PERROR_INIT_CAP (100)
+
+typedef uint32_t	t_errno;
+
+enum				e_errno {
+	ENO_INVID = 1,
+	ENO_INVCMD = 2,
+};
 
 typedef struct	s_mshell {
-	t_list	*env;
-	t_list	*path;
+	t_list		*env;
+	t_list		*path;
+	t_errno		ms_errno;
+	t_string	ms_err_procname;
 }				t_mshell;
 
 /*
@@ -54,6 +65,9 @@ t_string	*parser(t_string *cmd, uint32_t *argc);
 t_string	get_cmd(void);
 void		error(char *msg);
 void		init(t_mshell *mshell);
+void		ms_perror(t_mshell *mshell);
+void		ms_set_procname(t_mshell *mshell, char *procname);
+void		ms_set_procname_err(t_mshell *mshell, char *procname, char *err);
 void		prompt(t_mshell *mshell);
 void		run_cmd(t_mshell *mshell, t_string *cmd);
 

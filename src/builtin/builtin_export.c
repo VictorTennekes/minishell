@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 17:36:49 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/03 16:46:20 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/06 09:19:19 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 
 static bool	export_single(t_mshell *mshell, t_string arg)
 {
+	bool		env_set_ret;
+	char		*eq_index;
 	t_string	name;
 	t_string	value;
-	char		*eq_index;
-	bool		env_set_ret;
 
 	eq_index = ft_strchr(arg.str, '=');
 	if (!eq_index)
@@ -39,12 +39,10 @@ static bool	export_single(t_mshell *mshell, t_string arg)
 			string_from(&eq_index[1], &value))
 		error(E_ALLOC "'export_single'");
 	env_set_ret = env_set(mshell, name.str, value.str, false);
-	string_free(&name);
+	if (env_set_ret && mshell->ms_errno == ENO_INVID)
+		ms_set_procname_err(mshell, "export", arg.str);
 	string_free(&value);
-	if (env_set_ret)
-		//TODO: set error to invalid identifier
-		return (true);
-	return (false);
+	return (env_set_ret);
 }
 
 /*
@@ -67,8 +65,8 @@ bool		builtin_export(t_mshell *mshell, uint32_t argc, t_string argv[])
 	i = 1;
 	while (i < argc)
 	{
-		//TODO: print error if true
-		export_single(mshell, argv[i]);
+		if (export_single(mshell, argv[i]))
+			ms_perror(mshell);
 		i++;
 	}
 	return (false);

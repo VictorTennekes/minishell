@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 19:04:58 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/01 21:19:29 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/03 17:05:09 by aaugusti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char		*get_cwd(void)
 	char	*res;
 	size_t	cur_size;
 
-	cur_size = CWD_INIT_SIZE;
+	cur_size = CWD_INIT_CAP;
 	while (42)
 	{
 		res = malloc(cur_size);
