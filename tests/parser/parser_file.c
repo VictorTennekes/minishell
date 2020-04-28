@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_file.c                                      :+:      :+:    :+:   */
+/*   parser_file.c                                      :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 09:29:03 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:18:06 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:35:11 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <minishell.h>
 #include <stdlib.h>
 
-static int	mshell_parser_file_func(int fd)
+static int	mshell_parser_file_func(int fd, void *mshell)
 {
 	char		*line;
 	t_string	line_str;
@@ -45,14 +45,14 @@ static int	mshell_parser_file_func(int fd)
 				return (-1);
 			}
 			string_shrink(&line_str);
-			fail_count += mshell_parser_single(&line_str);
+			fail_count += mshell_parser_single(mshell, &line_str);
 			string_free(&line_str);
 		}
 		free(line);
 	}
 }
 
-int			mshell_parser_file(char *filename)
+int			mshell_parser_file(t_mshell *mshell, char *filename)
 {
-	return (file_wapper(filename, mshell_parser_file_func));
+	return (file_wapper_arg(filename, mshell_parser_file_func, mshell));
 }

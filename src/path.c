@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   path.c                                             :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 20:15:16 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 09:24:45 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:23:58 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ static void	path_update_env(t_mshell *mshell)
 	t_string	path;
 
 	if (string_init(0, NULL, &path))
-		error(E_ALLOC "'init_path'");
+		error(E_ALLOC "'init_path'", mshell);
 	cur = mshell->path;
 	while (cur)
 	{
 		if (string_push(&path, ((char *)cur->content)))
-			error(E_ALLOC "'init_path'");
+			error(E_ALLOC "'init_path'", mshell);
 		if (cur->next && string_pushc(&path, ':'))
-			error(E_ALLOC "'init_path'");
+			error(E_ALLOC "'init_path'", mshell);
 		cur = cur->next;
 	}
 	env_set(mshell, "PATH", path.str, false);
@@ -90,7 +90,7 @@ char	*path_find_file(t_mshell *mshell, char *name, bool executable)
 		cur_path = cur->content;
 		if (string_from(cur_path, &cur_file) || string_pushc(&cur_file, '/')
 				|| string_push(&cur_file, name))
-			error(E_ALLOC "'path_find_file'");
+			error(E_ALLOC "'path_find_file'", mshell);
 		if (path_check_file(cur_file.str, executable))
 			return (cur_file.str);
 		string_free(&cur_file);
@@ -117,7 +117,7 @@ char	*path_new(t_mshell *mshell, char *value, bool update_env)
 	//TODO: check valid path?
 	new = ft_strdup(value);
 	if (!new || lst_new_back(&mshell->path, new) == NULL)
-		error(E_ALLOC "'path_new'");
+		error(E_ALLOC "'path_new'", mshell);
 	if (update_env)
 		path_update_env(mshell);
 	return (new);

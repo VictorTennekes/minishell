@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_single.c                                    :+:      :+:    :+:   */
+/*   parser_single.c                                    :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 09:33:25 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:20:09 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/27 11:31:51 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,13 @@ static void	mshell_parser_single_replace(t_string *line)
 **	Test the parser with a single line, agains the output of bash. Output will
 **	be printed to stdout.
 **
+**	@param {t_mshell *} mshell - Used for errors
 **	@param {char *} line
 **
 **	@return {int} - 0 on success, >0 on fail.
 */
 
-int			mshell_parser_single(t_string *line)
+int			mshell_parser_single(t_mshell *mshell, t_string *line)
 {
 	FILE		*bash_file;
 	t_string	*argv;
@@ -124,7 +125,7 @@ int			mshell_parser_single(t_string *line)
 	uint32_t	argc;
 
 	ft_printf("testing [%s]:\n\t", line->str);
-	argv = parser(line, &argc);
+	argv = parser(mshell, line, &argc);
 	if (argv == NULL)
 		return (ft_printf("parse returned NULL"));
 	mshell_parser_single_replace(line);

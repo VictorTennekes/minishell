@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/04/03 17:18:40 by aaugusti         ###   ########.fr        #
+#    Updated: 2020/04/27 11:01:24 by aaugusti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS			=	\
 					builtin/builtin_unset\
 					env\
 					error\
+					free\
 					get_cmd\
 					init\
 					parser/parser\

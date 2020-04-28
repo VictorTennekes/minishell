@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_cases.c                                     :+:      :+:    :+:   */
+/*   parser_cases.c                                     :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 13:58:24 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:15:02 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:30:41 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-bool	parser_case_end(t_parser *parser, char c)
+bool	parser_case_end(t_mshell *mshell, t_parser *parser, char c)
 {
+	(void)mshell;
 	(void)c;
 	if (parser->in_word)
 		parser->end_word = true;
@@ -23,18 +24,18 @@ bool	parser_case_end(t_parser *parser, char c)
 	return (false);
 }
 
-bool	parser_case_rest(t_parser *parser, char c)
+bool	parser_case_rest(t_mshell *mshell, t_parser *parser, char c)
 {
 	if (!(parser->in_word || parser->in_dquote || parser->in_squote))
 	{
 		parser->in_word = true;
-		parser_new_word(parser);
+		parser_new_word(mshell, parser);
 	}
-	parser_push(parser, c);
+	parser_push(mshell, parser, c);
 	return (false);
 }
 
-bool	parser_case_whitespace(t_parser *parser, char c)
+bool	parser_case_whitespace(t_mshell *mshell, t_parser *parser, char c)
 {
 	if (parser->in_word)
 	{
@@ -42,11 +43,11 @@ bool	parser_case_whitespace(t_parser *parser, char c)
 		parser->in_word = false;
 	}
 	else if (parser->in_dquote || parser->in_squote)
-		parser_push(parser, c);
+		parser_push(mshell, parser, c);
 	return (false);
 }
 
-bool	parser_case_squote(t_parser *parser, char c)
+bool	parser_case_squote(t_mshell *mshell, t_parser *parser, char c)
 {
 	if (parser->in_squote)
 	{
@@ -54,7 +55,7 @@ bool	parser_case_squote(t_parser *parser, char c)
 		parser->in_squote = false;
 	}
 	else if (parser->in_dquote)
-		parser_push(parser, c);
+		parser_push(mshell, parser, c);
 	else if (!parser->in_word)
 	{
 		parser->new_word = true;
@@ -63,7 +64,7 @@ bool	parser_case_squote(t_parser *parser, char c)
 	return (false);
 }
 
-bool	parser_case_dquote(t_parser *parser, char c)
+bool	parser_case_dquote(t_mshell *mshell, t_parser *parser, char c)
 {
 	if (parser->in_dquote)
 	{
@@ -71,7 +72,7 @@ bool	parser_case_dquote(t_parser *parser, char c)
 		parser->in_dquote = false;
 	}
 	else if (parser->in_squote)
-		parser_push(parser, c);
+		parser_push(mshell, parser, c);
 	else if (!parser->in_word)
 	{
 		parser->new_word = true;

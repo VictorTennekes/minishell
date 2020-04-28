@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   parser.h                                           :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 11:11:18 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:13:27 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:30:58 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <libstring.h>
 # include <libvla.h>
+# include <minishell.h>
 # include <stdbool.h>
 
 # define PARSER_INIT_WORD_CAP (100)
@@ -39,7 +40,7 @@ typedef struct	s_parser {
 **	@param {char} c
 */
 
-void		parser_push(t_parser *parser, char c);
+void		parser_push(t_mshell *mshell, t_parser *parser, char c);
 
 
 /*
@@ -48,7 +49,7 @@ void		parser_push(t_parser *parser, char c);
 **	@param {t_parser *} parser
 */
 
-void		parser_new_word(t_parser *parser);
+void		parser_new_word(t_mshell *mshell, t_parser *parser);
 
 
 /*
@@ -58,7 +59,7 @@ void		parser_new_word(t_parser *parser);
 **	@param {t_parser *} parser
 */
 
-void		parser_end_word(t_parser *parser);
+void		parser_end_word(t_mshell *mshell, t_parser *parser);
 
 /*
 **	All of the cases for the parser. Every case corresponds to a single, or
@@ -71,16 +72,16 @@ void		parser_end_word(t_parser *parser);
 **	@return {bool} true if an error is encountered
 */
 
-bool		parser_case_end(t_parser *parser, char c);
-bool		parser_case_rest(t_parser *parser, char c);
-bool		parser_case_whitespace(t_parser *parser, char c);
-bool		parser_case_squote(t_parser *parser, char c);
-bool		parser_case_dquote(t_parser *parser, char c);
+bool		parser_case_end(t_mshell *mshell, t_parser *parser, char c);
+bool		parser_case_rest(t_mshell *mshell, t_parser *parser, char c);
+bool		parser_case_whitespace(t_mshell *mshell, t_parser *parser, char c);
+bool		parser_case_squote(t_mshell *mshell, t_parser *parser, char c);
+bool		parser_case_dquote(t_mshell *mshell, t_parser *parser, char c);
 
 
 typedef struct	s_parser_case {
 	char	c;
-	bool	(*func)(t_parser *, char);
+	bool	(*func)(t_mshell *, t_parser *, char);
 }				t_parser_case;
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 22:00:32 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 10:59:21 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/27 11:05:16 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ void	print_env(t_mshell *mshell, char *prefix)
 	cur = mshell->env;
 	bssert(cur);
 	if (string_init(ENV_PRINT_INIT_CAP, NULL, &buf))
-		error(E_ALLOC "'builtin_env'");
+		error(E_ALLOC "'builtin_env'", mshell);
 	while (cur)
 	{
 		env = cur->content;
 		if (prefix && string_push(&buf, prefix))
-			error(E_ALLOC "'builtin_env'");
+			error(E_ALLOC "'builtin_env'", mshell);
 		if (string_push(&buf, env->name.str) || string_pushc(&buf, '=') ||
 				string_push(&buf, env->value.str) || string_pushc(&buf, '\n'))
-			error(E_ALLOC "'builtin_env'");
+			error(E_ALLOC "'builtin_env'", mshell);
 		cur = cur->next;
 	}
 	ft_printf("%s", buf.str);

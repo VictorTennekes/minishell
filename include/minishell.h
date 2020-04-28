@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   minishell.h                                        :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:15:57 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 12:05:24 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:33:57 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,14 @@ typedef struct	s_builtin {
 	bool		(*func)(t_mshell * mshell, uint32_t argc, t_string argv[]);
 }				t_builtin;
 
-t_string	*parser(t_string *cmd, uint32_t *argc);
-t_string	get_cmd(void);
-void		error(char *msg);
-void		init(t_mshell *mshell);
-void		ms_perror(t_mshell *mshell);
 bool		ms_set_error(t_mshell *mshell, t_errno ms_errno, char *procname);
 bool		ms_set_error_from_no(t_mshell *mshell, char *procname, char *err);
+t_string	*parser(t_mshell *mshell, t_string *cmd, uint32_t *argc);
+t_string	get_cmd(t_mshell *mshell);
+void		error(char *msg, t_mshell *mshell);
+void		init(t_mshell *mshell);
+void		ms_free(t_mshell *mshell);
+void		ms_perror(t_mshell *mshell);
 void		ms_set_procname(t_mshell *mshell, char *procname);
 void		ms_set_procname_err(t_mshell *mshell, char *procname, char *err);
 void		prompt(t_mshell *mshell);
@@ -82,8 +83,10 @@ void		run_cmd(t_mshell *mshell, t_string *cmd);
 **	Utils
 */
 
-char		*get_cwd(void);
+char		*get_cwd(t_mshell *mshell);
 int			file_wapper(char *filename, int (*func)(int fd));
+int			file_wapper_arg(char *filename, int (*func)(int fd, void *arg),
+				void *arg);
 void		*zalloc(size_t size);
 void		print_env(t_mshell *mshell, char *prefix);
 

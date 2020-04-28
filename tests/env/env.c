@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 21:29:48 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 21:49:09 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:50:33 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ static int	mshell_env_basic(void)
 	return (0);
 }
 
-int			mshell_env(char *filename)
+int			mshell_env(t_mshell *mshell, char *filename)
 {
+	(void)mshell;
 	(void)filename;
 	mshell_env_basic();
 	ft_putstr_fd("Success!\n", 1);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:47:25 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 12:08:28 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/27 11:02:47 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	builtin_echo(t_mshell *mshell, uint32_t argc, t_string argv[])
 		return (false);
 	}
 	if (string_join(&argv[has_n + 1], argc - has_n - 1, " ", &str))
-		error(E_ALLOC "'builtin_echo'");
+		error(E_ALLOC "'builtin_echo'", mshell);
 	ft_putstr_fd(str.str, 1);
 	string_free(&str);
 	if (!has_n)

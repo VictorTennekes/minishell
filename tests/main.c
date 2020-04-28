@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:11:36 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/24 16:58:27 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:51:02 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int		main(int argc, char *argv[])
 						g_tests[i].label);
 				return (1);
 			}
-			else
-				return (g_tests[i].test_func(argc == 2 ? NULL : argv[2]));
+			return (g_tests[i].test_func(NULL, argc == 2 ? NULL : argv[2]));
 		}
 		i++;
 	}

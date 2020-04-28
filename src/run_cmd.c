@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_cmd.c                                          :+:      :+:    :+:   */
+/*   run_cmd.c                                          :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 13:31:42 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 10:50:43 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:25:30 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,21 @@ void		run_cmd(t_mshell *mshell, t_string *cmd)
 	uint32_t	i;
 
 	if (!*cmd->str)
-		exit(0);
+		return ;
 	i = 0;
-	argv = parser(cmd, &argc);
+	argv = parser(mshell, cmd, &argc);
 	if (!argv)
-		error(E_ALLOC "'run_cmd'");
+		error(E_ALLOC "'run_cmd'", mshell);
 	while (g_builtins[i].cmd)
 	{
-		if (ft_strcmp(argv[0].str, g_builtins[i].cmd))
+		if (!ft_strcmp(argv[0].str, g_builtins[i].cmd))
 		{
-			i++;
-			continue;
+			if (g_builtins[i].func(mshell, argc, argv))
+				ms_perror(mshell);
+			free_args(argc, argv);
+			return ;
 		}
-		//TODO handle a 'true' return
-		if (g_builtins[i].func(mshell, argc, argv))
-			ms_perror(mshell);
-		free_args(argc, argv);
-		return ;
+		i++;
 	}
 	//TODO handle a 'true' return
 	run_cmd_exec(mshell, argc, argv);

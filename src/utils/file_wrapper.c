@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_wrapper.c                                     :+:      :+:    :+:   */
+/*   file_wrapper.c                                     :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 09:21:36 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:27:49 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:26:35 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,38 @@ int		file_wapper(char *filename, int (*func)(int fd))
 		return (-1);
 	}
 	ret = func(fd);
+	if (close(fd) < 0)
+	{
+		ft_printf("mshell_parser_file: %s\n", strerror(errno));
+		return (-1);
+	}
+	return (ret);
+}
+
+/*
+**	The same filewrapper as the one above, only this one passes an argument to
+**	the given function.
+**
+**	@param {char *} filename
+**	@param {void (*)(int, void *)} func - will be given the opened fd
+**	@param {void *} arg - will be given to func
+**
+**	@return {int} -1 on failure, otherwise the return of 'func'
+*/
+
+int		file_wapper_arg(char *filename, int (*func)(int fd, void *arg),
+			void *arg)
+{
+	int	fd;
+	int	ret;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_printf("mshell_parser_file: %s\n", strerror(errno));
+		return (-1);
+	}
+	ret = func(fd, arg);
 	if (close(fd) < 0)
 	{
 		ft_printf("mshell_parser_file: %s\n", strerror(errno));

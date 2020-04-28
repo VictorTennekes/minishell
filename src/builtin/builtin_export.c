@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 17:36:49 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 11:47:54 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/27 11:05:40 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static bool	export_single(t_mshell *mshell, t_string arg)
 		return (false);
 	if (string_from_range(arg.str, 0, eq_index - arg.str, &name) ||
 			string_from(&eq_index[1], &value))
-		error(E_ALLOC "'export_single'");
+		error(E_ALLOC "'export_single'", mshell);
 	env_set_ret = env_set(mshell, name.str, value.str, false);
 	if (env_set_ret && mshell->ms_errno == ENO_INVID)
 		ms_set_procname_err(mshell, "export", arg.str);

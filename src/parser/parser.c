@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser.c                                           :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 19:49:13 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/03/31 16:14:04 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:31:26 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ t_parser_case	g_parser_cases[] = {
 	{ 42,	NULL },
 };
 
-t_parser		new_parser(void)
+t_parser		new_parser(t_mshell *mshell)
 {
 	t_parser	res;
 
 	ft_bzero(&res, sizeof(t_parser));
 	if (vla_init(sizeof(t_string), PARSER_ARGV_INIT_CAP, &res.result))
-		error(E_ALLOC "'new_parser'");
+		error(E_ALLOC "'new_parser'", mshell);
 	return (res);
 }
 
-bool		parser_step(t_parser *parser, char c)
+bool		parser_step(t_mshell *mshell, t_parser *parser, char c)
 {
 	uint32_t	i;
 
@@ -43,10 +43,10 @@ bool		parser_step(t_parser *parser, char c)
 	while (g_parser_cases[i].func != NULL)
 	{
 		if (g_parser_cases[i].c == c)
-			return (g_parser_cases[i].func(parser, c));
+			return (g_parser_cases[i].func(mshell, parser, c));
 		i++;
 	}
-	return (parser_case_rest(parser, c));
+	return (parser_case_rest(mshell, parser, c));
 }
 
 t_string	*parser_return(t_parser *parser, uint32_t *argc)
@@ -56,21 +56,21 @@ t_string	*parser_return(t_parser *parser, uint32_t *argc)
 	return(parser->result.vla);
 }
 
-t_string	*parser(t_string *cmd, uint32_t *argc)
+t_string	*parser(t_mshell *mshell, t_string *cmd, uint32_t *argc)
 {
 	t_parser		parser;
 	uint32_t	i;
 
-	parser = new_parser();
+	parser = new_parser(mshell);
 	i = 0;
 	while (42)
 	{
-		if (parser_step(&parser, cmd->str[i]))
-			error("Invalid input");
+		if (parser_step(mshell, &parser, cmd->str[i]))
+			error("Invalid input", mshell);
 		if (parser.new_word)
-			parser_new_word(&parser);
+			parser_new_word(mshell, &parser);
 		if (parser.end_word)
-			parser_end_word(&parser);
+			parser_end_word(mshell, &parser);
 		if (parser.done)
 			return (parser_return(&parser, argc));
 		i++;

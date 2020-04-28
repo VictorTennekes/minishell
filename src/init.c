@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:    :+:            */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 17:12:22 by aaugusti          #+#    #+#             */
-/*   Updated: 2020/04/06 11:42:51 by aaugusti         ###   ########.fr       */
+/*   Updated: 2020/04/28 09:27:53 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ static void	init_env(t_mshell *mshell)
 	t_env	*env;
 
 	env = malloc(sizeof(t_env));
-	cwd = get_cwd();
+	cwd = get_cwd(mshell);
 	if (!env ||
 			string_from("PWD", &env->name) || string_from(cwd, &env->value))
-		error(E_ALLOC "'init_env'");
+		error(E_ALLOC "'init_env'", mshell);
 	free(cwd);
 	env->read_only = true;
 	if (lst_new_back(&mshell->env, env) == NULL)
-		error(E_ALLOC "'init_env'");
+		error(E_ALLOC "'init_env'", mshell);
 	env_set(mshell, "OLDPWD", env->value.str, false);
 }
 
