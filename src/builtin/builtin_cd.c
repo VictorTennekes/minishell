@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 22:26:06 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 09:27:48 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 16:38:42 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,32 +64,31 @@ static bool	builtin_cd_other(t_mshell *mshell, t_string arg, t_string *path)
 **	Changes the current working directory.
 **
 **	@param {t_mshell *} mshell
-**	@param {uint32_t} argc
-**	@param {t_string []} argv
+**	@param {t_cmd} cmd
 **
 **	@return {bool} - true if there is an error
 */
 
-bool	builtin_cd(t_mshell *mshell, uint32_t argc, t_string argv[])
+bool	builtin_cd(t_mshell *mshell, t_cmd cmd)
 {
 	char		*cwd;
 	int			chdir_ret;
 	t_string	path;
 
-	if (argc > 2)
+	if (cmd.argc > 2)
 		return (ms_set_error(mshell, ENO_TMA, "cd"));
-	if (argc == 1)
+	if (cmd.argc == 1)
 	{
 		if (builtin_cd_home(mshell, &path))
 			return (true);
 	}
-	else if (builtin_cd_other(mshell, argv[1], &path))
+	else if (builtin_cd_other(mshell, cmd.argv[1], &path))
 		return (true);
 	env_set(mshell, "OLDPWD", env_get(mshell, "PWD")->value.str, false);
 	chdir_ret = chdir(path.str);
 	string_free(&path);
 	if (chdir_ret != 0)
-		return (ms_set_error_from_no(mshell, "cd", argv[1].str));
+		return (ms_set_error_from_no(mshell, "cd", cmd.argv[1].str));
 	cwd = get_cwd(mshell);
 	env_set(mshell, "PWD", cwd, false);
 	free(cwd);

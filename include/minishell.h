@@ -6,13 +6,14 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:15:57 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 09:33:57 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 17:22:09 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <cmd.h>
 # include <liblist.h>
 # include <libstring.h>
 # include <stdbool.h>
@@ -22,6 +23,7 @@
 # define SHELL "minishell"
 # define E_ALLOC "Allocation failed in "
 # define E_READ "Read failed in "
+# define E_GNL "get_next_line failed in "
 # define CWD_INIT_CAP (100)
 # define MS_PERROR_INIT_CAP (100)
 
@@ -48,13 +50,13 @@ typedef struct	s_mshell {
 **	Builtin functions.
 */
 
-bool		builtin_cd(t_mshell *mshell, uint32_t argc, t_string argv[]);
-bool		builtin_echo(t_mshell *mshell, uint32_t argc, t_string argv[]);
-bool		builtin_env(t_mshell *mshell, uint32_t argc, t_string argv[]);
-bool		builtin_exit(t_mshell *mshell, uint32_t argc, t_string argv[]);
-bool		builtin_export(t_mshell *mshell, uint32_t argc, t_string argv[]);
-bool		builtin_pwd(t_mshell *mshell, uint32_t argc, t_string argv[]);
-bool		builtin_unset(t_mshell *mshell, uint32_t argc, t_string argv[]);
+bool		builtin_cd(t_mshell *mshell, t_cmd cmd);
+bool		builtin_echo(t_mshell *mshell, t_cmd cmd);
+bool		builtin_env(t_mshell *mshell, t_cmd cmd);
+bool		builtin_exit(t_mshell *mshell, t_cmd cmd);
+bool		builtin_export(t_mshell *mshell, t_cmd cmd);
+bool		builtin_pwd(t_mshell *mshell, t_cmd cmd);
+bool		builtin_unset(t_mshell *mshell, t_cmd cmd);
 
 /*
 **	A struct for storing all builtin commands and their corresponding
@@ -63,13 +65,13 @@ bool		builtin_unset(t_mshell *mshell, uint32_t argc, t_string argv[]);
 
 typedef struct	s_builtin {
 	char		*cmd;
-	bool		(*func)(t_mshell * mshell, uint32_t argc, t_string argv[]);
+	bool		(*func)(t_mshell * mshell, t_cmd cmd);
 }				t_builtin;
 
 bool		ms_set_error(t_mshell *mshell, t_errno ms_errno, char *procname);
 bool		ms_set_error_from_no(t_mshell *mshell, char *procname, char *err);
-t_string	*parser(t_mshell *mshell, t_string *cmd, uint32_t *argc);
-t_string	get_cmd(t_mshell *mshell);
+t_cmd		*parser(t_mshell *mshell, char *cmd, size_t *cmd_count);
+char		*get_cmd(t_mshell *mshell);
 void		error(char *msg, t_mshell *mshell);
 void		init(t_mshell *mshell);
 void		ms_free(t_mshell *mshell);
@@ -77,7 +79,7 @@ void		ms_perror(t_mshell *mshell);
 void		ms_set_procname(t_mshell *mshell, char *procname);
 void		ms_set_procname_err(t_mshell *mshell, char *procname, char *err);
 void		prompt(t_mshell *mshell);
-void		run_cmd(t_mshell *mshell, t_string *cmd);
+void		run_cmd(t_mshell *mshell, char *cmd);
 
 /*
 **	Utils

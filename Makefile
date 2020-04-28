@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
-#    Updated: 2020/04/28 16:04:57 by aaugusti      ########   odam.nl          #
+#    Updated: 2020/04/28 17:31:45 by aaugusti      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,10 +86,10 @@ ifeq ($(DEBUG),1)
 FLAGS			+= -g -Og -fno-stack-protector
 ifneq ($(NOASAN),1)
 FLAGS			+= -fsanitize=address
-endif
+endif #noasan
 else
 FLAGS			+= -Ofast
-endif
+endif #debug
 
 # OS detection for libs and headers
 UNAME_S			:=	$(shell uname -s)

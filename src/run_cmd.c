@@ -6,10 +6,11 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:31:42 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 14:09:57 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 17:21:47 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <cmd.h>
 #include <env.h>
 #include <libft.h>
 #include <minishell.h>
@@ -29,20 +30,20 @@ t_builtin	g_builtins[] = {
 	{ NULL , 	NULL },
 };
 
-static void	free_args(uint32_t argc, t_string argv[])
+static void	free_cmd(t_cmd cmd)
 {
 	uint32_t	i;
 
 	i = 0;
-	while (i < argc)
+	while (i < cmd.argc)
 	{
-		string_free(&argv[i]);
+		string_free(&cmd.argv[i]);
 		i++;
 	}
-	free(argv);
+	free(cmd.argv);
 }
 
-static void start_proc(t_mshell *mshell, char *filename, uint32_t argc, t_string argv[])
+static void start_proc(t_mshell *mshell, char *filename, t_cmd cmd)
 {
 	char	**argvp;
 	char	**envp;
@@ -50,62 +51,68 @@ static void start_proc(t_mshell *mshell, char *filename, uint32_t argc, t_string
 
 	child_pid = fork();
 
-	if (child_pid == 0)
+	if (child_pid)
+		waitpid(child_pid, NULL, 0);
+	else
 	{
-		argvp = string_to_array(argc, argv);
+		argvp = string_to_array(cmd.argc, cmd.argv);
 		if (!argvp)
 			error(E_ALLOC "'start_proc'", mshell);
 		envp = env_to_envp(mshell);
 		execve(filename, argvp, envp);
 	}
-	else
-	{
-		waitpid(child_pid, NULL, 0);
-	}
 }
 
-static bool	run_cmd_exec(t_mshell *mshell, uint32_t argc, t_string argv[])
+static bool	run_cmd_exec(t_mshell *mshell, t_cmd cmd)
 {
 	char	*filename;
 
-	(void)argc;
-	filename = path_find_file(mshell, argv[0].str, true);
-	if (!filename)
+	filename = path_find_file(mshell, cmd.argv[0].str, true);
+	if (filename)
+		start_proc(mshell, filename, cmd);
+	else
 	{
-		ms_set_procname(mshell, argv[0].str);
+		ms_set_procname(mshell, cmd.argv[0].str);
 		mshell->ms_errno = ENO_INVCMD;
 		ms_perror(mshell);
 	}
-	else
-		start_proc(mshell, filename, argc, argv);
 	free(filename);
 	return (filename ? true : false);
 }
 
-void		run_cmd(t_mshell *mshell, t_string *cmd)
+static void	run_cmd_single(t_mshell *mshell, t_cmd cmd)
 {
-	t_string	*argv;
-	uint32_t	argc;
 	uint32_t	i;
 
-	if (!*cmd->str)
-		return ;
 	i = 0;
-	argv = parser(mshell, cmd, &argc);
-	if (!argv)
-		error(E_ALLOC "'run_cmd'", mshell);
 	while (g_builtins[i].cmd)
 	{
-		if (!ft_strcmp(argv[0].str, g_builtins[i].cmd))
+		if (!ft_strcmp(cmd.argv[0].str, g_builtins[i].cmd))
 		{
-			if (g_builtins[i].func(mshell, argc, argv))
+			if (g_builtins[i].func(mshell, cmd))
 				ms_perror(mshell);
-			free_args(argc, argv);
+			free_cmd(cmd);
 			return ;
 		}
 		i++;
 	}
 	//TODO handle a 'true' return
-	run_cmd_exec(mshell, argc, argv);
-	free_args(argc, argv);
+	run_cmd_exec(mshell, cmd);
+	free_cmd(cmd);
+}
+
+void		run_cmd(t_mshell *mshell, char *cmd)
+{
+	size_t		cmd_count;
+	size_t		i;
+	t_cmd		*cmds;
+
+	i = 0;
+	cmds = parser(mshell, cmd, &cmd_count);
+	while (i < cmd_count)
+	{
+		run_cmd_single(mshell, cmds[i]);
+		i++;
+	}
+	free(cmds);
 }

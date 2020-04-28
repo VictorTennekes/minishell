@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:16:57 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/27 11:29:02 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 16:17:50 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,15 @@
 **	Reads one command from stdin. Returns the allocated string with the command.
 **
 **	@param {t_mshell *} mshell - Used for the errors
+**
+**	@return {char *}
 */
 
-t_string	get_cmd(t_mshell *mshell)
+char	*get_cmd(t_mshell *mshell)
 {
 	char		*res;
-	t_string	str;
 
 	if (get_next_line(0, &res) < 0)
-		error(E_READ "'get_cmd'", mshell);
-	if (!res)
-		error(E_ALLOC "'get_cmd'", mshell);
-	if (string_from(res, &str))
-		error(E_ALLOC "'get_cmd'", mshell);
-	free(res);
-	return (str);
+		error(E_GNL "'get_cmd'", mshell);
+	return (res);
 }

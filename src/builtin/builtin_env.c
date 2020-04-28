@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 22:00:32 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/27 11:05:16 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 16:38:48 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,14 @@ void	print_env(t_mshell *mshell, char *prefix)
 **	Prints out every set environment variable.
 **
 **	@param {t_mshell *} mshell
-**	@param {uint32_t} argc
-**	@param {t_string []} argv - not used
+**	@param {t_cmd} cmd
 **
 **	@return {bool} - true if there is an error
 */
 
-bool	builtin_env(t_mshell *mshell, uint32_t argc, t_string argv[])
+bool	builtin_env(t_mshell *mshell, t_cmd cmd)
 {
-	(void)argv;
-	if (argc != 1)
+	if (cmd.argc != 1)
 		return (ms_set_error(mshell, ENO_TMA, "env"));
 	print_env(mshell, NULL);
 	return (false);

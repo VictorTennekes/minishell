@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/02 17:36:49 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/27 11:05:40 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 16:42:43 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,25 @@ static bool	export_single(t_mshell *mshell, t_string arg)
 /*
 **	Set envirnoment variables from the shell.
 **
-**	@param {t_mshell *} mshell - not used
-**	@param {uint32_t} argc
-**	@param {t_string []} argv
+**	@param {t_mshell *} mshell
+**	@param {t_cmd} cmd
+**
+**	@return {bool}
 */
 
-bool		builtin_export(t_mshell *mshell, uint32_t argc, t_string argv[])
+bool		builtin_export(t_mshell *mshell, t_cmd cmd)
 {
 	uint32_t	i;
 
-	if (argc == 1)
+	if (cmd.argc == 1)
 	{
 		print_env(mshell, "export ");
 		return (false);
 	}
 	i = 1;
-	while (i < argc)
+	while (i < cmd.argc)
 	{
-		if (export_single(mshell, argv[i]))
+		if (export_single(mshell, cmd.argv[i]))
 			ms_perror(mshell);
 		i++;
 	}

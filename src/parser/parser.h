@@ -6,20 +6,21 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 11:11:18 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 09:30:58 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 19:45:40 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PASER_H
-# define PASER_H
+#ifndef PARSER_H
+# define PARSER_H
 
 # include <libstring.h>
 # include <libvla.h>
 # include <minishell.h>
 # include <stdbool.h>
 
-# define PARSER_INIT_WORD_CAP (100)
-# define PARSER_ARGV_INIT_CAP (10)
+# define PARSER_INIT_WORD_CAP 100
+# define PARSER_ARGV_INIT_CAP 10
+# define PARSER_CMDS_INIT_CAP 4
 
 typedef struct	s_parser {
 	bool		done;
@@ -27,10 +28,11 @@ typedef struct	s_parser {
 	bool		in_dquote;
 	bool		in_squote;
 	bool		in_word;
+	bool		new_cmd;
 	bool		new_word;
 	t_string	*curr_word;
+	t_vla		curr_cmd;
 	t_vla		result;
-	uint32_t	argc;
 }				t_parser;
 
 /*
@@ -40,8 +42,7 @@ typedef struct	s_parser {
 **	@param {char} c
 */
 
-void		parser_push(t_mshell *mshell, t_parser *parser, char c);
-
+void			parser_push(t_mshell *mshell, t_parser *parser, char c);
 
 /*
 **	Push a new (empty) word on top of the list.
@@ -49,8 +50,7 @@ void		parser_push(t_mshell *mshell, t_parser *parser, char c);
 **	@param {t_parser *} parser
 */
 
-void		parser_new_word(t_mshell *mshell, t_parser *parser);
-
+void			parser_new_word(t_mshell *mshell, t_parser *parser);
 
 /*
 **	Terminate the current word. This shrinks it to the minimum size required
@@ -59,7 +59,16 @@ void		parser_new_word(t_mshell *mshell, t_parser *parser);
 **	@param {t_parser *} parser
 */
 
-void		parser_end_word(t_mshell *mshell, t_parser *parser);
+void			parser_end_word(t_mshell *mshell, t_parser *parser);
+
+/*
+**	Terminate the current command. This shrinks the current command sto the
+**	minimum size required and sets the appropiate flags.
+*/
+
+void			parser_new_cmd(t_mshell *mshell, t_parser *parser, bool init);
+
+void			parser_push_cmd(t_mshell *mshell, t_parser *parser);
 
 /*
 **	All of the cases for the parser. Every case corresponds to a single, or
@@ -72,12 +81,14 @@ void		parser_end_word(t_mshell *mshell, t_parser *parser);
 **	@return {bool} true if an error is encountered
 */
 
-bool		parser_case_end(t_mshell *mshell, t_parser *parser, char c);
-bool		parser_case_rest(t_mshell *mshell, t_parser *parser, char c);
-bool		parser_case_whitespace(t_mshell *mshell, t_parser *parser, char c);
-bool		parser_case_squote(t_mshell *mshell, t_parser *parser, char c);
-bool		parser_case_dquote(t_mshell *mshell, t_parser *parser, char c);
-
+bool			parser_case_end(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_dquote(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_rest(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_semicolon(t_mshell *mshell, t_parser *parser,
+					char c);
+bool			parser_case_squote(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_whitespace(t_mshell *mshell, t_parser *parser,
+					char c);
 
 typedef struct	s_parser_case {
 	char	c;
