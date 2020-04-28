@@ -6,14 +6,17 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:31:42 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 09:25:30 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 14:09:57 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <env.h>
 #include <libft.h>
 #include <minishell.h>
 #include <path.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 t_builtin	g_builtins[] = {
 	{ "cd", 	builtin_cd },
@@ -39,9 +42,27 @@ static void	free_args(uint32_t argc, t_string argv[])
 	free(argv);
 }
 
-	//TODO: temp
-	#include <libftprintf.h>
-	#include <unistd.h>
+static void start_proc(t_mshell *mshell, char *filename, uint32_t argc, t_string argv[])
+{
+	char	**argvp;
+	char	**envp;
+	int		child_pid;
+
+	child_pid = fork();
+
+	if (child_pid == 0)
+	{
+		argvp = string_to_array(argc, argv);
+		if (!argvp)
+			error(E_ALLOC "'start_proc'", mshell);
+		envp = env_to_envp(mshell);
+		execve(filename, argvp, envp);
+	}
+	else
+	{
+		waitpid(child_pid, NULL, 0);
+	}
+}
 
 static bool	run_cmd_exec(t_mshell *mshell, uint32_t argc, t_string argv[])
 {
@@ -56,7 +77,7 @@ static bool	run_cmd_exec(t_mshell *mshell, uint32_t argc, t_string argv[])
 		ms_perror(mshell);
 	}
 	else
-		system(filename); // TODO: this is cheating. Just for testing
+		start_proc(mshell, filename, argc, argv);
 	free(filename);
 	return (filename ? true : false);
 }

@@ -6,13 +6,14 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 18:22:43 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/27 11:05:53 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 16:05:23 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <bssert.h>
 #include <env.h>
 #include <libft.h>
+#include <libftprintf.h>
 #include <stdlib.h>
 
 /*
@@ -27,6 +28,14 @@ static void		env_free(t_env *env)
 	string_free(&env->value);
 	free(env);
 }
+
+/*
+**	Check if the name of an environment variable is valid.
+**
+**	@param {char *} name
+**
+**	@return {int32_t} - The position of the error, or -1 if no error occured.
+*/
 
 static int32_t		env_check_name(char *name)
 {
@@ -69,6 +78,25 @@ static t_env	*env_new(t_mshell *mshell, char *name, char *value,
 	if (lst_new_back(&mshell->env, new) == NULL)
 		error(E_ALLOC "'env_new'", mshell);
 	return (new);
+}
+
+/*
+**	Free all of the envp elements in case of error.
+**
+**	@param {char *[]} envp
+*/
+
+static void		env_to_envp_free(char *envp[])
+{
+	size_t	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
 }
 
 /*
@@ -154,4 +182,43 @@ bool			env_unset(t_mshell *mshell, char *name, bool enforce_ro)
 	//assert(parent);
 	lst_remove(parent, (void(*)(void *))env_free);
 	return (false);
+}
+
+/*
+**	Convert the envirnoment variables to a string array which can be passed to
+**	a child process. The resulting array will contain string of the format
+**	`key=value`. If an allocation fails, an error will be thrown.
+**
+**	@param {t_mshell *} mshell
+**
+**	@return {char *[]}
+*/
+
+char		**env_to_envp(t_mshell *mshell)
+{
+	char	**res;
+	size_t	i;
+	t_env	*cur_env;
+	t_list	*cur;
+
+	res = ft_xalloc(sizeof(char *) * (lst_size(mshell->env) + 1));
+	if (!res)
+		error(E_ALLOC "'env_to_envp'", mshell);
+	cur = mshell->env;
+	i = 0;
+	while (cur)
+	{
+		cur_env = cur->content;
+		res[i] = malloc(sizeof(char) * (cur_env->name.len +
+					cur_env->value.len + 2));
+		if (!res[i])
+		{
+			env_to_envp_free(res);
+			error(E_ALLOC "'env_to_envp'", mshell);
+		}
+		ft_sprintf(res[i], "%s=%s", cur_env->name.str, cur_env->value.str);
+		cur = cur->next;
+		i++;
+	}
+	return (res);
 }
