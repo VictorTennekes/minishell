@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 16:43:29 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 16:41:11 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 20:19:20 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ bool	builtin_exit(t_mshell *mshell, t_cmd cmd)
 	(void)mshell;
 	if (cmd.argc > 2)
 		return (ms_set_error(mshell, ENO_TMA, "exit"));
-	exit_status = 0; 	//TODO: should be the exit status of the last executed
-						//process.
+	exit_status = mshell->last_exit;
 	if (cmd.argc == 2)
 	{
 		tmp = ft_atoi(cmd.argv[1].str);

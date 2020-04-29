@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:15:57 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 17:22:09 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/28 20:19:07 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_mshell {
 	t_errno		ms_errno;
 	t_string	ms_err_procname;
 	bool		ms_stderrno;
+	int			last_exit;
 }				t_mshell;
 
 /*

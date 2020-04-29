@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:31:42 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 17:21:47 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/29 18:56:43 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,16 @@ static void start_proc(t_mshell *mshell, char *filename, t_cmd cmd)
 	char	**argvp;
 	char	**envp;
 	int		child_pid;
+	int		exit_status;
 
 	child_pid = fork();
 
 	if (child_pid)
-		waitpid(child_pid, NULL, 0);
+	{
+		if (waitpid(child_pid, &exit_status, 0) == -1)
+			error("waitpid failed in 'start_proc'", mshell);
+		mshell->last_exit = (exit_status & 0xff00) >> 8;
+	}
 	else
 	{
 		argvp = string_to_array(cmd.argc, cmd.argv);
