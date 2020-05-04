@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/01 20:15:16 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 09:23:58 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/05/04 14:59:20 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static bool	path_check_file(char *filename, bool executable)
 
 	if (stat(filename, &statbuf) != 0)
 		return (false);
-	if (!(((statbuf.st_mode) & S_IFMT) == S_IFREG))
+	if ((statbuf.st_mode & S_IFMT) != S_IFREG)
 		return (false);
 	if (!executable)
 		return (true);

@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/27 10:50:22 by aaugusti       #+#   #+#                 */
-/*   Updated: 2020/04/27 11:02:05 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/05/04 15:02:12 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 
 void	ms_free(t_mshell *mshell)
 {
-	lst_foreach(mshell->env, &free);
-	lst_foreach(mshell->path, &free);
+	lst_destroy(mshell->env, (void (*)(void *))&env_free);
+	lst_destroy(mshell->path, &free);
 }

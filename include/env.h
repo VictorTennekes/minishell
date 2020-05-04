@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 17:19:26 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 11:38:09 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/29 19:42:16 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ bool	env_set(t_mshell *mshell, char *name, char *value, bool read_only);
 bool	env_unset(t_mshell *mshell, char *name, bool enforce_ro);
 char	**env_to_envp(t_mshell *mshell);
 t_env	*env_get(t_mshell *mshell, char *name);
+void	env_free(t_env *env);
 
 #endif

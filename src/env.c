@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 18:22:43 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 16:05:23 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/29 19:42:04 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 **	@param {t_env *} env
 */
 
-static void		env_free(t_env *env)
+void				env_free(t_env *env)
 {
 	string_free(&env->name);
 	string_free(&env->value);

@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 17:12:22 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 09:27:53 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/29 19:14:20 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <libft.h>
 #include <minishell.h>
 #include <path.h>
+#include <signal.h>
 #include <stdlib.h>
 
 /*
@@ -38,6 +39,12 @@ static void	init_env(t_mshell *mshell)
 	if (lst_new_back(&mshell->env, env) == NULL)
 		error(E_ALLOC "'init_env'", mshell);
 	env_set(mshell, "OLDPWD", env->value.str, false);
+}
+
+static void	init_signal(t_mshell *mshell)
+{
+	if (signal(SIGINT, SIG_IGN) == SIG_ERR)
+		error("signal failed", mshell);
 }
 
 char	*g_path_init[] = {
@@ -67,6 +74,7 @@ static void	init_path(t_mshell *mshell)
 void		init(t_mshell *mshell)
 {
 	ft_bzero(mshell, sizeof(t_mshell));
+	init_signal(mshell);
 	init_env(mshell);
 	init_path(mshell);
 }

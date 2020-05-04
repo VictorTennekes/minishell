@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:31:42 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/29 18:56:43 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/04/29 19:47:38 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void start_proc(t_mshell *mshell, char *filename, t_cmd cmd)
 	{
 		if (waitpid(child_pid, &exit_status, 0) == -1)
 			error("waitpid failed in 'start_proc'", mshell);
-		mshell->last_exit = (exit_status & 0xff00) >> 8;
+		mshell->last_exit = WEXITSTATUS(exit_status);
 	}
 	else
 	{
@@ -85,10 +85,16 @@ static bool	run_cmd_exec(t_mshell *mshell, t_cmd cmd)
 	return (filename ? true : false);
 }
 
-static void	run_cmd_single(t_mshell *mshell, t_cmd cmd)
+static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds)
 {
 	uint32_t	i;
 
+	if (cmd.argc == 0)
+	{
+		free_cmd(cmd);
+		free(cmds);
+		builtin_exit(mshell, cmd);
+	}
 	i = 0;
 	while (g_builtins[i].cmd)
 	{
@@ -114,9 +120,10 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 
 	i = 0;
 	cmds = parser(mshell, cmd, &cmd_count);
+	free(cmd);
 	while (i < cmd_count)
 	{
-		run_cmd_single(mshell, cmds[i]);
+		run_cmd_single(mshell, cmds[i], cmds);
 		i++;
 	}
 	free(cmds);
