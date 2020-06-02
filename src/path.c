@@ -6,13 +6,14 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/01 20:15:16 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/05/04 14:59:20 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/06/02 15:53:51 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <env.h>
 #include <libft.h>
 #include <minishell.h>
+#include <stdlib.h>
 #include <sys/stat.h>
 
 /*
@@ -122,3 +123,36 @@ char	*path_new(t_mshell *mshell, char *value, bool update_env)
 		path_update_env(mshell);
 	return (new);
 }
+
+/*
+**	Update the path variable based on the current value of the "PATH"
+**	envirnoment variable.
+**
+**	@param {t_mshell *} mshell
+*/
+
+void		path_update_from_env(t_mshell *mshell)
+{
+	size_t		i;
+	size_t		splitted_len;
+	t_env		*path_env;
+	t_string	*splitted;
+
+	lst_destroy(mshell->path, free);
+	mshell->path = NULL;
+
+	path_env = env_get(mshell, "PATH");
+	if (!path_env)
+		error("tried to update path from env, but PATH is not set", mshell);
+	if (string_split(path_env->value.str, ":", &splitted, &splitted_len))
+		error(E_ALLOC "'path_update_from_env'", mshell);
+	i = 0;
+	while (i < splitted_len)
+	{
+		path_new(mshell, splitted[i].str, false);
+		string_free(&splitted[i]);
+		i++;
+	}
+	free(splitted);
+}
+

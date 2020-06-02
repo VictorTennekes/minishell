@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:31:42 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/29 19:47:38 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/06/02 15:35:34 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,21 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+	#include <libftprintf.h>
+static bool	tmp_printpath(t_mshell *mshell, t_cmd cmd)
+{
+	t_list	*cur;
+
+	(void)cmd;
+	cur = mshell->path;
+	while (cur)
+	{
+		ft_printf("%s\n", cur->content);
+		cur = cur->next;
+	}
+	return (0);
+}
+
 t_builtin	g_builtins[] = {
 	{ "cd", 	builtin_cd },
 	{ "echo", 	builtin_echo },
@@ -27,6 +42,7 @@ t_builtin	g_builtins[] = {
 	{ "export", builtin_export },
 	{ "pwd", 	builtin_pwd },
 	{ "unset", 	builtin_unset },
+	{ "printpath", tmp_printpath },
 	{ NULL , 	NULL },
 };
 

@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 18:22:43 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/29 19:42:04 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/06/02 15:51:17 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <env.h>
 #include <libft.h>
 #include <libftprintf.h>
+#include <path.h>
 #include <stdlib.h>
 
 /*
@@ -147,13 +148,15 @@ bool			env_set(t_mshell *mshell, char *name, char *value, bool read_only)
 	}
 	env = env_get(mshell, name);
 	if (!env)
-	{
 		env_new(mshell, name, value, read_only);
-		return (false);
+	else
+	{
+		string_reset(&env->value, false);
+		if (string_push(&env->value, value) || string_shrink(&env->value))
+			error(E_ALLOC "'env_set'", mshell);
 	}
-	string_reset(&env->value, false);
-	if (string_push(&env->value, value) || string_shrink(&env->value))
-		error(E_ALLOC "'env_set'", mshell);
+	if (!ft_strcmp(name, "PATH"))
+		path_update_from_env(mshell);
 	return (false);
 }
 

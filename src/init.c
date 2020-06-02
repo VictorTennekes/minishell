@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 17:12:22 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/29 19:14:20 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/06/02 15:38:41 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,24 @@
 #include <path.h>
 #include <signal.h>
 #include <stdlib.h>
+
+#include <stdio.h>
+static void	init_env_from_parent_proc(t_mshell *mshell)
+{
+	extern char	**environ;
+	int			i;
+	t_string	current;
+
+	(void)mshell;
+	i = 0;
+	while (environ[i])
+	{
+		if (string_from(environ[i], &current))
+			error(E_ALLOC "'init_env_from_parent_proc'", mshell);
+		export_single(mshell, current);
+		i++;
+	}
+}
 
 /*
 **	Initialize the environment variable linked list. To initialize the list,
@@ -39,6 +57,7 @@ static void	init_env(t_mshell *mshell)
 	if (lst_new_back(&mshell->env, env) == NULL)
 		error(E_ALLOC "'init_env'", mshell);
 	env_set(mshell, "OLDPWD", env->value.str, false);
+	init_env_from_parent_proc(mshell);
 }
 
 static void	init_signal(t_mshell *mshell)
@@ -64,6 +83,8 @@ static void	init_path(t_mshell *mshell)
 	uint32_t	i;
 
 	i = 0;
+	if (env_get(mshell, "PATH"))
+		return;
 	while (g_path_init[i])
 	{
 		path_new(mshell, g_path_init[i], g_path_init[i + 1] == NULL);

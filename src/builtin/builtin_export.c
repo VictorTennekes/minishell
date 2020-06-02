@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/02 17:36:49 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 16:42:43 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/06/02 15:13:47 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 **			identifier is given.
 */
 
-static bool	export_single(t_mshell *mshell, t_string arg)
+bool		export_single(t_mshell *mshell, t_string arg)
 {
 	bool		env_set_ret;
 	char		*eq_index;
