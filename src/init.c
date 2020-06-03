@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 17:12:22 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/06/03 20:50:49 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/06/03 20:52:51 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,12 @@ static void	init_env_from_parent_proc(t_mshell *mshell)
 {
 	extern char	**environ;
 	int			i;
-	t_string	current;
 
 	(void)mshell;
 	i = 0;
 	while (environ[i])
 	{
-		if (string_from(environ[i], &current))
-			error(E_ALLOC "'init_env_from_parent_proc'", mshell);
-		export_single(mshell, current);
-		string_free(&current);
+		export_single(mshell, environ[i]);
 		i++;
 	}
 }

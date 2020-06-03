@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 17:19:26 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/06/02 15:13:57 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/06/03 20:52:33 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ bool	env_unset(t_mshell *mshell, char *name, bool enforce_ro);
 char	**env_to_envp(t_mshell *mshell);
 t_env	*env_get(t_mshell *mshell, char *name);
 void	env_free(t_env *env);
-bool	export_single(t_mshell *mshell, t_string arg);
+bool	export_single(t_mshell *mshell, char *arg);
 
 #endif
