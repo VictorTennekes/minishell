@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/01 20:15:16 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/06/02 15:53:51 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/06/03 21:08:16 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ char	*path_new(t_mshell *mshell, char *value, bool update_env)
 {
 	char	*new;
 
-	//TODO: check valid path?
 	new = ft_strdup(value);
 	if (!new || lst_new_back(&mshell->path, new) == NULL)
 		error(E_ALLOC "'path_new'", mshell);

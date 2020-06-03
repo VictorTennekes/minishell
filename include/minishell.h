@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:15:57 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 20:19:07 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/06/03 21:03:02 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int			file_wapper_arg(char *filename, int (*func)(int fd, void *arg),
 				void *arg);
 void		*zalloc(size_t size);
 void		print_env(t_mshell *mshell, char *prefix);
+void		init_signal(t_mshell *mshell);
 
 #endif
