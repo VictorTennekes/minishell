@@ -5,7 +5,7 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/31 13:58:24 by aaugusti      #+#   #+#                  */
+/*   Created: 2020/03/31 13:58:24 by aaugusti      #+#    #+#                 */
 /*   Updated: 2020/04/28 17:21:14 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
@@ -86,7 +86,7 @@ bool	parser_case_semicolon(t_mshell *mshell, t_parser *parser, char c)
 {
 	(void)c;
 	if (parser->in_squote || parser->in_dquote)
-		parser_push(mshell, parser, ';');
+		parser_push(mshell, parser, c);
 	else if (parser->in_word) {
 		parser->end_word = true;
 		parser->new_cmd = true;
