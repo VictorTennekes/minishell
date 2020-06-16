@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <libft.h>
-#include <libstring.h>
 #include <minishell.h>
 #include <stdlib.h>
 
@@ -28,7 +27,6 @@
 bool	builtin_echo(t_mshell *mshell, t_cmd cmd)
 {
 	bool		has_n;
-	int			env_var;
 	t_string	str;
 
 	(void)mshell;
@@ -41,12 +39,8 @@ bool	builtin_echo(t_mshell *mshell, t_cmd cmd)
 	}
 	if (string_join(&cmd.argv[has_n + 1], cmd.argc - has_n - 1, " ", &str))
 		error(E_ALLOC "'builtin_echo'", mshell);
-	env_var = ft_strncmp(str.str, "$", 1);
-	if (env_var == 0)
-		str.str = getenv(str.str + 1);
 	ft_putstr_fd(str.str, 1);
-	if (env_var == 1)
-		string_free(&str);
+	string_free(&str);
 	if (!has_n)
 		ft_putchar_fd('\n', 1);
 	return (false);

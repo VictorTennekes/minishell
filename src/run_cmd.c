@@ -132,6 +132,8 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 {
 	size_t		cmd_count;
 	size_t		i;
+	size_t		j;
+	t_env		*env_var;
 	t_cmd		*cmds;
 
 	i = 0;
@@ -139,6 +141,16 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	free(cmd);
 	while (i < cmd_count)
 	{
+		j = 0;
+		while (j < cmds[i].argc)
+		{
+			if (!ft_strncmp(cmds[i].argv[j].str, "$", 1))
+			{
+				env_var = env_get(mshell, cmds[i].argv[j].str + 1);
+				cmds[i].argv[j].str = env_var->value.str;
+			}
+			j++;
+		}
 		run_cmd_single(mshell, cmds[i], cmds);
 		i++;
 	}
