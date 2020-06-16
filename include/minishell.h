@@ -5,7 +5,7 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/23 13:15:57 by aaugusti      #+#   #+#                  */
+/*   Created: 2020/03/23 13:15:57 by aaugusti      #+#    #+#                 */
 /*   Updated: 2020/06/03 21:03:02 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
@@ -21,8 +21,8 @@
 # include <stdint.h>
 
 # define SHELL "minishell"
-# define E_ALLOC "Allocation failed in "
-# define E_READ "Read failed in "
+# define E_ALLOC "allocation failed in "
+# define E_READ "read failed in "
 # define E_GNL "get_next_line failed in "
 # define CWD_INIT_CAP (100)
 # define MS_PERROR_INIT_CAP (100)

@@ -147,7 +147,9 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 			if (!ft_strncmp(cmds[i].argv[j].str, "$", 1))
 			{
 				env_var = env_get(mshell, cmds[i].argv[j].str + 1);
-				cmds[i].argv[j].str = env_var->value.str;
+				if (!env_var)
+					error("unknown environment variable", mshell);
+				cmds[i].argv[j].str = ft_strdup(env_var->value.str);
 			}
 			j++;
 		}
