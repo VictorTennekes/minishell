@@ -25,7 +25,7 @@ int	main(void)
 	{
 		prompt(&mshell);
 		cmd = get_cmd(&mshell);
-		if (ft_strcmp(cmd, ""))
+		if (ft_strncmp(cmd, "", 1))
 			run_cmd(&mshell, cmd);
 	}
 }

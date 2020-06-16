@@ -23,7 +23,7 @@
 **	@return {char *}
 */
 
-bool	cmd_exit(t_mshell *mshell)
+static bool	cmd_exit(t_mshell *mshell)
 {
 	uint8_t	exit_status;
 
