@@ -128,12 +128,33 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds)
 	free_cmd(cmd);
 }
 
+void		replace_env(t_mshell *mshell, t_cmd *cmds, size_t i)
+{
+	size_t	j;
+	t_list	*env_vars;
+	t_env	*env_tmp;
+
+	j = 0;
+	while (j < cmds[i].argc)
+	{
+		env_vars = mshell->env;
+		while (env_vars)
+		{
+			env_tmp = env_vars->content;
+			if (ft_strnstr(cmds[i].argv[j].str, env_tmp->name.str,
+				ft_strlen(cmds[i].argv[j].str)))
+				string_replace(&cmds[i].argv[j],
+				ft_strjoin("$", env_tmp->name.str), env_tmp->value.str);
+			env_vars = env_vars->next;
+		}
+		j++;
+	}
+}
+
 void		run_cmd(t_mshell *mshell, char *cmd)
 {
 	size_t		cmd_count;
 	size_t		i;
-	size_t		j;
-	t_env		*env_var;
 	t_cmd		*cmds;
 
 	i = 0;
@@ -141,19 +162,7 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	free(cmd);
 	while (i < cmd_count)
 	{
-		j = 0;
-		while (j < cmds[i].argc)
-		{
-			if (!ft_strncmp(cmds[i].argv[j].str, "$", 1))
-			{
-				env_var = env_get(mshell, cmds[i].argv[j].str + 1);
-				if (!env_var)
-					error("unknown environment variable", mshell);
-				ft_memcpy(cmds[i].argv[j].str, env_var->value.str,
-					ft_strlen(env_var->value.str));
-			}
-			j++;
-		}
+		replace_env(mshell, cmds, i);
 		run_cmd_single(mshell, cmds[i], cmds);
 		i++;
 	}

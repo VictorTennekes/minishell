@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
 #include <libft.h>
+#include <libftprintf.h>
 #include <minishell.h>
 #include <stdlib.h>
 
