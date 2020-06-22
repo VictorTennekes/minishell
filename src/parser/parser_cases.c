@@ -84,7 +84,6 @@ bool	parser_case_dquote(t_mshell *mshell, t_parser *parser, char c)
 
 bool	parser_case_semicolon(t_mshell *mshell, t_parser *parser, char c)
 {
-	(void)c;
 	if (parser->in_squote || parser->in_dquote)
 		parser_push(mshell, parser, c);
 	else if (parser->in_word) {

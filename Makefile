@@ -1,11 +1,11 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
+#                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
-#                                                     +:+ +:+         +:+      #
-#    By: aaugusti <aaugusti@student.codam.nl>       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/23 13:07:19 by aaugusti          #+#    #+#              #
+#                                                      +:+                     #
+#    By: aaugusti <aaugusti@student.codam.nl>         +#+                      #
+#                                                    +#+                       #
+#    Created: 2020/03/23 13:07:19 by aaugusti      #+#    #+#                  #
 #    Updated: 2020/06/03 21:06:00 by aaugusti      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
@@ -38,7 +38,10 @@ SRCS			=	\
 					signal\
 					utils/bssert\
 					utils/file_wrapper\
+					utils/free_char_arr\
 					utils/get_cwd\
+					utils/replace_env\
+					utils/str_replace\
 					utils/zalloc\
 
 # Sources which are just needed for the bonus part

@@ -128,29 +128,6 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds)
 	free_cmd(cmd);
 }
 
-void		replace_env(t_mshell *mshell, t_cmd *cmds, size_t i)
-{
-	size_t	j;
-	t_list	*env_vars;
-	t_env	*env_tmp;
-
-	j = 0;
-	while (j < cmds[i].argc)
-	{
-		env_vars = mshell->env;
-		while (env_vars)
-		{
-			env_tmp = env_vars->content;
-			if (ft_strnstr(cmds[i].argv[j].str, env_tmp->name.str,
-				ft_strlen(cmds[i].argv[j].str)))
-				string_replace(&cmds[i].argv[j],
-				ft_strjoin("$", env_tmp->name.str), env_tmp->value.str);
-			env_vars = env_vars->next;
-		}
-		j++;
-	}
-}
-
 void		run_cmd(t_mshell *mshell, char *cmd)
 {
 	size_t		cmd_count;
