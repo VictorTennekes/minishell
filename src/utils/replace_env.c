@@ -44,7 +44,7 @@ static char		*loop_env(t_mshell *mshell, char *str)
 		env_tmp = env_vars->content;
 		if (!ft_strncmp(str, env_tmp->name.str, ft_strlen(str)))
 		{
-			res = malloc(sizeof(char) * env_tmp->value.len);
+			res = zalloc(sizeof(char) * env_tmp->value.len);
 			ft_strlcpy(res, env_tmp->value.str, env_tmp->value.len + 1);
 			free(str);
 			return (res);
