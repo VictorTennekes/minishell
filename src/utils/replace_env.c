@@ -22,6 +22,7 @@ static char		*join_str_arr(char **str)
 	size_t	i;
 
 	res = zalloc(sizeof(char));
+	tmp = res;
 	i = 0;
 	while (str[i])
 	{
