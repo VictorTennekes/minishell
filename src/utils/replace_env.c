@@ -15,20 +15,21 @@
 #include <libft.h>
 #include <stdlib.h>
 
-#include <stdio.h>
-
 static char		*join_str_arr(char **str)
 {
 	char	*res;
+	char	*tmp;
 	size_t	i;
 
 	res = zalloc(sizeof(char));
 	i = 0;
 	while (str[i])
 	{
-		res = ft_strjoin(res, str[i]);
+		tmp = res;
+		res = ft_strjoin(tmp, str[i]);
 		i++;
 	}
+	free(tmp);
 	return (res);
 }
 
