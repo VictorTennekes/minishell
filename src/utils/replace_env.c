@@ -55,7 +55,7 @@ static char		*loop_env(t_mshell *mshell, char *str)
 	return (str);
 }
 
-void		replace_env(t_mshell *mshell, t_cmd *cmds, size_t i)
+void		replace_env(t_mshell *mshell, t_cmd cmd)
 {
 	size_t	j;
 	size_t	n;
@@ -63,11 +63,11 @@ void		replace_env(t_mshell *mshell, t_cmd *cmds, size_t i)
 	char	*res;
 
 	j = 0;
-	while (j < cmds[i].argc)
+	while (j < cmd.argc)
 	{
-		if (ft_strchr(cmds[i].argv[j].str, '$'))
+		if (ft_strchr(cmd.argv[j].str, '$'))
 		{
-			split_res = ft_split(cmds[i].argv[j].str, '$');
+			split_res = ft_split(cmd.argv[j].str, '$');
 			n = 0;
 			while (split_res[n])
 			{
@@ -75,8 +75,8 @@ void		replace_env(t_mshell *mshell, t_cmd *cmds, size_t i)
 				n++;
 			}
 			res = join_str_arr(split_res);
-			free_char_arr(split_res);
-			cmds[i].argv[j].str = str_replace(cmds[i].argv[j].str, cmds[i].argv[j].str, res, true);
+			free_str_arr(split_res);
+			cmd.argv[j].str = str_replace(cmd.argv[j].str, cmd.argv[j].str, res, true);
 			free (res);
 		}
 		j++;

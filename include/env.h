@@ -29,6 +29,6 @@ char	**env_to_envp(t_mshell *mshell);
 t_env	*env_get(t_mshell *mshell, char *name);
 void	env_free(t_env *env);
 bool	export_single(t_mshell *mshell, char *arg);
-void	replace_env(t_mshell *mshell, t_cmd *cmds, size_t i);
+void		replace_env(t_mshell *mshell, t_cmd cmd);
 
 #endif

@@ -94,6 +94,6 @@ void		*zalloc(size_t size);
 void		print_env(t_mshell *mshell, char *prefix);
 void		init_signal(t_mshell *mshell);
 char		*str_replace(char *str, char *to_find, char *replace, bool do_free);
-char    	**free_char_arr(char **str);
+char    	**free_str_arr(char **str);
 
 #endif

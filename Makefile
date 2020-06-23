@@ -38,7 +38,7 @@ SRCS			=	\
 					signal\
 					utils/bssert\
 					utils/file_wrapper\
-					utils/free_char_arr\
+					utils/free_str_arr\
 					utils/get_cwd\
 					utils/replace_env\
 					utils/str_replace\
