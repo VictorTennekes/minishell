@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   free_str_arr.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
+/*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/23 13:14:58 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/06/16 18:43:41 by aaugusti      ########   odam.nl         */
+/*   Created: 2020/06/23 16:12:46 by vtenneke      #+#    #+#                 */
+/*   Updated: 2020/06/23 16:12:46 by vtenneke      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-#include <minishell.h>
 #include <stdlib.h>
 
-int	main(void)
+char    **free_str_arr(char **str)
 {
-	t_mshell	mshell;
-	char		*cmd;
+    size_t    i;
 
-	init(&mshell);
-	while (1)
-	{
-		prompt(&mshell);
-		cmd = get_cmd(&mshell);
-		if (ft_strcmp(cmd, ""))
-			run_cmd(&mshell, cmd);
-	}
+    i = 0;
+    while (str[i])
+    {
+        free(str[i]);
+        i++;
+    }
+    free(str);
+    return (NULL);
 }

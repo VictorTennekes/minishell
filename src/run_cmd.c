@@ -139,6 +139,7 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	free(cmd);
 	while (i < cmd_count)
 	{
+		replace_env(mshell, cmds[i]);
 		run_cmd_single(mshell, cmds[i], cmds);
 		i++;
 	}
