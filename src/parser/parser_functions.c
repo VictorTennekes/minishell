@@ -5,13 +5,14 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/31 14:02:02 by aaugusti      #+#   #+#                  */
+/*   Created: 2020/03/31 14:02:02 by aaugusti      #+#    #+#                 */
 /*   Updated: 2020/04/28 20:08:31 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include <libft.h>
+#include <libstring.h>
 #include <minishell.h>
 
 void		parser_push(t_mshell *mshell, t_parser *parser, char c)
