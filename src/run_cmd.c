@@ -128,6 +128,11 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	size_t		i;
 	t_cmd		*cmds;
 
+	if (ft_strlen(cmd) == 0)
+	{
+		free(cmd);
+		return ;
+	}
 	i = 0;
 	cmds = parser(mshell, cmd, &cmd_count);
 	free(cmd);
