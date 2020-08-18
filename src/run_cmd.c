@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:31:42 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/06/02 15:35:34 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/08/18 16:26:19 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,10 @@ static bool	run_cmd_exec(t_mshell *mshell, t_cmd cmd)
 	return (filename ? true : false);
 }
 
-static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds)
+static void	run_cmd_single(t_mshell *mshell, t_cmd cmd)
 {
 	uint32_t	i;
 
-	if (cmd.argc == 0)
-	{
-		free_cmd(cmd);
-		free(cmds);
-		builtin_exit(mshell, cmd);
-	}
 	i = 0;
 	while (g_builtins[i].cmd)
 	{
@@ -140,7 +134,7 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	while (i < cmd_count)
 	{
 		replace_env(mshell, cmds[i]);
-		run_cmd_single(mshell, cmds[i], cmds);
+		run_cmd_single(mshell, cmds[i]);
 		i++;
 	}
 	free(cmds);

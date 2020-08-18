@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 19:49:13 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/04/28 19:30:06 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/08/18 16:27:42 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static bool		parser_step(t_mshell *mshell, t_parser *parser, char c)
 static t_cmd	*parser_return(t_mshell *mshell, t_parser *parser,
 					size_t *cmd_count)
 {
-	parser_push_cmd(mshell, parser);
+	if (parser->curr_cmd.size > 0)
+		parser_push_cmd(mshell, parser);
 	if (vla_shrink(&parser->result))
 		error(E_ALLOC "'parser_return'", mshell);
 	*cmd_count = parser->result.size;
