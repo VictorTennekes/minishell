@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:31:42 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/06/02 15:35:34 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/08/18 14:53:08 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,11 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	size_t		i;
 	t_cmd		*cmds;
 
+	if (ft_strlen(cmd) == 0)
+	{
+		free(cmd);
+		return ;
+	}
 	i = 0;
 	cmds = parser(mshell, cmd, &cmd_count);
 	free(cmd);
