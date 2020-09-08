@@ -25,6 +25,7 @@ static void	signal_int(int sig)
 {
 	(void)sig;
 	ft_printf("\n");
+	g_mshell->signal = true;
 	prompt(g_mshell);
 }
 

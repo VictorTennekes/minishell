@@ -45,6 +45,7 @@ typedef struct	s_mshell {
 	t_string	ms_err_procname;
 	bool		ms_stderrno;
 	int			last_exit;
+	bool		signal;
 }				t_mshell;
 
 /*

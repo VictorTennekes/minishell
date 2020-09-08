@@ -19,6 +19,7 @@ int	main(void)
 	t_mshell	mshell;
 	char		*cmd;
 
+	cmd = NULL;
 	init(&mshell);
 	while (1)
 	{
