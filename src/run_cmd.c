@@ -59,15 +59,16 @@ static void	free_cmd(t_cmd cmd)
 	free(cmd.argv);
 }
 
-static void start_proc(t_mshell *mshell, char *filename, t_cmd cmd)
+static int start_proc(t_mshell *mshell, char *filename, t_cmd cmd)
 {
 	char	**argvp;
 	char	**envp;
 	int		child_pid;
 	int		exit_status;
+	int		ret;
 
 	child_pid = fork();
-
+	ret = 0;
 	if (child_pid)
 	{
 		if (waitpid(child_pid, &exit_status, 0) == -1)
@@ -76,12 +77,15 @@ static void start_proc(t_mshell *mshell, char *filename, t_cmd cmd)
 	}
 	else
 	{
+		if (child_pid)
+			waitpid(child_pid, &exit_status, 0);
 		argvp = string_to_array(cmd.argc, cmd.argv);
 		if (!argvp)
 			error(E_ALLOC "'start_proc'", mshell);
 		envp = env_to_envp(mshell);
-		execve(filename, argvp, envp);
+		ret = execve(filename, argvp, envp);
 	}
+	return (ret);
 }
 
 static bool	run_cmd_exec(t_mshell *mshell, t_cmd cmd)
@@ -94,8 +98,12 @@ static bool	run_cmd_exec(t_mshell *mshell, t_cmd cmd)
 	else
 	{
 		ms_set_procname(mshell, cmd.argv[0].str);
-		mshell->ms_errno = ENO_INVCMD;
-		ms_perror(mshell);
+		filename = mshell->ms_err_procname.str;
+		if (start_proc(mshell, filename, cmd) == -1)
+		{
+			mshell->ms_errno = ENO_INVCMD;
+			ms_perror(mshell);
+		}
 	}
 	free(filename);
 	return (filename ? true : false);
@@ -106,6 +114,11 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd)
 	uint32_t	i;
 
 	i = 0;
+	if (cmd.argc == 0)
+	{
+		free_cmd(cmd);
+		return ;
+	}
 	while (g_builtins[i].cmd)
 	{
 		if (!ft_strcmp(cmd.argv[0].str, g_builtins[i].cmd))
