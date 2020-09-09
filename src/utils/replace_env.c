@@ -57,6 +57,8 @@ static char		*loop_env(t_mshell *mshell, char *str)
 	return (str);
 }
 
+#include <stdio.h>
+
 void		replace_env(t_mshell *mshell, t_cmd cmd)
 {
 	size_t	j;
