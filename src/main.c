@@ -15,8 +15,6 @@
 #include <stdlib.h>
 #include <env.h>
 
-#include <stdio.h>
-
 int	main(void)
 {
 	t_mshell	mshell;
