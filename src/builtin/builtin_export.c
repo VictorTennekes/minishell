@@ -5,7 +5,7 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/04/02 17:36:49 by aaugusti      #+#   #+#                  */
+/*   Created: 2020/04/02 17:36:49 by aaugusti      #+#    #+#                 */
 /*   Updated: 2020/06/03 20:53:04 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
@@ -24,6 +24,8 @@
 **		* Export will contine through every argument even if an invalid
 **			identifier is given.
 */
+
+#include <stdio.h>
 
 bool		export_single(t_mshell *mshell, char *arg)
 {

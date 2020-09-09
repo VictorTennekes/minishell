@@ -15,22 +15,28 @@
 #include <libft.h>
 #include <stdlib.h>
 
-static char		*join_str_arr(char **str)
+static char		*replace_str_single(char *src, char *to_find, char *start,
+									char *replace)
 {
+	size_t	to_find_len;
+	size_t	replace_len;
 	char	*res;
-	char	*tmp;
-	size_t	i;
 
-	res = zalloc(sizeof(char));
-	tmp = res;
-	i = 0;
-	while (str[i])
-	{
-		tmp = res;
-		res = ft_strjoin(tmp, str[i]);
-		i++;
-	}
-	free(tmp);
+	if (!src || !to_find || !replace)
+		return (NULL);
+	to_find_len = ft_strlen(to_find);
+	replace_len = ft_strlen(replace);
+	if (!to_find_len)
+		return (NULL);
+	res = zalloc(sizeof(char) * ft_strlen(src)
+			+ (replace_len - to_find_len) + 1);
+	if (!res)
+		return (NULL);
+	ft_strlcpy(res, src, (start - src) + 1);
+	ft_strlcpy(res + (start - src), replace, replace_len + 1);
+	ft_strlcpy(res + (start - src) + replace_len, start + to_find_len,
+				ft_strlen(src) - ((start - src) + to_find_len) + 1);
+	free(src);
 	return (res);
 }
 
@@ -44,43 +50,65 @@ static char		*loop_env(t_mshell *mshell, char *str)
 	while (env_vars)
 	{
 		env_tmp = env_vars->content;
-		if (!ft_strncmp(str, env_tmp->name.str, ft_strlen(str)))
+		if (!ft_strncmp(str, env_tmp->name.str, ft_strlen(env_tmp->name.str)))
 		{
-			res = zalloc(sizeof(char) * env_tmp->value.len);
+			res = zalloc(sizeof(char) * env_tmp->value.len + 1);
 			ft_strlcpy(res, env_tmp->value.str, env_tmp->value.len + 1);
-			free(str);
 			return (res);
 		}
 		env_vars = env_vars->next;
 	}
-	ft_strlcpy(str, "", 2);
-	return (str);
+	res = "";
+	return (res);
+}
+
+int			valid_env_size(char *str)
+{
+	int i;
+	i = 1;
+	while (((str[i] >= 'a' && str[i] <= 'z') ||
+			(str[i] >= 'A' && str[i] <= 'Z') ||
+			(i != 0 && (str[i] >= '0' && str[i] <= '9')) ||
+			str[i] == '_'))
+		i++;
+	return (i);
+}
+
+static char *subst_env(t_mshell *mshell, char **command, char *pos, char *to_find)
+{
+	int len;
+	char *replace;
+
+	if (!to_find)
+		return (NULL);
+	len = valid_env_size(pos);
+	if (len <= 1)
+		return (NULL);
+	ft_strlcpy(to_find, pos, len + 1);
+	len += pos - *command;
+	replace = loop_env(mshell, to_find + 1);
+	*command = replace_str_single(*command, to_find, pos, replace);
+	len = (len - ft_strlen(to_find)) + ft_strlen(replace);
+	if (!ft_strchr(*command + len - 1, '$'))
+		return (NULL);
+	pos = ft_strchr(*command + len - 1, '$');
+	return (pos);
 }
 
 void		replace_env(t_mshell *mshell, t_cmd cmd)
 {
 	size_t	j;
-	size_t	n;
-	char	**split_res;
-	char	*res;
+	char	*pos;
+	char	*to_find;
 
 	j = 0;
 	while (j < cmd.argc)
 	{
-		if (ft_strchr(cmd.argv[j].str, '$'))
-		{
-			split_res = ft_split(cmd.argv[j].str, '$');
-			n = 0;
-			while (split_res[n])
-			{
-				split_res[n] = loop_env(mshell, split_res[n]);
-				n++;
-			}
-			res = join_str_arr(split_res);
-			free_str_arr(split_res);
-			cmd.argv[j].str = str_replace(cmd.argv[j].str, cmd.argv[j].str, res, true);
-			free (res);
-		}
+		to_find = malloc(sizeof(char) * cmd.argv[j].len + 1);
+		pos = ft_strchr(cmd.argv[j].str, '$');
+		while (pos)
+			pos = subst_env(mshell, &cmd.argv[j].str, pos, to_find);
+		free(to_find);
 		j++;
 	}
 }
