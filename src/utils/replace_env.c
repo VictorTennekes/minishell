@@ -28,7 +28,7 @@ static char		*replace_str_single(char *src, char *to_find, char *start,
 	replace_len = ft_strlen(replace);
 	if (!to_find_len)
 		return (NULL);
-	res = zalloc(sizeof(char) * ft_strlen(src)
+	res = malloc(sizeof(char) * ft_strlen(src)
 			+ (replace_len - to_find_len) + 1);
 	if (!res)
 		return (NULL);
@@ -52,7 +52,7 @@ static char		*loop_env(t_mshell *mshell, char *str)
 		env_tmp = env_vars->content;
 		if (!ft_strncmp(str, env_tmp->name.str, ft_strlen(env_tmp->name.str)))
 		{
-			res = zalloc(sizeof(char) * env_tmp->value.len + 1);
+			res = malloc(sizeof(char) * env_tmp->value.len + 1);
 			ft_strlcpy(res, env_tmp->value.str, env_tmp->value.len + 1);
 			return (res);
 		}
