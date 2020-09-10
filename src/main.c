@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
 #include <minishell.h>
 #include <stdlib.h>
+#include <libft.h>
 #include <env.h>
 
 int	main(void)
@@ -23,9 +23,9 @@ int	main(void)
 	init(&mshell);
 	while (1)
 	{
-		env_set(&mshell, "?", ft_itoa(mshell.last_exit), false);
 		prompt(&mshell);
 		cmd = get_cmd(&mshell);
 		run_cmd(&mshell, cmd);
+		env_set(&mshell, "?", ft_itoa(mshell.last_exit), false);
 	}
 }
