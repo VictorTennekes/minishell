@@ -25,8 +25,6 @@
 **			identifier is given.
 */
 
-#include <stdio.h>
-
 bool		export_single(t_mshell *mshell, char *arg)
 {
 	bool		env_set_ret;
