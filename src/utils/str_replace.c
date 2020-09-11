@@ -5,7 +5,7 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/24 16:09:52 by aaugusti  #+#   #+#                      */
+/*   Created: 2020/03/24 16:09:52 by aaugusti  #   #+#    #+#                 */
 /*   Updated: 2020/04/28 10:11:42 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
@@ -71,7 +71,7 @@ char	*str_replace(char *str, char *to_find, char *replace, bool do_free)
 	uint32_t	replace_len;
 	uint32_t	to_find_len;
 
-	if (!str || !*to_find)
+	if (!str || !to_find)
 		return (NULL);
 	to_find_len = ft_strlen(to_find);
 	replace_len = ft_strlen(replace);
