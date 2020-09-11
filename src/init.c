@@ -5,7 +5,7 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/31 17:12:22 by aaugusti      #+#   #+#                  */
+/*   Created: 2020/03/31 17:12:22 by aaugusti      #+#    #+#                 */
 /*   Updated: 2020/06/03 21:02:26 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
@@ -16,7 +16,6 @@
 #include <path.h>
 #include <stdlib.h>
 
-#include <stdio.h>
 static void	init_env_from_parent_proc(t_mshell *mshell)
 {
 	extern char	**environ;

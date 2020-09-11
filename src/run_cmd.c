@@ -144,6 +144,7 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	if (ft_strlen(cmd) == 0)
 	{
 		free(cmd);
+		env_set(mshell, "?", ft_itoa(mshell->last_exit), false);
 		return ;
 	}
 	i = 0;
@@ -156,4 +157,5 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 		i++;
 	}
 	free(cmds);
+	env_set(mshell, "?", ft_itoa(mshell->last_exit), false);
 }

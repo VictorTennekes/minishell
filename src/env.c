@@ -5,7 +5,7 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/31 18:22:43 by aaugusti      #+#   #+#                  */
+/*   Created: 2020/03/31 18:22:43 by aaugusti      #+#    #+#                 */
 /*   Updated: 2020/06/02 15:51:17 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
@@ -43,6 +43,9 @@ static int32_t		env_check_name(char *name)
 	int32_t	i;
 
 	i = 0;
+	
+	if (!ft_strcmp(name, "?"))
+		return(-1);
 	while (name[i])
 	{
 		if (!((name[i] >= 'a' && name[i] <= 'z') ||
