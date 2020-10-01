@@ -69,7 +69,7 @@ int			valid_env_size(char *str)
 	while (((str[i] >= 'a' && str[i] <= 'z') ||
 			(str[i] >= 'A' && str[i] <= 'Z') ||
 			(i != 0 && (str[i] >= '0' && str[i] <= '9')) ||
-			str[i] == '_'))
+			str[i] == '_') || str[i] == '?')
 		i++;
 	return (i);
 }
