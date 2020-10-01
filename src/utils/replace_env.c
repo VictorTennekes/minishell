@@ -50,7 +50,7 @@ static char		*loop_env(t_mshell *mshell, char *str)
 	while (env_vars)
 	{
 		env_tmp = env_vars->content;
-		if (!ft_strncmp(str, env_tmp->name.str, ft_strlen(env_tmp->name.str)))
+		if (!ft_strncmp(str, env_tmp->name.str, ft_strlen(str)))
 		{
 			res = malloc(sizeof(char) * env_tmp->value.len + 1);
 			ft_strlcpy(res, env_tmp->value.str, env_tmp->value.len + 1);
@@ -94,8 +94,6 @@ static char *subst_env(t_mshell *mshell, char **command, char *pos, char *to_fin
 	pos = ft_strchr(*command + len - 1, '$');
 	return (pos);
 }
-
-#include <stdio.h>
 
 void		replace_env(t_mshell *mshell, t_cmd cmd)
 {
