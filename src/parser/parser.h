@@ -21,6 +21,7 @@
 # define PARSER_INIT_WORD_CAP 100
 # define PARSER_ARGV_INIT_CAP 10
 # define PARSER_CMDS_INIT_CAP 4
+# define PARSER_FILES_INIT_CAP 3
 
 typedef struct	s_parser {
 	bool		done;
@@ -30,8 +31,13 @@ typedef struct	s_parser {
 	bool		in_word;
 	bool		new_cmd;
 	bool		new_word;
+	bool		redir;
+	int			redir_kind;
+	bool		pipe;
 	t_string	*curr_word;
+	t_vla		redir_files;
 	t_vla		curr_cmd;
+	t_vla		curr_line;
 	t_vla		result;
 }				t_parser;
 
@@ -82,13 +88,17 @@ void			parser_push_cmd(t_mshell *mshell, t_parser *parser);
 */
 
 bool			parser_case_end(t_mshell *mshell, t_parser *parser, char c);
-bool			parser_case_dquote(t_mshell *mshell, t_parser *parser, char c);
 bool			parser_case_rest(t_mshell *mshell, t_parser *parser, char c);
-bool			parser_case_semicolon(t_mshell *mshell, t_parser *parser,
-					char c);
-bool			parser_case_squote(t_mshell *mshell, t_parser *parser, char c);
 bool			parser_case_whitespace(t_mshell *mshell, t_parser *parser,
 					char c);
+bool			parser_case_squote(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_dquote(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_semicolon(t_mshell *mshell, t_parser *parser,
+					char c);
+bool			parser_case_pipe(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_write(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_input(t_mshell *mshell, t_parser *parser, char c);
+
 
 typedef struct	s_parser_case {
 	char	c;

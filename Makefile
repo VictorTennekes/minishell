@@ -146,7 +146,6 @@ bonus:
 	@BONUS=1 make $(NAME)
 	@touch bonus
 
-
 # Generic rule for compiling any C-file into an object file
 %.o: %.c
 	$(CC) -o $@ -c $< $(FLAGS) $(INCLUDES)

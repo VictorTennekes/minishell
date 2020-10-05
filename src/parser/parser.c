@@ -23,6 +23,9 @@ t_parser_case	g_parser_cases[] = {
 	{ '\'',	parser_case_squote },
 	{ '\"',	parser_case_dquote },
 	{ ';',	parser_case_semicolon },
+	{ '|',	parser_case_pipe },
+	{ '>',	parser_case_write },
+	{ '<',	parser_case_input },
 	{ 42,	NULL },
 };
 
