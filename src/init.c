@@ -52,6 +52,7 @@ static void	init_env(t_mshell *mshell)
 	if (lst_new_back(&mshell->env, env) == NULL)
 		error(E_ALLOC "'init_env'", mshell);
 	env_set(mshell, "OLDPWD", env->value.str, false);
+	/*env_set(mshell, "?", "0", false);*/
 	init_env_from_parent_proc(mshell);
 }
 

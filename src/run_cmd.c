@@ -77,13 +77,13 @@ static int start_proc(t_mshell *mshell, char *filename, t_cmd cmd)
 	}
 	else
 	{
-		if (child_pid)
-			waitpid(child_pid, &exit_status, 0);
 		argvp = string_to_array(cmd.argc, cmd.argv);
 		if (!argvp)
 			error(E_ALLOC "'start_proc'", mshell);
 		envp = env_to_envp(mshell);
 		ret = execve(filename, argvp, envp);
+		free(filename);
+		error("Unknown command" , mshell);
 	}
 	return (ret);
 }
@@ -94,7 +94,10 @@ static bool	run_cmd_exec(t_mshell *mshell, t_cmd cmd)
 
 	filename = path_find_file(mshell, cmd.argv[0].str, true);
 	if (filename)
+	{
 		start_proc(mshell, filename, cmd);
+		free(filename);
+	}
 	else
 	{
 		ms_set_procname(mshell, cmd.argv[0].str);
@@ -105,7 +108,6 @@ static bool	run_cmd_exec(t_mshell *mshell, t_cmd cmd)
 			ms_perror(mshell);
 		}
 	}
-	free(filename);
 	return (filename ? true : false);
 }
 
@@ -135,6 +137,8 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd)
 	free_cmd(cmd);
 }
 
+#include <stdio.h>
+
 void		run_cmd(t_mshell *mshell, char *cmd)
 {
 	size_t		cmd_count;
@@ -149,6 +153,9 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	}
 	i = 0;
 	cmds = parser(mshell, cmd, &cmd_count);
+	// printf("write to: %s\n", cmds[0].redir_files[0].redir_filename[WRITE].str);
+	// printf("write to second: %s\n", cmds[0].redir_files[1].redir_filename[INPUT].str);
+	// printf("write to third: %s\n", cmds[0].redir_files[2].redir_filename[APPEND].str);		
 	free(cmd);
 	while (i < cmd_count)
 	{
