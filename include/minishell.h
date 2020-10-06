@@ -20,6 +20,8 @@
 # include <stddef.h>
 # include <stdint.h>
 
+# include <stdio.h> // THIS NO GUCCI SHOULD BE REMOVED LATER
+
 # define SHELL "minishell"
 # define E_ALLOC "allocation failed in "
 # define E_READ "read failed in "

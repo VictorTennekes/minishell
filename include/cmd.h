@@ -16,13 +16,15 @@
 # include <libstring.h>
 
 typedef struct		s_redir_file {
-	t_string		redir_filename[3];
+	t_string		redir_filename;
+	int				redir_type;
 }					t_redir_file;
 
 typedef struct		s_cmd {
 	uint32_t		argc;
 	t_string		*argv;
 	t_redir_file	*redir_files;
+	uint32_t		file_argc;
 	bool			pipe;
 }					t_cmd;
 

@@ -118,7 +118,7 @@ bool	parser_case_write(t_mshell *mshell, t_parser *parser, char c)
 		if (parser->in_word)
 			parser->end_word = true;
 		parser->redir = true;
-		parser->redir_kind = WRITE;
+		parser->redir_type = WRITE;
 	}
 	return (false);
 }
@@ -132,7 +132,7 @@ bool	parser_case_input(t_mshell *mshell, t_parser *parser, char c)
 		if (parser->in_word)
 			parser->end_word = true;
 		parser->redir = true;
-		parser->redir_kind = INPUT;
+		parser->redir_type = INPUT;
 	}
 	return (false);
 }

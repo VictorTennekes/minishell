@@ -32,7 +32,7 @@ typedef struct	s_parser {
 	bool		new_cmd;
 	bool		new_word;
 	bool		redir;
-	int			redir_kind;
+	int			redir_type;
 	bool		pipe;
 	t_string	*curr_word;
 	t_vla		redir_files;

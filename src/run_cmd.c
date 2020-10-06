@@ -49,11 +49,18 @@ t_builtin	g_builtins[] = {
 static void	free_cmd(t_cmd cmd)
 {
 	uint32_t	i;
+	uint32_t	j;
 
 	i = 0;
 	while (i < cmd.argc)
 	{
+		j = 0;
 		string_free(&cmd.argv[i]);
+		while(j < cmd.file_argc)
+		{
+			string_free(&cmd.redir_files[j].redir_filename);
+			j++;
+		}
 		i++;
 	}
 	free(cmd.argv);
@@ -153,9 +160,6 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	}
 	i = 0;
 	cmds = parser(mshell, cmd, &cmd_count);
-	// printf("write to: %s\n", cmds[0].redir_files[0].redir_filename[WRITE].str);
-	// printf("write to second: %s\n", cmds[0].redir_files[1].redir_filename[INPUT].str);
-	// printf("write to third: %s\n", cmds[0].redir_files[2].redir_filename[APPEND].str);		
 	free(cmd);
 	while (i < cmd_count)
 	{
