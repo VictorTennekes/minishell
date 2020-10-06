@@ -89,6 +89,7 @@ static char *subst_env(t_mshell *mshell, char **command, char *pos, char *to_fin
 	replace = loop_env(mshell, to_find + 1);
 	*command = replace_str_single(*command, to_find, pos, replace);
 	len = (len - ft_strlen(to_find)) + ft_strlen(replace);
+	free (replace);
 	if (!ft_strchr(*command + len - 1, '$'))
 		return (NULL);
 	pos = ft_strchr(*command + len - 1, '$');
