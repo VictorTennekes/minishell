@@ -24,7 +24,7 @@ typedef struct		s_cmd {
 	uint32_t		argc;
 	t_string		*argv;
 	t_redir_file	*redir_files;
-	uint32_t		file_argc;
+	uint32_t		redir_count;
 	bool			pipe;
 }					t_cmd;
 

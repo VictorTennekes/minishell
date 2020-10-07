@@ -58,7 +58,7 @@ static void	free_cmd(t_cmd cmd)
 		string_free(&cmd.argv[i]);
 		i++;
 	}
-	while(j < cmd.file_argc)
+	while(j < cmd.redir_count)
 	{
 		string_free(&cmd.redir_files[j].redir_filename);
 		j++;

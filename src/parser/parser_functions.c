@@ -66,7 +66,7 @@ void		parser_push_cmd(t_mshell *mshell, t_parser *parser)
 		error(E_ALLOC "'parser_new_cmd'", mshell);
 	to_push.argv = parser->curr_cmd.vla;
 	to_push.argc = parser->curr_cmd.size;
-	to_push.file_argc = parser->redir_files.size;
+	to_push.redir_count = parser->redir_files.size;
 	to_push.pipe = parser->pipe;
 	to_push.redir_files = parser->redir_files.vla;
 	if (vla_push(&parser->result, &to_push, NULL))
