@@ -52,16 +52,16 @@ static void	free_cmd(t_cmd cmd)
 	uint32_t	j;
 
 	i = 0;
+	j = 0;
 	while (i < cmd.argc)
 	{
-		j = 0;
 		string_free(&cmd.argv[i]);
-		while(j < cmd.file_argc)
-		{
-			string_free(&cmd.redir_files[j].redir_filename);
-			j++;
-		}
 		i++;
+	}
+	while(j < cmd.file_argc)
+	{
+		string_free(&cmd.redir_files[j].redir_filename);
+		j++;
 	}
 	free(cmd.redir_files);
 	free(cmd.argv);
