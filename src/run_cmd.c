@@ -63,6 +63,7 @@ static void	free_cmd(t_cmd cmd)
 		}
 		i++;
 	}
+	free(cmd.redir_files);
 	free(cmd.argv);
 }
 
@@ -151,11 +152,14 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	size_t		cmd_count;
 	size_t		i;
 	t_cmd		*cmds;
+	char		*last_exit;
 
 	if (ft_strlen(cmd) == 0)
 	{
 		free(cmd);
-		env_set(mshell, "?", ft_itoa(mshell->last_exit), false);
+		last_exit = ft_itoa(mshell->last_exit);
+		env_set(mshell, "?", last_exit, false);
+		free(last_exit);
 		return ;
 	}
 	i = 0;
@@ -168,5 +172,7 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 		i++;
 	}
 	free(cmds);
-	env_set(mshell, "?", ft_itoa(mshell->last_exit), false);
+	last_exit = ft_itoa(mshell->last_exit);
+	env_set(mshell, "?", last_exit, false);
+	free(last_exit);
 }
