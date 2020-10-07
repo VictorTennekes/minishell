@@ -18,8 +18,8 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <libftprintf.h>
 
-	#include <libftprintf.h>
 static bool	tmp_printpath(t_mshell *mshell, t_cmd cmd)
 {
 	t_list	*cur;
@@ -145,8 +145,6 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd)
 	free_cmd(cmd);
 }
 
-#include <stdio.h>
-
 void		run_cmd(t_mshell *mshell, char *cmd)
 {
 	size_t		cmd_count;
@@ -164,6 +162,8 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	}
 	i = 0;
 	cmds = parser(mshell, cmd, &cmd_count);
+	if (cmds == NULL)
+		return ;
 	free(cmd);
 	while (i < cmd_count)
 	{

@@ -23,6 +23,7 @@ char				*g_ermsgs[] = {
 	[ENO_HOME] = "HOME not set",
 	[ENO_OLDPWD] = "OLDPWD not set",
 	[ENO_USET] = "cannot unset: readonly variable",
+	[ENO_UNEXTOK] = "unexpected token",
 };
 
 static t_string	ms_strerror(t_mshell *mshell)

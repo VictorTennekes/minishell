@@ -75,7 +75,10 @@ t_cmd		*parser(t_mshell *mshell, char *cmd, size_t *cmd_count)
 	while (42)
 	{
 		if (parser_step(mshell, &parser, cmd[i]))
-			error("Invalid input", mshell);
+		{
+			ms_perror(mshell);
+			return (NULL);
+		}
 		if (parser.new_word)
 			parser_new_word(mshell, &parser);
 		if (parser.end_word)

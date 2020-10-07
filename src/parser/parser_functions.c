@@ -29,7 +29,6 @@ void		parser_new_word(t_mshell *mshell, t_parser *parser)
 
 	if (parser->redir)
 	{
-		printf("redir kind: %i\n", parser->redir_type);
 		new_file.redir_type = parser->redir_type;
 		if (string_init(PARSER_INIT_WORD_CAP, NULL, &new_file.redir_filename))
 			error(E_ALLOC "'parser_new_word'", mshell);
@@ -73,8 +72,6 @@ void		parser_push_cmd(t_mshell *mshell, t_parser *parser)
 	if (vla_push(&parser->result, &to_push, NULL))
 		error(E_ALLOC "'parser_new_cmd'", mshell);
 }
-
-// ABE FIX MY BIG POOPOO CODE
 
 void		parser_new_cmd(t_mshell *mshell, t_parser *parser, bool init)
 {

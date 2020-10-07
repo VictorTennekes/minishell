@@ -20,8 +20,6 @@
 # include <stddef.h>
 # include <stdint.h>
 
-# include <stdio.h> // THIS NO GUCCI SHOULD BE REMOVED LATER
-
 # define SHELL "minishell"
 # define E_ALLOC "allocation failed in "
 # define E_READ "read failed in "
@@ -38,6 +36,7 @@ enum				e_errno {
 	ENO_HOME = 4,
 	ENO_OLDPWD = 5,
 	ENO_USET = 6,
+	ENO_UNEXTOK = 7,
 };
 
 typedef struct	s_mshell {
