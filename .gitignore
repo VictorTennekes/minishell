@@ -8,3 +8,5 @@ bonus
 .vscode
 .DS_Store
 note*
+.clangd
+compile_commands.json

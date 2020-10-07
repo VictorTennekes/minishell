@@ -23,6 +23,9 @@ t_parser_case	g_parser_cases[] = {
 	{ '\'',	parser_case_squote },
 	{ '\"',	parser_case_dquote },
 	{ ';',	parser_case_semicolon },
+	{ '|',	parser_case_pipe },
+	{ '>',	parser_case_write },
+	{ '<',	parser_case_input },
 	{ 42,	NULL },
 };
 
@@ -72,7 +75,10 @@ t_cmd		*parser(t_mshell *mshell, char *cmd, size_t *cmd_count)
 	while (42)
 	{
 		if (parser_step(mshell, &parser, cmd[i]))
-			error("Invalid input", mshell);
+		{
+			ms_perror(mshell);
+			return (NULL);
+		}
 		if (parser.new_word)
 			parser_new_word(mshell, &parser);
 		if (parser.end_word)

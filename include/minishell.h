@@ -36,6 +36,7 @@ enum				e_errno {
 	ENO_HOME = 4,
 	ENO_OLDPWD = 5,
 	ENO_USET = 6,
+	ENO_UNEXTOK = 7,
 };
 
 typedef struct	s_mshell {

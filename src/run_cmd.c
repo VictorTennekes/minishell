@@ -18,8 +18,8 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <libftprintf.h>
 
-	#include <libftprintf.h>
 static bool	tmp_printpath(t_mshell *mshell, t_cmd cmd)
 {
 	t_list	*cur;
@@ -49,13 +49,21 @@ t_builtin	g_builtins[] = {
 static void	free_cmd(t_cmd cmd)
 {
 	uint32_t	i;
+	uint32_t	j;
 
 	i = 0;
+	j = 0;
 	while (i < cmd.argc)
 	{
 		string_free(&cmd.argv[i]);
 		i++;
 	}
+	while(j < cmd.redir_count)
+	{
+		string_free(&cmd.redir_files[j].redir_filename);
+		j++;
+	}
+	free(cmd.redir_files);
 	free(cmd.argv);
 }
 
@@ -77,13 +85,13 @@ static int start_proc(t_mshell *mshell, char *filename, t_cmd cmd)
 	}
 	else
 	{
-		if (child_pid)
-			waitpid(child_pid, &exit_status, 0);
 		argvp = string_to_array(cmd.argc, cmd.argv);
 		if (!argvp)
 			error(E_ALLOC "'start_proc'", mshell);
 		envp = env_to_envp(mshell);
 		ret = execve(filename, argvp, envp);
+		free(filename);
+		error("Unknown command" , mshell);
 	}
 	return (ret);
 }
@@ -94,7 +102,10 @@ static bool	run_cmd_exec(t_mshell *mshell, t_cmd cmd)
 
 	filename = path_find_file(mshell, cmd.argv[0].str, true);
 	if (filename)
+	{
 		start_proc(mshell, filename, cmd);
+		free(filename);
+	}
 	else
 	{
 		ms_set_procname(mshell, cmd.argv[0].str);
@@ -105,7 +116,6 @@ static bool	run_cmd_exec(t_mshell *mshell, t_cmd cmd)
 			ms_perror(mshell);
 		}
 	}
-	free(filename);
 	return (filename ? true : false);
 }
 
@@ -140,15 +150,20 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	size_t		cmd_count;
 	size_t		i;
 	t_cmd		*cmds;
+	char		*last_exit;
 
 	if (ft_strlen(cmd) == 0)
 	{
 		free(cmd);
-		env_set(mshell, "?", ft_itoa(mshell->last_exit), false);
+		last_exit = ft_itoa(mshell->last_exit);
+		env_set(mshell, "?", last_exit, false);
+		free(last_exit);
 		return ;
 	}
 	i = 0;
 	cmds = parser(mshell, cmd, &cmd_count);
+	if (cmds == NULL)
+		return ;
 	free(cmd);
 	while (i < cmd_count)
 	{
@@ -157,5 +172,7 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 		i++;
 	}
 	free(cmds);
-	env_set(mshell, "?", ft_itoa(mshell->last_exit), false);
+	last_exit = ft_itoa(mshell->last_exit);
+	env_set(mshell, "?", last_exit, false);
+	free(last_exit);
 }

@@ -94,3 +94,54 @@ bool	parser_case_semicolon(t_mshell *mshell, t_parser *parser, char c)
 	}
 	return (false);
 }
+
+bool	parser_case_pipe(t_mshell *mshell, t_parser *parser, char c)
+{
+	if (parser->in_squote || parser->in_dquote)
+		parser_push(mshell, parser, c);
+	else
+	{
+		if (parser->in_word)
+			parser->end_word = true;
+		parser->new_cmd = true;
+		parser->pipe = true;
+	}
+	return (false);
+}
+
+bool	parser_case_write(t_mshell *mshell, t_parser *parser, char c)
+{
+	if (parser->in_squote || parser->in_dquote)
+		parser_push(mshell, parser, c);
+	else
+	{
+		if (parser->in_word)
+			parser->end_word = true;
+		if (parser->redir == true && parser->redir_type == APPEND)
+		{
+			ms_set_error(mshell, ENO_UNEXTOK, "");
+			return (true);
+		}
+		else if (parser->redir == true)
+			parser->redir_type = APPEND;
+		else {
+			parser->redir = true;
+			parser->redir_type = WRITE;
+		}
+	}
+	return (false);
+}
+
+bool	parser_case_input(t_mshell *mshell, t_parser *parser, char c)
+{
+	if (parser->in_squote || parser->in_dquote)
+		parser_push(mshell, parser, c);
+	else
+	{
+		if (parser->in_word)
+			parser->end_word = true;
+		parser->redir = true;
+		parser->redir_type = INPUT;
+	}
+	return (false);
+}
