@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:15:57 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/06/03 21:03:02 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/15 11:31:08 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define E_ALLOC "allocation failed in "
 # define E_READ "read failed in "
 # define E_GNL "get_next_line failed in "
+# define E_FORK "fork failed in "
 # define CWD_INIT_CAP (100)
 # define MS_PERROR_INIT_CAP (100)
 
@@ -37,6 +38,7 @@ enum				e_errno {
 	ENO_OLDPWD = 5,
 	ENO_USET = 6,
 	ENO_UNEXTOK = 7,
+	ENO_UNEXEOF = 8,
 };
 
 typedef struct	s_mshell {
@@ -66,9 +68,11 @@ bool		builtin_unset(t_mshell *mshell, t_cmd cmd);
 **	functions.
 */
 
+typedef bool (*t_builtin_func)(t_mshell *, t_cmd);
+
 typedef struct	s_builtin {
-	char		*cmd;
-	bool		(*func)(t_mshell * mshell, t_cmd cmd);
+	char			*cmd;
+	t_builtin_func	func;
 }				t_builtin;
 
 bool		ms_set_error(t_mshell *mshell, t_errno ms_errno, char *procname);

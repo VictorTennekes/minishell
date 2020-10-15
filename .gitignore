@@ -10,3 +10,5 @@ bonus
 note*
 .clangd
 compile_commands.json
+a.out
+test.c

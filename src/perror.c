@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 16:49:01 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/04/28 09:25:07 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/15 11:31:43 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char				*g_ermsgs[] = {
 	[ENO_OLDPWD] = "OLDPWD not set",
 	[ENO_USET] = "cannot unset: readonly variable",
 	[ENO_UNEXTOK] = "unexpected token",
+	[ENO_UNEXEOF] = "unexpected end of file",
 };
 
 static t_string	ms_strerror(t_mshell *mshell)

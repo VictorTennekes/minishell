@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/23 13:07:19 by aaugusti      #+#    #+#                  #
-#    Updated: 2020/06/03 21:06:00 by aaugusti      ########   odam.nl          #
+#    Updated: 2020/10/15 11:34:51 by aaugusti      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,16 @@ SRCS			=	\
 					init\
 					parser/parser\
 					parser/parser_cases\
+					parser/parser_check\
 					parser/parser_functions\
 					path\
 					perror\
 					prompt\
-					run_cmd\
+					run_cmd/find_builtin\
+					run_cmd/free_cmds\
+					run_cmd/handle_redir_files\
+					run_cmd/run_cmd\
+					run_cmd/start_proc\
 					signal\
 					utils/bssert\
 					utils/file_wrapper\
