@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:15:57 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/15 11:31:08 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/15 15:01:34 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@
 # include <stdint.h>
 
 # define SHELL "minishell"
-# define E_ALLOC "allocation failed in "
+# define E_ALLOC "malloc failed in "
 # define E_READ "read failed in "
 # define E_GNL "get_next_line failed in "
 # define E_FORK "fork failed in "
+# define E_PIPE "pipe failed in "
+# define E_DUP2 "dup2 failed in "
+# define E_CLOSE "close failed in "
+# define E_WAITPID "waitpid failed in "
 # define CWD_INIT_CAP (100)
 # define MS_PERROR_INIT_CAP (100)
 
