@@ -1,13 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   run_cmd.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2020/10/20 13:27:35 by vtenneke      #+#    #+#                 */
+/*   Updated: 2020/10/20 13:27:35 by vtenneke      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cmd.h"
 #include "libft.h"
 #include "run_cmd.h"
 #include <minishell.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <env.h>
 
 static void	run_cmd_single(t_mshell *mshell, t_cmd cmd)
 {
+	char *last_exit;
+	
 	start_proc(mshell, cmd);
+	last_exit = ft_itoa(mshell->last_exit);
+	env_set(mshell, "?", last_exit, false);
+	free(last_exit);
 }
 
 static void dupclose_fd(int fd, int sec_fd)
@@ -51,6 +69,7 @@ static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 	prev_pipe = STDIN_FILENO;
 	while (i < cmd_count - 1)
 	{
+		replace_env(mshell, cmds[i]);
 		if (cmds[i].pipe == true)
 			if_pipe(mshell, pfds, prev_pipe, cmds[i]);
 		if (prev_pipe != STDIN_FILENO)
@@ -64,6 +83,7 @@ static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 	}
 	std_in = dup(STDIN_FILENO);
 	dupclose_fd(prev_pipe, STDIN_FILENO);
+	replace_env(mshell, cmds[i]);
 	run_cmd_single(mshell, cmds[i]);
 	dup2(std_in, STDIN_FILENO);
 }
