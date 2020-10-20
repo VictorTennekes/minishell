@@ -87,9 +87,12 @@ static char *subst_env(t_mshell *mshell, char **command, char *pos, char *to_fin
 	ft_strlcpy(to_find, pos, len + 1);
 	len += pos - *command;
 	replace = loop_env(mshell, to_find + 1);
+	if (!replace)
+		error(SHELL "'subst_env'", mshell);
 	*command = replace_str_single(*command, to_find, pos, replace);
 	len = (len - ft_strlen(to_find)) + ft_strlen(replace);
-	free (replace);
+	if (ft_strlen(replace) > 0)
+		free (replace);
 	if (!ft_strchr(*command + len - 1, '$'))
 		return (NULL);
 	pos = ft_strchr(*command + len - 1, '$');
