@@ -19,33 +19,40 @@ static void dupclose_fd(int fd, int sec_fd)
 	}
 }
 
+static void	if_pipe(t_mshell *mshell, int *pfds, int prev_pipe, t_cmd cmd)
+{
+	int pipe_ret;
+	int pid;
+
+	pipe_ret = pipe(pfds);
+	if (pipe_ret == -1)
+		error(E_PIPE "'run_cmds'", mshell);
+	pid = fork();
+	if (pid == -1)
+		error(E_FORK "'run_cmds'", mshell);
+	if (pid == 0)
+	{
+		dupclose_fd(prev_pipe, STDIN_FILENO);
+		dup2(pfds[1], STDOUT_FILENO);
+		close(pfds[1]);
+		run_cmd_single(mshell, cmd);
+		exit(1);
+	}
+}
+
 static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 {
 	size_t	i;
 	int		pfds[2];
 	int		prev_pipe;
 	int		std_in;
-	int		pid;
 
 	i = 0;
 	prev_pipe = STDIN_FILENO;
 	while (i < cmd_count - 1)
 	{
 		if (cmds[i].pipe == true)
-		{
-			pipe(pfds);
-			pid = fork();
-			if (pid == -1)
-				error(E_FORK "'run_cmds'", mshell);
-			if (pid == 0)
-			{
-				dupclose_fd(prev_pipe, STDIN_FILENO);
-				dup2(pfds[1], STDOUT_FILENO);
-				close(pfds[1]);
-				run_cmd_single(mshell, cmds[i]);
-				exit(1);
-			}
-		}
+			if_pipe(mshell, pfds, prev_pipe, cmds[i]);
 		if (prev_pipe != STDIN_FILENO)
 			close(prev_pipe);
 		if (cmds[i].pipe == true)
