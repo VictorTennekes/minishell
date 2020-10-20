@@ -102,4 +102,5 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	}
 	run_cmds(mshell, cmds, cmd_count);
 	free_cmds(cmds, cmd_count);
+	free(cmds);
 }
