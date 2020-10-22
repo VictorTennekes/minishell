@@ -13,7 +13,7 @@
 #ifndef CMD_H
 # define CMD_H
 
-#include "liblist.h"
+# include "liblist.h"
 # include <libstring.h>
 
 typedef enum		e_redir_type {
