@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 11:11:18 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/04/28 19:45:40 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/15 11:45:17 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct	s_parser {
 	t_vla		curr_line;
 	t_vla		result;
 }				t_parser;
+
+typedef bool (*t_parser_check)(t_mshell *, t_cmd **, size_t *);
 
 /*
 **	Push a character to the end of the current word.
@@ -75,6 +77,8 @@ void			parser_end_word(t_mshell *mshell, t_parser *parser);
 void			parser_new_cmd(t_mshell *mshell, t_parser *parser, bool init);
 
 void			parser_push_cmd(t_mshell *mshell, t_parser *parser);
+
+void			parser_check(t_mshell *mshell, t_cmd **result, size_t *cmd_count);
 
 /*
 **	All of the cases for the parser. Every case corresponds to a single, or

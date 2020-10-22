@@ -6,27 +6,15 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 16:33:21 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/08/24 18:25:37 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/09 14:54:19 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CMD_H
 # define CMD_H
 
+# include "liblist.h"
 # include <libstring.h>
-
-typedef struct		s_redir_file {
-	t_string		redir_filename;
-	int				redir_type;
-}					t_redir_file;
-
-typedef struct		s_cmd {
-	uint32_t		argc;
-	t_string		*argv;
-	t_redir_file	*redir_files;
-	uint32_t		redir_count;
-	bool			pipe;
-}					t_cmd;
 
 typedef enum		e_redir_type {
 	WRITE = 0,
@@ -34,10 +22,22 @@ typedef enum		e_redir_type {
 	INPUT = 2,
 }					t_redir_type;
 
-/*
-**	The `redir_filenames` act are the filenames for the redirections defined in
-**	`t_redir_type`. If one of these strings are not empty, it means that the
-**	redirection should be performed.
-*/
+typedef struct		s_redir_file {
+	t_string		redir_filename;
+	t_redir_type	redir_type;
+}					t_redir_file;
+
+typedef struct		s_cmd {
+	size_t			argc;
+	t_string		*argv;
+	t_redir_file	*redir_files;
+	size_t			redir_count;
+	bool			pipe;
+}					t_cmd;
+
+typedef struct		s_cmd_directions {
+	bool	has_redirect[3];
+	int		redirect_fd[3];
+}					t_cmd_directions;
 
 #endif
