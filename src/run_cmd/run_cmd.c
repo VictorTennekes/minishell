@@ -19,24 +19,45 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+static void	run_child_builtin(t_mshell *mshell, t_builtin_func builtin,
+		t_cmd cmd)
+{
+	int	exit_status;
+
+	handle_redirs(mshell, cmd);
+	exit_status = builtin(mshell, cmd);
+	ms_free(mshell);
+	exit(exit_status);
+}
+
 static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds, size_t cmd_count)
 {
 	char			*last_exit;
 	char			*path;
 	int				exit_status;
 	t_builtin_func	builtin;
+	int				pid;
 
 	path = path_find_file(mshell, cmd.argv[0].str, true);
 	builtin = find_builtin(cmd.argv[0]);
 	if (builtin)
 	{
-		exit_status = builtin(mshell, cmd);
-		if (cmd.pipe)
+		if (cmd.redir_count > 0)
 		{
-			free(path);
-			free_cmds(cmds, cmd_count);
-			ms_free(mshell);
-			exit(exit_status);
+			pid = fork();
+			if (pid == 0)
+				run_child_builtin(mshell, builtin, cmd);
+		}
+		else
+		{
+			exit_status = builtin(mshell, cmd);
+			if (cmd.pipe)
+			{
+				free(path);
+				free_cmds(cmds, cmd_count);
+				ms_free(mshell);
+				exit(exit_status);
+			}
 		}
 	}
 	else
