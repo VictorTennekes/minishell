@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/15 16:37:27 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/16 12:52:15 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/16 13:10:14 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ static void	run_child_builtin(t_mshell *mshell, t_builtin_func builtin,
 		t_cmd cmd)
 {
 	// TODO Some builtins should not run in a child
-	exit(builtin(mshell, cmd));
+	int	exit_status;
+
+	exit_status = builtin(mshell, cmd);
+	ms_free(mshell);
+	exit(exit_status);
 }
 
 static void	run_child_file(t_mshell *mshell, char *path, t_cmd cmd)
