@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/15 16:37:27 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/16 13:10:14 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/22 13:36:16 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void	run_child_builtin(t_mshell *mshell, t_builtin_func builtin,
-		t_cmd cmd)
-{
-	// TODO Some builtins should not run in a child
-	int	exit_status;
-
-	exit_status = builtin(mshell, cmd);
-	ms_free(mshell);
-	exit(exit_status);
-}
-
 static void	run_child_file(t_mshell *mshell, char *path, t_cmd cmd)
 {
 	char **argvp;
@@ -42,7 +31,7 @@ static void	run_child_file(t_mshell *mshell, char *path, t_cmd cmd)
 	if (argvp == NULL)
 		error(E_ALLOC "'run_child'", mshell);
 	envp = env_to_envp(mshell);
-	execve(path, argvp, envp);
+	execve(path == NULL ? cmd.argv[0].str : path, argvp, envp); // TODO check return
 }
 
 static void	start_proc_parent(t_mshell *mshell, pid_t pid, char *path)
@@ -55,34 +44,21 @@ static void	start_proc_parent(t_mshell *mshell, pid_t pid, char *path)
 	mshell->last_exit = exit_status;
 }
 
-static void	start_proc_child(t_mshell *mshell, t_cmd cmd,
-		t_builtin_func builtin, char *path)
+static void	start_proc_child(t_mshell *mshell, t_cmd cmd, char *path)
 {
 	handle_redirs(mshell, cmd);
-	if (builtin != NULL)
-		run_child_builtin(mshell, builtin, cmd);
-	else if (path != NULL)
-		run_child_file(mshell, path, cmd);
-	else
-	{
-		// TODO Handle error
-		exit(1);
-	}
+	run_child_file(mshell, path, cmd);
 }
 
-void		start_proc(t_mshell *mshell, t_cmd cmd)
+void		start_proc(t_mshell *mshell, t_cmd cmd, char *path)
 {
-	char			*path;
 	pid_t			pid;
-	t_builtin_func	builtin;
 
-	builtin = find_builtin(cmd.argv[0]);
-	path = path_find_file(mshell, cmd.argv[0].str, true);
 	pid = fork();
 	if (pid == -1)
 		error(E_FORK "'start_proc'", mshell);
 	if (pid == 0)
-		start_proc_child(mshell, cmd, builtin, path);
+		start_proc_child(mshell, cmd, path);
 	else
 		start_proc_parent(mshell, pid, path);
 }

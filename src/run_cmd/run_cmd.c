@@ -6,24 +6,43 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/20 13:27:35 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/10/20 13:27:35 by vtenneke      ########   odam.nl         */
+/*   Updated: 2020/10/22 13:49:33 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmd.h"
 #include "libft.h"
 #include "run_cmd.h"
+#include <env.h>
 #include <minishell.h>
+#include <path.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <env.h>
 
-static void	run_cmd_single(t_mshell *mshell, t_cmd cmd)
+static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds, size_t cmd_count)
 {
-	char *last_exit;
-	
-	start_proc(mshell, cmd);
-	last_exit = ft_itoa(mshell->last_exit);
+	char			*last_exit;
+	char			*path;
+	int				exit_status;
+	t_builtin_func	builtin;
+
+	path = path_find_file(mshell, cmd.argv[0].str, true);
+	builtin = find_builtin(cmd.argv[0]);
+	if (builtin)
+	{
+		exit_status = builtin(mshell, cmd);
+		if (cmd.pipe)
+		{
+			free(path);
+			free_cmds(cmds, cmd_count);
+			ms_free(mshell);
+			exit(exit_status);
+		}
+	}
+	else
+		start_proc(mshell, cmd, path);
+	exit_status = (builtin == NULL) ? mshell->last_exit : exit_status;
+	last_exit = ft_itoa(exit_status);
 	env_set(mshell, "?", last_exit, false);
 	free(last_exit);
 }
@@ -37,7 +56,8 @@ static void dupclose_fd(int fd, int sec_fd)
 	}
 }
 
-static void	if_pipe(t_mshell *mshell, int *pfds, int prev_pipe, t_cmd cmd)
+static void	if_pipe(t_mshell *mshell, int *pfds, int prev_pipe, t_cmd cmd,
+		t_cmd *cmds, size_t cmd_count)
 {
 	int pipe_ret;
 	int pid;
@@ -53,7 +73,7 @@ static void	if_pipe(t_mshell *mshell, int *pfds, int prev_pipe, t_cmd cmd)
 		dupclose_fd(prev_pipe, STDIN_FILENO);
 		dup2(pfds[1], STDOUT_FILENO);
 		close(pfds[1]);
-		run_cmd_single(mshell, cmd);
+		run_cmd_single(mshell, cmd, cmds, cmd_count);
 		exit(1);
 	}
 }
@@ -71,7 +91,7 @@ static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 	{
 		replace_env(mshell, cmds[i]);
 		if (cmds[i].pipe == true)
-			if_pipe(mshell, pfds, prev_pipe, cmds[i]);
+			if_pipe(mshell, pfds, prev_pipe, cmds[i], cmds, cmd_count);
 		if (prev_pipe != STDIN_FILENO)
 			close(prev_pipe);
 		if (cmds[i].pipe == true)
@@ -84,7 +104,7 @@ static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 	std_in = dup(STDIN_FILENO);
 	dupclose_fd(prev_pipe, STDIN_FILENO);
 	replace_env(mshell, cmds[i]);
-	run_cmd_single(mshell, cmds[i]);
+	run_cmd_single(mshell, cmds[i], cmds, cmd_count);
 	dup2(std_in, STDIN_FILENO);
 }
 
