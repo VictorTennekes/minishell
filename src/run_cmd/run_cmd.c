@@ -38,7 +38,7 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds, size_t cmd_
 	t_builtin_func	builtin;
 	int				pid;
 
-	(void)exit_status;
+	exit_status = 0;
 	path = path_find_file(mshell, cmd.argv[0].str, true);
 	builtin = find_builtin(cmd.argv[0]);
 	if (builtin)
@@ -60,6 +60,7 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds, size_t cmd_
 				exit(exit_status);
 			}
 		}
+		free(path);
 	}
 	else
 		start_proc(mshell, cmd, path);
