@@ -31,7 +31,8 @@ static void	run_child_file(t_mshell *mshell, char *path, t_cmd cmd)
 	if (argvp == NULL)
 		error(E_ALLOC "'run_child'", mshell);
 	envp = env_to_envp(mshell);
-	execve(path == NULL ? cmd.argv[0].str : path, argvp, envp); // TODO check return
+	if (execve(path == NULL ? cmd.argv[0].str : path, argvp, envp) == -1)
+		error("Unknown command", mshell);
 }
 
 static void	start_proc_parent(t_mshell *mshell, pid_t pid, char *path)
