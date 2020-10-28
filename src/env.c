@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 18:22:43 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/06/02 15:51:17 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 14:09:07 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,25 +82,6 @@ static t_env	*env_new(t_mshell *mshell, char *name, char *value,
 	if (lst_new_back(&mshell->env, new) == NULL)
 		error(E_ALLOC "'env_new'", mshell);
 	return (new);
-}
-
-/*
-**	Free all of the envp elements in case of error.
-**
-**	@param {char *[]} envp
-*/
-
-static void		env_to_envp_free(char *envp[])
-{
-	size_t	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		free(envp[i]);
-		i++;
-	}
-	free(envp);
 }
 
 /*
@@ -219,7 +200,7 @@ char		**env_to_envp(t_mshell *mshell)
 					cur_env->value.len + 2));
 		if (!res[i])
 		{
-			env_to_envp_free(res);
+			free_str_arr(res);
 			error(E_ALLOC "'env_to_envp'", mshell);
 		}
 		ft_sprintf(res[i], "%s=%s", cur_env->name.str, cur_env->value.str);
