@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/20 13:27:35 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/10/22 13:49:33 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 14:45:31 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	run_child_builtin(t_mshell *mshell, t_builtin_func builtin,
 
 	handle_redirs(mshell, cmd);
 	exit_status = builtin(mshell, cmd);
+	if (exit_status)
+		ms_perror(mshell);
 	ms_free(mshell);
 	exit(exit_status);
 }
@@ -52,6 +54,8 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds, size_t cmd_
 		else
 		{
 			exit_status = builtin(mshell, cmd);
+			if (exit_status)
+				ms_perror(mshell);
 			if (cmd.pipe)
 			{
 				free(path);

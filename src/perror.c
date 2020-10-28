@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 16:49:01 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/28 14:30:01 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 14:38:20 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char				*g_ermsgs[] = {
 	[ENO_USET] = "cannot unset: readonly variable",
 	[ENO_UNEXTOK] = "unexpected token",
 	[ENO_UNEXEOF] = "unexpected end of file",
+	[ENO_NOFILE] = "No such file or directory",
 };
 
 static t_string	ms_strerror(t_mshell *mshell)

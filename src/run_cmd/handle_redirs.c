@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/16 12:47:45 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/16 13:02:40 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 14:37:57 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <libft.h>
 #include <minishell.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 t_redir_spec	g_redir_specs[] = {
@@ -54,7 +55,11 @@ void	open_files(t_mshell *mshell, t_cmd cmd, t_cmd_directions *directions)
 		directions->redirect_fd[cur_redir.redir_type] =
 			open(cur_redir.redir_filename.str, cur_spec.oflags, cur_spec.omode);
 		if (directions->redirect_fd[cur_redir.redir_type] == -1)
-			error("failed to open file", mshell); // TODO
+		{
+			ms_set_error(mshell, ENO_NOFILE, cur_redir.redir_filename.str);
+			ms_perror(mshell);
+			exit(1);
+		}
 		i++;
 	}
 }

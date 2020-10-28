@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:15:57 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/15 15:01:34 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 14:35:49 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ enum				e_errno {
 	ENO_USET = 6,
 	ENO_UNEXTOK = 7,
 	ENO_UNEXEOF = 8,
+	ENO_NOFILE = 9,
 };
 
 typedef struct	s_mshell {
