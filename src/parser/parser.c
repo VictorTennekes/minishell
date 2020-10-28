@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 19:49:13 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/15 11:33:25 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 16:22:06 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_parser_case	g_parser_cases[] = {
 	{ '\t',	parser_case_whitespace },
 	{ '\'',	parser_case_squote },
 	{ '\"',	parser_case_dquote },
+	{ '\\',	parser_case_escape },
 	{ ';',	parser_case_semicolon },
 	{ '|',	parser_case_pipe },
 	{ '>',	parser_case_write },
