@@ -6,15 +6,17 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 16:49:01 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/15 11:31:43 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 14:30:01 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <errno.h>
 #include <libftprintf.h>
 #include <minishell.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 char				*g_ermsgs[] = {
 	[ENO_INVID] = "not a valid identifier",
@@ -79,13 +81,16 @@ void			ms_perror(t_mshell *mshell)
 		errstr = strerror(errno);
 	else
 		errstr = ms_strerror(mshell).str;
+	ft_putstr_fd(SHELL, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
 	if (mshell->ms_err_procname.len > 0)
 	{
-		ft_printf("%s: %s: %s\n", SHELL, mshell->ms_err_procname.str, errstr);
-		string_free(&mshell->ms_err_procname);
+		ft_putstr_fd(mshell->ms_err_procname.str, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	else
-		ft_printf("%s: %s\n", SHELL, errstr);
+	string_free(&mshell->ms_err_procname);
+	ft_putstr_fd(errstr, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 	if (!mshell->ms_stderrno)
 		free(errstr);
 	else
