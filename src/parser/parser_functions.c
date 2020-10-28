@@ -53,13 +53,7 @@ void		parser_end_word(t_mshell *mshell, t_parser *parser)
 	if (string_shrink(parser->curr_word))
 		error(E_ALLOC "'parser_end_word'", mshell);
 	if (parser->expand_env)
-	{
 		replace_env(mshell, parser->curr_word);
-		// env = env_get(mshell, parser->curr_word->str);
-		// string_reset(parser->curr_word, true);
-		// if (env)
-		// 	string_push(parser->curr_word, env->value.str);
-	}
 	parser->expand_env = false;
 	parser->curr_word = NULL;
 	parser->end_word = false;
