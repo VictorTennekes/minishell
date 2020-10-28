@@ -99,20 +99,14 @@ static char *subst_env(t_mshell *mshell, char **command, char *pos, char *to_fin
 	return (pos);
 }
 
-void		replace_env(t_mshell *mshell, t_cmd cmd)
+void		replace_env(t_mshell *mshell, t_string *str)
 {
-	size_t	j;
 	char	*pos;
 	char	*to_find;
 
-	j = 0;
-	while (j < cmd.argc)
-	{
-		to_find = malloc(sizeof(char) * cmd.argv[j].len + 1);
-		pos = ft_strchr(cmd.argv[j].str, '$');
-		while (pos)
-			pos = subst_env(mshell, &cmd.argv[j].str, pos, to_find);
-		free(to_find);
-		j++;
-	}
+	to_find = malloc(sizeof(char) * str->len + 1);
+	pos = ft_strchr(str->str, '$');
+	while (pos)
+		pos = subst_env(mshell, &str->str, pos, to_find);
+	free(to_find);
 }

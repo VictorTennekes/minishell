@@ -26,6 +26,7 @@ t_parser_case	g_parser_cases[] = {
 	{ '|',	parser_case_pipe },
 	{ '>',	parser_case_write },
 	{ '<',	parser_case_input },
+	{ '$',	parser_case_env },
 	{ 42,	NULL },
 };
 
@@ -84,10 +85,7 @@ t_cmd		*parser(t_mshell *mshell, char *cmd, size_t *cmd_count)
 	while (42)
 	{
 		if (parser_step(mshell, &parser, cmd[i]))
-		{
-			ms_perror(mshell);
 			return (NULL);
-		}
 		if (parser.new_word)
 			parser_new_word(mshell, &parser);
 		if (parser.end_word)

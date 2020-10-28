@@ -20,7 +20,10 @@ bool	parser_case_end(t_mshell *mshell, t_parser *parser, char c)
 	if (parser->in_word)
 		parser->end_word = true;
 	if (parser->in_dquote || parser->in_squote)
+	{
+		mshell->ms_errno = ENO_UNEXEOF;
 		return (true);
+	}
 	parser->done = true;
 	return (false);
 }
@@ -143,5 +146,12 @@ bool	parser_case_input(t_mshell *mshell, t_parser *parser, char c)
 		parser->redir = true;
 		parser->redir_type = INPUT;
 	}
+	return (false);
+}
+
+bool	parser_case_env(t_mshell *mshell, t_parser *parser, char c)
+{
+	parser->expand_env = !parser->in_squote;
+	parser_case_rest(mshell, parser, c);
 	return (false);
 }
