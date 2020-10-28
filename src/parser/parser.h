@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 11:11:18 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/15 11:45:17 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 16:23:03 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct	s_parser {
 	int			redir_type;
 	bool		pipe;
 	bool		expand_env;
+	bool		escaped;
 	t_string	*curr_word;
 	t_vla		redir_files;
 	t_vla		curr_cmd;
@@ -103,6 +104,7 @@ bool			parser_case_pipe(t_mshell *mshell, t_parser *parser, char c);
 bool			parser_case_write(t_mshell *mshell, t_parser *parser, char c);
 bool			parser_case_input(t_mshell *mshell, t_parser *parser, char c);
 bool			parser_case_env(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_escape(t_mshell *mshell, t_parser *parser, char c);
 
 typedef struct	s_parser_case {
 	char	c;
