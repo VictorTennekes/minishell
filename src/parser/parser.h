@@ -38,7 +38,6 @@ typedef struct	s_parser {
 	t_string	*curr_word;
 	t_vla		redir_files;
 	t_vla		curr_cmd;
-	t_vla		curr_line;
 	t_vla		result;
 }				t_parser;
 
