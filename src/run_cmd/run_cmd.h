@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/16 12:56:01 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/16 12:56:53 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/22 13:33:15 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void			free_cmds(t_cmd *cmds, size_t cmd_count);
 void			handle_redir_files(t_mshell *mshell, t_redir_file *redir_files,
 		size_t redir_count, t_cmd_directions *directions);
 t_builtin_func	find_builtin(t_string name);
-void			start_proc(t_mshell *mshell, t_cmd cmd);
+void			start_proc(t_mshell *mshell, t_cmd cmd, char *path);
 void			handle_redirs(t_mshell *mshell, t_cmd cmd);
 
 #endif
