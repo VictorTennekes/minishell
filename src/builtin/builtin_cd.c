@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 22:26:06 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 16:38:42 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 14:43:00 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ bool	builtin_cd(t_mshell *mshell, t_cmd cmd)
 	cwd = get_cwd(mshell);
 	env_set(mshell, "PWD", cwd, false);
 	free(cwd);
-	return (0);
+	return (false);
 }
