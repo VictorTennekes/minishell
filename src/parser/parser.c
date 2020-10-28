@@ -15,6 +15,7 @@
 #include <libvla.h>
 #include <minishell.h>
 #include <stdlib.h>
+#include "../run_cmd/run_cmd.h"
 
 t_parser_case	g_parser_cases[] = {
 	{ '\0',	parser_case_end },
@@ -26,6 +27,7 @@ t_parser_case	g_parser_cases[] = {
 	{ '|',	parser_case_pipe },
 	{ '>',	parser_case_write },
 	{ '<',	parser_case_input },
+	{ '$',	parser_case_env },
 	{ 42,	NULL },
 };
 
@@ -73,6 +75,18 @@ static t_cmd	*parser_return(t_mshell *mshell, t_parser *parser,
 	return(result);
 }
 
+static t_cmd	*parser_free(t_mshell *mshell, t_parser *parser)
+{
+	t_cmd	*result;
+	size_t	cmd_count;
+
+	result = parser_return(mshell, parser, &cmd_count);
+	if (result)
+		free_cmds(result, cmd_count);
+	free(parser->result.vla);
+	return (NULL);
+}
+
 t_cmd		*parser(t_mshell *mshell, char *cmd, size_t *cmd_count)
 {
 	t_parser	parser;
@@ -84,10 +98,7 @@ t_cmd		*parser(t_mshell *mshell, char *cmd, size_t *cmd_count)
 	while (42)
 	{
 		if (parser_step(mshell, &parser, cmd[i]))
-		{
-			ms_perror(mshell);
-			return (NULL);
-		}
+			return(parser_free(mshell, &parser));
 		if (parser.new_word)
 			parser_new_word(mshell, &parser);
 		if (parser.end_word)

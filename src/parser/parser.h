@@ -34,10 +34,10 @@ typedef struct	s_parser {
 	bool		redir;
 	int			redir_type;
 	bool		pipe;
+	bool		expand_env;
 	t_string	*curr_word;
 	t_vla		redir_files;
 	t_vla		curr_cmd;
-	t_vla		curr_line;
 	t_vla		result;
 }				t_parser;
 
@@ -102,7 +102,7 @@ bool			parser_case_semicolon(t_mshell *mshell, t_parser *parser,
 bool			parser_case_pipe(t_mshell *mshell, t_parser *parser, char c);
 bool			parser_case_write(t_mshell *mshell, t_parser *parser, char c);
 bool			parser_case_input(t_mshell *mshell, t_parser *parser, char c);
-
+bool			parser_case_env(t_mshell *mshell, t_parser *parser, char c);
 
 typedef struct	s_parser_case {
 	char	c;

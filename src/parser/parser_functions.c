@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 14:02:02 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/04/28 20:08:31 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 15:53:31 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <libft.h>
 #include <libstring.h>
 #include <minishell.h>
+#include <env.h>
 
 void		parser_push(t_mshell *mshell, t_parser *parser, char c)
 {
@@ -51,6 +52,9 @@ void		parser_end_word(t_mshell *mshell, t_parser *parser)
 {
 	if (string_shrink(parser->curr_word))
 		error(E_ALLOC "'parser_end_word'", mshell);
+	if (parser->expand_env)
+		replace_env(mshell, parser->curr_word);
+	parser->expand_env = false;
 	parser->curr_word = NULL;
 	parser->end_word = false;
 	parser->in_word = false;

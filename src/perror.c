@@ -77,7 +77,6 @@ void			ms_perror(t_mshell *mshell)
 {
 	char	*errstr;
 
-	//TODO: stderr
 	if (mshell->ms_stderrno)
 		errstr = strerror(errno);
 	else

@@ -116,7 +116,6 @@ static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 	prev_pipe = STDIN_FILENO;
 	while (i < cmd_count - 1)
 	{
-		replace_env(mshell, cmds[i]);
 		if (cmds[i].pipe == true)
 			if_pipe(mshell, pfds, prev_pipe, cmds[i], cmds, cmd_count);
 		if (prev_pipe != STDIN_FILENO)
@@ -130,7 +129,6 @@ static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 	}
 	std_in = dup(STDIN_FILENO);
 	dupclose_fd(prev_pipe, STDIN_FILENO);
-	replace_env(mshell, cmds[i]);
 	run_cmd_single(mshell, cmds[i], cmds, cmd_count);
 	dup2(std_in, STDIN_FILENO);
 }
