@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/15 16:37:27 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/22 13:36:16 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/28 14:14:12 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,28 @@
 
 static void	run_child_file(t_mshell *mshell, char *path, t_cmd cmd)
 {
-	char **argvp;
-	char **envp;
+	char	**argvp;
+	char	**envp;
+	char	*procname;
 
 	argvp = string_to_array(cmd.argc, cmd.argv);
 	if (argvp == NULL)
 		error(E_ALLOC "'run_child'", mshell);
 	envp = env_to_envp(mshell);
+	procname = ft_strdup(cmd.argv[0].str);
+	if (procname == NULL)
+		error(E_ALLOC "'run_child_file'", mshell);
 	if (execve(path == NULL ? cmd.argv[0].str : path, argvp, envp) == -1)
-		error("Unknown command", mshell);
+	{
+		free_str_arr(envp);
+		free_str_arr(argvp);
+		free(path);
+		ms_set_error(mshell, ENO_INVCMD, procname);
+		free(procname);
+		ms_perror(mshell);
+		ms_free(mshell);
+		exit(1);
+	}
 }
 
 static void	start_proc_parent(t_mshell *mshell, pid_t pid, char *path)
