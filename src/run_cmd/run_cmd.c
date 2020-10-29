@@ -19,40 +19,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	run_child_builtin(t_mshell *mshell, t_builtin_func builtin,
-		t_cmd cmd)
-{
-	int	exit_status;
-
-	handle_redirs(mshell, cmd);
-	exit_status = builtin(mshell, cmd);
-	if (exit_status)
-		ms_perror(mshell);
-	ms_free(mshell);
-	exit(exit_status);
-}
-
-static bool	handle_builtin(t_mshell *mshell, t_cmd cmd,
-		int *exit_status, t_builtin_func builtin)
-{
-	if (cmd.redir_count > 0)
-	{
-		if (fork() == 0)
-			run_child_builtin(mshell, builtin, cmd);
-	}
-	else
-	{
-		*exit_status = builtin(mshell, cmd);
-		if (exit_status)
-			ms_perror(mshell);
-		if (cmd.pipe)
-			return (true);
-	}
-	return (false);
-}
-
-static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds,
-		size_t cmd_count)
+static void	run_cmd_single(t_mshell *mshell, t_cmd cmd,
+		t_cmd *cmds, size_t cmd_count)
 {
 	char			*exit_string;
 	char			*path;
@@ -64,14 +32,13 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds,
 	builtin = find_builtin(cmd.argv[0]);
 	if (builtin)
 	{
-		if (handle_builtin(mshell, cmd, &exit_status, builtin))
+		free(path);
+		if (handle_builtin(mshell, cmd, builtin, &exit_status))
 		{
-			free(path);
 			free_cmds(cmds, cmd_count);
 			ms_free(mshell);
 			exit(exit_status);
 		}
-		free(path);
 	}
 	else
 		start_proc(mshell, cmd, path);
@@ -81,22 +48,13 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds,
 	free(exit_string);
 }
 
-static void dupclose_fd(int fd, int sec_fd)
-{
-	if (fd != sec_fd)
-	{
-		dup2(fd, sec_fd);
-		close(fd);
-	}
-}
-
-static void	if_pipe(t_mshell *mshell, int *pfds, int prev_pipe, t_cmd cmd,
+void		if_pipe(t_mshell *mshell, t_pipe_info *pipe_data,
 		t_cmd *cmds, size_t cmd_count)
 {
 	int pipe_ret;
 	int pid;
 
-	pipe_ret = pipe(pfds);
+	pipe_ret = pipe(pipe_data->pfds);
 	if (pipe_ret == -1)
 		error(E_PIPE "'run_cmds'", mshell);
 	pid = fork();
@@ -104,38 +62,38 @@ static void	if_pipe(t_mshell *mshell, int *pfds, int prev_pipe, t_cmd cmd,
 		error(E_FORK "'run_cmds'", mshell);
 	if (pid == 0)
 	{
-		dupclose_fd(prev_pipe, STDIN_FILENO);
-		dup2(pfds[1], STDOUT_FILENO);
-		close(pfds[1]);
-		run_cmd_single(mshell, cmd, cmds, cmd_count);
+		dupclose_fd(pipe_data->prev_pipe, STDIN_FILENO);
+		dup2(pipe_data->pfds[1], STDOUT_FILENO);
+		close(pipe_data->pfds[1]);
+		run_cmd_single(mshell, pipe_data->cmd, cmds, cmd_count);
 		exit(1);
 	}
 }
 
 static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 {
-	size_t	i;
-	int		pfds[2];
-	int		prev_pipe;
-	int		std_in;
+	size_t		i;
+	t_pipe_info	pipe_data;
+	int			std_in;
 
 	i = 0;
-	prev_pipe = STDIN_FILENO;
+	pipe_data.prev_pipe = STDIN_FILENO;
 	while (i < cmd_count - 1)
 	{
+		pipe_data.cmd = cmds[i];
 		if (cmds[i].pipe == true)
-			if_pipe(mshell, pfds, prev_pipe, cmds[i], cmds, cmd_count);
-		if (prev_pipe != STDIN_FILENO)
-			close(prev_pipe);
+			if_pipe(mshell, &pipe_data, cmds, cmd_count);
+		if (pipe_data.prev_pipe != STDIN_FILENO)
+			close(pipe_data.prev_pipe);
 		if (cmds[i].pipe == true)
 		{
-			close(pfds[1]);
-			prev_pipe = pfds[0];
+			close(pipe_data.pfds[1]);
+			pipe_data.prev_pipe = pipe_data.pfds[0];
 		}
 		i++;
 	}
 	std_in = dup(STDIN_FILENO);
-	dupclose_fd(prev_pipe, STDIN_FILENO);
+	dupclose_fd(pipe_data.prev_pipe, STDIN_FILENO);
 	run_cmd_single(mshell, cmds[i], cmds, cmd_count);
 	dup2(std_in, STDIN_FILENO);
 }

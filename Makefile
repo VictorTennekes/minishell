@@ -45,11 +45,13 @@ SRCS			=	\
 					parser/parser_functions\
 					path\
 					perror\
+					perror_utils\
 					prompt\
 					run_cmd/find_builtin\
 					run_cmd/free_cmds\
 					run_cmd/handle_redirs\
 					run_cmd/run_cmd\
+					run_cmd/run_cmd_utils\
 					run_cmd/start_proc\
 					signal\
 					utils/free_str_arr\

@@ -16,10 +16,17 @@
 # include <minishell.h>
 
 typedef struct	s_redir_spec {
-	int	target;
-	int	oflags;
-	int	omode;
+	int			target;
+	int			oflags;
+	int			omode;
 }				t_redir_spec;
+
+typedef struct	s_pipe_info {
+	int			pfds[2];
+	int			prev_pipe;
+	t_cmd		cmd;
+}				t_pipe_info;
+
 
 void			free_cmds(t_cmd *cmds, size_t cmd_count);
 void			handle_redir_files(t_mshell *mshell, t_redir_file *redir_files,
@@ -27,5 +34,9 @@ void			handle_redir_files(t_mshell *mshell, t_redir_file *redir_files,
 t_builtin_func	find_builtin(t_string name);
 void			start_proc(t_mshell *mshell, t_cmd cmd, char *path);
 void			handle_redirs(t_mshell *mshell, t_cmd cmd);
+
+bool		handle_builtin(t_mshell *mshell, t_cmd cmd, t_builtin_func builtin, int *exit_status);
+void		if_pipe(t_mshell *mshell, t_pipe_info *pipe_data, t_cmd *cmds, size_t cmd_count);
+void		dupclose_fd(int fd, int sec_fd);
 
 #endif
