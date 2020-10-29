@@ -29,8 +29,8 @@
 # define E_DUP2 "dup2 failed in "
 # define E_CLOSE "close failed in "
 # define E_WAITPID "waitpid failed in "
-# define CWD_INIT_CAP (100)
-# define MS_PERROR_INIT_CAP (100)
+# define CWD_INIT_CAP 100
+# define MS_PERROR_INIT_CAP 100
 
 typedef uint32_t	t_errno;
 
@@ -46,61 +46,64 @@ enum				e_errno {
 	ENO_NOFILE = 9,
 };
 
-typedef struct	s_mshell {
-	t_list		*env;
-	t_list		*path;
-	t_errno		ms_errno;
-	t_string	ms_err_procname;
-	bool		ms_stderrno;
-	int			last_exit;
-	bool		signal;
-}				t_mshell;
+typedef struct		s_mshell {
+	t_list			*env;
+	t_list			*path;
+	t_errno			ms_errno;
+	t_string		ms_err_procname;
+	bool			ms_stderrno;
+	int				last_exit;
+	bool			signal;
+}					t_mshell;
 
 /*
 **	Builtin functions.
 */
 
-bool		builtin_cd(t_mshell *mshell, t_cmd cmd);
-bool		builtin_echo(t_mshell *mshell, t_cmd cmd);
-bool		builtin_env(t_mshell *mshell, t_cmd cmd);
-bool		builtin_exit(t_mshell *mshell, t_cmd cmd);
-bool		builtin_export(t_mshell *mshell, t_cmd cmd);
-bool		builtin_pwd(t_mshell *mshell, t_cmd cmd);
-bool		builtin_unset(t_mshell *mshell, t_cmd cmd);
+bool				builtin_cd(t_mshell *mshell, t_cmd cmd);
+bool				builtin_echo(t_mshell *mshell, t_cmd cmd);
+bool				builtin_env(t_mshell *mshell, t_cmd cmd);
+bool				builtin_exit(t_mshell *mshell, t_cmd cmd);
+bool				builtin_export(t_mshell *mshell, t_cmd cmd);
+bool				builtin_pwd(t_mshell *mshell, t_cmd cmd);
+bool				builtin_unset(t_mshell *mshell, t_cmd cmd);
 
 /*
 **	A struct for storing all builtin commands and their corresponding
 **	functions.
 */
 
-typedef bool (*t_builtin_func)(t_mshell *, t_cmd);
+typedef	bool		(*t_builtin_func)(t_mshell *, t_cmd);
 
-typedef struct	s_builtin {
+typedef struct		s_builtin {
 	char			*cmd;
 	t_builtin_func	func;
-}				t_builtin;
+}					t_builtin;
 
-bool		ms_set_error(t_mshell *mshell, t_errno ms_errno, char *procname);
-bool		ms_set_error_from_no(t_mshell *mshell, char *procname, char *err);
-t_cmd		*parser(t_mshell *mshell, char *cmd, size_t *cmd_count);
-char		*get_cmd(t_mshell *mshell);
-void		error(char *msg, t_mshell *mshell);
-void		init(t_mshell *mshell);
-void		ms_free(t_mshell *mshell);
-void		ms_perror(t_mshell *mshell);
-void		ms_set_procname(t_mshell *mshell, char *procname);
-void		ms_set_procname_err(t_mshell *mshell, char *procname, char *err);
-void		prompt(t_mshell *mshell);
-void		run_cmd(t_mshell *mshell, char *cmd);
+bool				ms_set_error(t_mshell *mshell, t_errno ms_errno,
+					char *procname);
+bool				ms_set_error_from_no(t_mshell *mshell, char *procname,
+					char *err);
+t_cmd				*parser(t_mshell *mshell, char *cmd, size_t *cmd_count);
+char				*get_cmd(t_mshell *mshell);
+void				error(char *msg, t_mshell *mshell);
+void				init(t_mshell *mshell);
+void				ms_free(t_mshell *mshell);
+void				ms_perror(t_mshell *mshell);
+void				ms_set_procname(t_mshell *mshell, char *procname);
+void				ms_set_procname_err(t_mshell *mshell, char *procname,
+					char *err);
+void				prompt(t_mshell *mshell);
+void				run_cmd(t_mshell *mshell, char *cmd);
 
 /*
 **	Utils
 */
 
-char		*get_cwd(t_mshell *mshell);
-void		*zalloc(size_t size);
-void		print_env(t_mshell *mshell, char *prefix);
-void		init_signal(t_mshell *mshell);
-char    	**free_str_arr(char **str);
+char				*get_cwd(t_mshell *mshell);
+void				*zalloc(size_t size);
+void				print_env(t_mshell *mshell, char *prefix);
+void				init_signal(t_mshell *mshell);
+char				**free_str_arr(char **str);
 
 #endif
