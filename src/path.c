@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/01 20:15:16 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/06/03 21:08:16 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/29 13:05:39 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static bool	path_check_file(char *filename, bool executable)
 		return (false);
 	if (!executable)
 		return (true);
-	//TODO: check if the executing user has rights to execute
 	if (!(statbuf.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)))
 		return (false);
 	return (true);
@@ -79,7 +78,7 @@ static bool	path_check_file(char *filename, bool executable)
 **		file is found.
 */
 
-char	*path_find_file(t_mshell *mshell, char *name, bool executable)
+char		*path_find_file(t_mshell *mshell, char *name, bool executable)
 {
 	char		*cur_path;
 	t_list		*cur;
@@ -111,7 +110,7 @@ char	*path_find_file(t_mshell *mshell, char *name, bool executable)
 **	@return {char *} pointer to the new variable
 */
 
-char	*path_new(t_mshell *mshell, char *value, bool update_env)
+char		*path_new(t_mshell *mshell, char *value, bool update_env)
 {
 	char	*new;
 
@@ -139,7 +138,6 @@ void		path_update_from_env(t_mshell *mshell)
 
 	lst_destroy(mshell->path, free);
 	mshell->path = NULL;
-
 	path_env = env_get(mshell, "PATH");
 	if (!path_env)
 		error("tried to update path from env, but PATH is not set", mshell);
@@ -154,4 +152,3 @@ void		path_update_from_env(t_mshell *mshell)
 	}
 	free(splitted);
 }
-

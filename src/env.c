@@ -6,83 +6,15 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 18:22:43 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/28 14:09:07 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/29 13:27:34 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <bssert.h>
 #include <env.h>
 #include <libft.h>
 #include <libftprintf.h>
 #include <path.h>
 #include <stdlib.h>
-
-/*
-**	Used to free an envirnoment variable.
-**
-**	@param {t_env *} env
-*/
-
-void				env_free(t_env *env)
-{
-	string_free(&env->name);
-	string_free(&env->value);
-	free(env);
-}
-
-/*
-**	Check if the name of an environment variable is valid.
-**
-**	@param {char *} name
-**
-**	@return {int32_t} - The position of the error, or -1 if no error occured.
-*/
-
-static int32_t		env_check_name(char *name)
-{
-	int32_t	i;
-
-	i = 0;
-	
-	if (!ft_strcmp(name, "?"))
-		return(-1);
-	while (name[i])
-	{
-		if (!((name[i] >= 'a' && name[i] <= 'z') ||
-			(name[i] >= 'A' && name[i] <= 'Z') ||
-			(i != 0 && (name[i] >= '0' && name[i] <= '9')) ||
-			name[i] == '_'))
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-/*
-**	Add a new environment variable. Throws an error is any allocation fails.
-**
-**	@param {t_mshell *} mshell
-**	@param {char *} name
-**	@param {char *} value
-**	@param {bool} read_only
-**
-**	@return {t_env *} - a pointer to the new variable
-*/
-
-static t_env	*env_new(t_mshell *mshell, char *name, char *value,
-		bool read_only)
-{
-	t_env	*new;
-
-	new = zalloc(sizeof(t_env));
-	if (!new ||
-			string_from(name, &new->name) || string_from(value, &new->value))
-		error(E_ALLOC "'env_new'", mshell);
-	new->read_only = read_only;
-	if (lst_new_back(&mshell->env, new) == NULL)
-		error(E_ALLOC "'env_new'", mshell);
-	return (new);
-}
 
 /*
 **	Find an environment variable with the given name.
@@ -93,12 +25,11 @@ static t_env	*env_new(t_mshell *mshell, char *name, char *value,
 **	@return {t_env *} - NULL if no match is found
 */
 
-t_env			*env_get(t_mshell *mshell, char *name)
+t_env	*env_get(t_mshell *mshell, char *name)
 {
 	t_list	*cur;
 
 	cur = mshell->env;
-	bssert(cur);
 	while (cur)
 	{
 		if (!ft_strcmp(name, ((t_env *)cur->content)->name.str))
@@ -121,7 +52,8 @@ t_env			*env_get(t_mshell *mshell, char *name)
 **	@return {bool} - true if an error occured. ms_errno will be set.
 */
 
-bool			env_set(t_mshell *mshell, char *name, char *value, bool read_only)
+bool	env_set(t_mshell *mshell, char *name, char *value,
+		bool read_only)
 {
 	t_env	*env;
 
@@ -155,7 +87,7 @@ bool			env_set(t_mshell *mshell, char *name, char *value, bool read_only)
 **	@return {bool} - true if the variable be not unset because of read_only.
 */
 
-bool			env_unset(t_mshell *mshell, char *name, bool enforce_ro)
+bool	env_unset(t_mshell *mshell, char *name, bool enforce_ro)
 {
 	t_env	*env;
 	t_list	*parent;
@@ -181,7 +113,7 @@ bool			env_unset(t_mshell *mshell, char *name, bool enforce_ro)
 **	@return {char *[]}
 */
 
-char		**env_to_envp(t_mshell *mshell)
+char	**env_to_envp(t_mshell *mshell)
 {
 	char	**res;
 	size_t	i;

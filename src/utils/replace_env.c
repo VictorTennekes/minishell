@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 19:07:02 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/06/18 19:07:02 by vtenneke      ########   odam.nl         */
+/*   Updated: 2020/10/29 13:10:44 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <libft.h>
 #include <stdlib.h>
 
-static char		*replace_str_single(char *src, char *to_find, char *start,
+static char	*replace_str_single(char *src, char *to_find, char *start,
 									char *replace)
 {
 	size_t	to_find_len;
@@ -40,7 +40,7 @@ static char		*replace_str_single(char *src, char *to_find, char *start,
 	return (res);
 }
 
-static char		*loop_env(t_mshell *mshell, char *str)
+static char	*loop_env(t_mshell *mshell, char *str)
 {
 	t_list	*env_vars;
 	t_env	*env_tmp;
@@ -65,6 +65,7 @@ static char		*loop_env(t_mshell *mshell, char *str)
 int			valid_env_size(char *str)
 {
 	int i;
+
 	i = 1;
 	while (((str[i] >= 'a' && str[i] <= 'z') ||
 			(str[i] >= 'A' && str[i] <= 'Z') ||
@@ -74,10 +75,11 @@ int			valid_env_size(char *str)
 	return (i);
 }
 
-static char *subst_env(t_mshell *mshell, char **command, char *pos, char *to_find)
+static char	*subst_env(t_mshell *mshell, char **command, char *pos,
+		char *to_find)
 {
-	int len;
-	char *replace;
+	int		len;
+	char	*replace;
 
 	if (!to_find)
 		return (NULL);
@@ -92,7 +94,7 @@ static char *subst_env(t_mshell *mshell, char **command, char *pos, char *to_fin
 	*command = replace_str_single(*command, to_find, pos, replace);
 	len = (len - ft_strlen(to_find)) + ft_strlen(replace);
 	if (ft_strlen(replace) > 0)
-		free (replace);
+		free(replace);
 	if (!ft_strchr(*command + len - 1, '$'))
 		return (NULL);
 	pos = ft_strchr(*command + len - 1, '$');

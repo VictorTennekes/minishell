@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 14:02:02 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/28 15:53:31 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/29 13:32:23 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void		parser_new_word(t_mshell *mshell, t_parser *parser)
 		new_file.redir_type = parser->redir_type;
 		if (string_init(PARSER_INIT_WORD_CAP, NULL, &new_file.redir_filename))
 			error(E_ALLOC "'parser_new_word'", mshell);
-		if (vla_push(&parser->redir_files, &new_file.redir_filename, (void **)&new_loc))
+		if (vla_push(&parser->redir_files, &new_file.redir_filename,
+					(void **)&new_loc))
 			error(E_ALLOC "'parser_new_word'", mshell);
 		parser->redir = false;
 	}
@@ -84,7 +85,8 @@ void		parser_new_cmd(t_mshell *mshell, t_parser *parser, bool init)
 	if (vla_init(sizeof(t_string), PARSER_ARGV_INIT_CAP,
 				&parser->curr_cmd))
 		error(E_ALLOC "'parser_new_cmd'", mshell);
-	if (vla_init(sizeof(t_redir_file), PARSER_FILES_INIT_CAP, &parser->redir_files))
+	if (vla_init(sizeof(t_redir_file), PARSER_FILES_INIT_CAP,
+				&parser->redir_files))
 		error(E_ALLOC "'parser_new_cmd'", mshell);
 	parser->new_cmd = false;
 	parser->pipe = false;

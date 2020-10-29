@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/20 13:27:45 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/10/20 13:27:45 by vtenneke      ########   odam.nl         */
+/*   Updated: 2020/10/29 14:00:31 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,3 @@ void		free_cmds(t_cmd *cmds, size_t cmd_count)
 		i++;
 	}
 }
-

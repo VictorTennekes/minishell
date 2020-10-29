@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/20 13:27:35 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/10/28 14:45:31 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/29 13:59:53 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,44 @@ static void	run_child_builtin(t_mshell *mshell, t_builtin_func builtin,
 	exit(exit_status);
 }
 
-static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds, size_t cmd_count)
+static bool	handle_builtin(t_mshell *mshell, t_cmd cmd,
+		int *exit_status, t_builtin_func builtin)
+{
+	if (cmd.redir_count > 0)
+	{
+		if (fork() == 0)
+			run_child_builtin(mshell, builtin, cmd);
+	}
+	else
+	{
+		*exit_status = builtin(mshell, cmd);
+		if (exit_status)
+			ms_perror(mshell);
+		if (cmd.pipe)
+			return (true);
+	}
+	return (false);
+}
+
+static void	run_cmd_single(t_mshell *mshell, t_cmd cmd, t_cmd *cmds,
+		size_t cmd_count)
 {
 	char			*exit_string;
 	char			*path;
 	int				exit_status;
 	t_builtin_func	builtin;
-	int				pid;
 
 	exit_status = 0;
 	path = path_find_file(mshell, cmd.argv[0].str, true);
 	builtin = find_builtin(cmd.argv[0]);
 	if (builtin)
 	{
-		if (cmd.redir_count > 0)
+		if (handle_builtin(mshell, cmd, &exit_status, builtin))
 		{
-			pid = fork();
-			if (pid == 0)
-				run_child_builtin(mshell, builtin, cmd);
-		}
-		else
-		{
-			exit_status = builtin(mshell, cmd);
-			if (exit_status)
-				ms_perror(mshell);
-			if (cmd.pipe)
-			{
-				free(path);
-				free_cmds(cmds, cmd_count);
-				ms_free(mshell);
-				exit(exit_status);
-			}
+			free(path);
+			free_cmds(cmds, cmd_count);
+			ms_free(mshell);
+			exit(exit_status);
 		}
 		free(path);
 	}

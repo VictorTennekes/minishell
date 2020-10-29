@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 13:16:57 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/04/28 16:17:50 by vtenneke      ########   odam.nl         */
+/*   Updated: 2020/10/29 13:06:11 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool	cmd_exit(t_mshell *mshell)
 	return (false);
 }
 
-static void handle_ctrld(t_mshell *mshell, t_string *input, char *res, int ret)
+static void	handle_ctrld(t_mshell *mshell, t_string *input, char *res, int ret)
 {
 	if (mshell->signal == true)
 	{
@@ -50,7 +50,7 @@ static void handle_ctrld(t_mshell *mshell, t_string *input, char *res, int ret)
 	free(res);
 }
 
-char	*get_cmd(t_mshell *mshell)
+char		*get_cmd(t_mshell *mshell)
 {
 	char		*res;
 	t_string	input;
@@ -60,7 +60,7 @@ char	*get_cmd(t_mshell *mshell)
 		error(E_ALLOC "'get cmd'", mshell);
 	ret = get_next_line(0, &res);
 	while (ret >= 0)
-	{	
+	{
 		handle_ctrld(mshell, &input, res, ret);
 		if (ret == 1)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 17:19:26 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/28 14:08:54 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/29 13:26:09 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ t_env	*env_get(t_mshell *mshell, char *name);
 void	env_free(t_env *env);
 bool	export_single(t_mshell *mshell, char *arg);
 void	replace_env(t_mshell *mshell, t_string *str);
+int32_t	env_check_name(char *name);
+t_env	*env_new(t_mshell *mshell, char *name, char *value,
+		bool read_only);
 
 #endif

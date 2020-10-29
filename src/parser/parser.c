@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 19:49:13 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/28 16:22:06 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/29 13:34:59 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
 #include "../run_cmd/run_cmd.h"
 
 t_parser_case	g_parser_cases[] = {
-	{ '\0',	parser_case_end },
-	{ ' ',	parser_case_whitespace },
-	{ '\t',	parser_case_whitespace },
-	{ '\'',	parser_case_squote },
-	{ '\"',	parser_case_dquote },
-	{ '\\',	parser_case_escape },
-	{ ';',	parser_case_semicolon },
-	{ '|',	parser_case_pipe },
-	{ '>',	parser_case_write },
-	{ '<',	parser_case_input },
-	{ '$',	parser_case_env },
-	{ 42,	NULL },
+	{ '\0', parser_case_end },
+	{ ' ', parser_case_whitespace },
+	{ '\t', parser_case_whitespace },
+	{ '\'', parser_case_squote },
+	{ '\"', parser_case_dquote },
+	{ '\\', parser_case_escape },
+	{ ';', parser_case_semicolon },
+	{ '|', parser_case_pipe },
+	{ '>', parser_case_write },
+	{ '<', parser_case_input },
+	{ '$', parser_case_env },
+	{ 42, NULL },
 };
 
 static t_parser	parser_new(t_mshell *mshell)
@@ -73,7 +73,7 @@ static t_cmd	*parser_return(t_mshell *mshell, t_parser *parser,
 	*cmd_count = parser->result.size;
 	result = parser->result.vla;
 	parser_check(mshell, &result, cmd_count);
-	return(result);
+	return (result);
 }
 
 static t_cmd	*parser_free(t_mshell *mshell, t_parser *parser)
@@ -88,7 +88,7 @@ static t_cmd	*parser_free(t_mshell *mshell, t_parser *parser)
 	return (NULL);
 }
 
-t_cmd		*parser(t_mshell *mshell, char *cmd, size_t *cmd_count)
+t_cmd			*parser(t_mshell *mshell, char *cmd, size_t *cmd_count)
 {
 	t_parser	parser;
 	size_t		i;
@@ -99,7 +99,7 @@ t_cmd		*parser(t_mshell *mshell, char *cmd, size_t *cmd_count)
 	while (42)
 	{
 		if (parser_step(mshell, &parser, cmd[i]))
-			return(parser_free(mshell, &parser));
+			return (parser_free(mshell, &parser));
 		if (parser.new_word)
 			parser_new_word(mshell, &parser);
 		if (parser.end_word)

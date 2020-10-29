@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/23 13:07:19 by aaugusti      #+#    #+#                  #
-#    Updated: 2020/10/16 12:50:02 by aaugusti      ########   odam.nl          #
+#    Updated: 2020/10/29 13:44:20 by aaugusti      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,23 @@ SRCS			=	\
 					builtin/builtin_pwd\
 					builtin/builtin_unset\
 					env\
+					env_utils\
 					error\
 					free\
 					get_cmd\
 					init\
 					parser/parser\
-					parser/parser_cases\
+					parser/cases/parser_case_dquote\
+					parser/cases/parser_case_end\
+					parser/cases/parser_case_env\
+					parser/cases/parser_case_escape\
+					parser/cases/parser_case_input\
+					parser/cases/parser_case_pipe\
+					parser/cases/parser_case_rest\
+					parser/cases/parser_case_semicolon\
+					parser/cases/parser_case_squote\
+					parser/cases/parser_case_whitespace\
+					parser/cases/parser_case_write\
 					parser/parser_check\
 					parser/parser_functions\
 					path\
@@ -41,12 +52,9 @@ SRCS			=	\
 					run_cmd/run_cmd\
 					run_cmd/start_proc\
 					signal\
-					utils/bssert\
-					utils/file_wrapper\
 					utils/free_str_arr\
 					utils/get_cwd\
 					utils/replace_env\
-					utils/str_replace\
 					utils/zalloc\
 
 # Sources which are just needed for the bonus part
