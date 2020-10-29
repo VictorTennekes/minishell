@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/23 13:07:19 by aaugusti      #+#    #+#                  #
-#    Updated: 2020/10/29 13:44:20 by aaugusti      ########   odam.nl          #
+#    Updated: 2020/10/29 15:39:38 by aaugusti      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,18 +65,9 @@ BONUS_SRCS		=	\
 # These are files that need to be recompiled when the bonus is made
 BONUS_RECOMP	=	\
 
-TEST_SRCS		=	\
-					env/env\
-					parser/parser\
-					parser/parser_file\
-					parser/parser_rand\
-					parser/parser_single\
-
-
 OFILES			=	$(SRCS:%=src/%.o)
 BONUS_OFILES	=	$(BONUS_SRCS:%=src/%.o)
 BONUS_RECOMP_O	=	$(BONUS_RECOMP:%=src/%.o)
-TEST_OFILES		=	$(TEST_SRCS:%=tests/%.o)
 
 
 # Paths to the headeres which are needed
@@ -150,9 +141,6 @@ clean_bonus:
 $(NAME): $(TARGETS_EXTRA) $(TARGETS) src/main.o
 	$(CC) $(TARGETS) src/main.o $(FLAGS) -o $(NAME)
 
-test: $(NAME) $(LIB_SRCS) $(TEST_OFILES) tests/main.o
-	$(CC) $(TARGETS) $(TEST_OFILES) $(LIB_SRCS) tests/main.o $(FLAGS) -o test lib/libft/libft.a
-
 # Rule for compiling the bonus part of the program. We just remove the existing
 # executable and recompile the normal program with the BONUS env. variable set
 # to 1.
@@ -180,7 +168,7 @@ clean:
 	make clean -C lib/liblist
 	make clean -C lib/libstring
 	make clean -C lib/libvla
-	rm -f $(OFILES) $(BONUS_OFILES) $(TEST_OFILES) src/main.o tests/main.o
+	rm -f $(OFILES) $(BONUS_OFILES) src/main.o
 
 fclean: clean
 	make fclean -C lib/libft
@@ -189,9 +177,7 @@ fclean: clean
 	make fclean -C lib/liblist
 	make fclean -C lib/libstring
 	make fclean -C lib/libvla
-	rm -f $(NAME) test
+	rm -f $(NAME)
 	rm -f bonus
 
 re: fclean all
-
-testre: fclean test
