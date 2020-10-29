@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/15 16:37:27 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/28 14:14:12 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/29 15:36:06 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,27 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
+	#include <stdio.h>
+
+static void	free_and_exit(t_mshell *mshell, char *path, char *procname)
+{
+	bool	is_relative;
+
+	is_relative = ft_strchr(procname, '/') == NULL;
+	free(path);
+	if (is_relative)
+		ms_set_error(mshell, ENO_INVCMD, procname);
+	else
+	{
+		mshell->ms_stderrno = true;
+		ms_set_procname(mshell, procname);
+	}
+	free(procname);
+	ms_perror(mshell);
+	ms_free(mshell);
+	exit(1);
+}
 
 static void	run_child_file(t_mshell *mshell, char *path, t_cmd cmd)
 {
@@ -39,12 +60,7 @@ static void	run_child_file(t_mshell *mshell, char *path, t_cmd cmd)
 	{
 		free_str_arr(envp);
 		free_str_arr(argvp);
-		free(path);
-		ms_set_error(mshell, ENO_INVCMD, procname);
-		free(procname);
-		ms_perror(mshell);
-		ms_free(mshell);
-		exit(1);
+		free_and_exit(mshell, path, procname);
 	}
 }
 
