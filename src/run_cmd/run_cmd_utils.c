@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 14:57:09 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/10/29 14:57:09 by vtenneke      ########   odam.nl         */
+/*   Updated: 2020/10/29 15:10:56 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool		handle_builtin(t_mshell *mshell, t_cmd cmd,
 	return (false);
 }
 
-void	dupclose_fd(int fd, int sec_fd)
+void		dupclose_fd(int fd, int sec_fd)
 {
 	if (fd != sec_fd)
 	{
