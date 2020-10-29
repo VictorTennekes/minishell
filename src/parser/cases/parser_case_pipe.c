@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   zalloc.c                                           :+:    :+:            */
+/*   parser_case_pipe.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/29 13:15:46 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:15:47 by aaugusti      ########   odam.nl         */
+/*   Created: 2020/10/29 13:41:16 by aaugusti      #+#    #+#                 */
+/*   Updated: 2020/10/29 13:43:30 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
 #include <minishell.h>
-#include <stdlib.h>
+#include "../parser.h"
 
-/*
-**	Allocate a block of data and initialize it to be all 0.
-**
-**	@param {size_t} size
-**
-**	@return {void *} - NULL if malloc failed
-*/
-
-void	*zalloc(size_t size)
+bool	parser_case_pipe(t_mshell *mshell, t_parser *parser, char c)
 {
-	void	*res;
-
-	res = malloc(size);
-	if (!res)
-		return (NULL);
-	ft_bzero(res, size);
-	return (res);
+	if (parser->in_squote || parser->in_dquote)
+		parser_push(mshell, parser, c);
+	else
+	{
+		if (parser->in_word)
+			parser->end_word = true;
+		parser->new_cmd = true;
+		parser->pipe = true;
+	}
+	return (false);
 }

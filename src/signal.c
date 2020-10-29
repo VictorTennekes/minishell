@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/06/03 21:01:30 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/06/03 21:27:43 by aaugusti      ########   odam.nl         */
+/*   Created: 2020/10/29 13:44:52 by aaugusti      #+#    #+#                 */
+/*   Updated: 2020/10/29 13:45:40 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	signal_int(int sig)
 	prompt(g_mshell);
 }
 
-void	init_signal(t_mshell *mshell)
+void		init_signal(t_mshell *mshell)
 {
 	g_mshell = mshell;
 	if (signal(SIGINT, signal_int) == SIG_ERR)

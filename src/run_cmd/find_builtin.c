@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/20 13:27:50 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/10/20 13:27:50 by vtenneke      ########   odam.nl         */
+/*   Updated: 2020/10/29 13:52:30 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include <libft.h>
 
 t_builtin	g_builtins[] = {
-	{ "cd", 	builtin_cd },
-	{ "echo", 	builtin_echo },
-	{ "env", 	builtin_env },
-	{ "exit", 	builtin_exit },
+	{ "cd", builtin_cd },
+	{ "echo", builtin_echo },
+	{ "env", builtin_env },
+	{ "exit", builtin_exit },
 	{ "export", builtin_export },
-	{ "pwd", 	builtin_pwd },
-	{ "unset", 	builtin_unset },
-	{ NULL , 	NULL },
+	{ "pwd", builtin_pwd },
+	{ "unset", builtin_unset },
+	{ NULL, NULL },
 };
 
 t_builtin_func	find_builtin(t_string name)
@@ -37,4 +37,3 @@ t_builtin_func	find_builtin(t_string name)
 	}
 	return (NULL);
 }
-

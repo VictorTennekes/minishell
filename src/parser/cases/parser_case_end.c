@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   bssert.c                                           :+:    :+:            */
+/*   parser_case_end.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/31 19:20:43 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/03/31 19:24:51 by aaugusti      ########   odam.nl         */
+/*   Created: 2020/10/29 13:38:38 by aaugusti      #+#    #+#                 */
+/*   Updated: 2020/10/29 13:43:20 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
-#include <stdlib.h>
+#include <minishell.h>
+#include "../parser.h"
 
-#ifdef DEBUG
-
-void	bssert(void *val)
+bool	parser_case_end(t_mshell *mshell, t_parser *parser, char c)
 {
-	if (val)
-		return ;
-	ft_printf("bssert failed\n");
-	exit(1);
+	(void)mshell;
+	(void)c;
+	if (parser->in_word)
+		parser->end_word = true;
+	if (parser->in_dquote || parser->in_squote)
+	{
+		mshell->ms_errno = ENO_UNEXEOF;
+		return (true);
+	}
+	parser->done = true;
+	return (false);
 }
-
-#else
-
-void	bssert(void *val)
-{
-	(void)val;
-	return ;
-}
-
-#endif

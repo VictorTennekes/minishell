@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   parser_check.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2020/10/29 13:35:16 by aaugusti      #+#    #+#                 */
+/*   Updated: 2020/10/29 13:35:31 by aaugusti      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "parser.h"
 #include "../run_cmd/run_cmd.h"
 
 #define EX_SYNTAX
 
-static bool	parser_check_pipe(t_mshell *mshell, t_cmd **result, size_t *cmd_count)
+static bool	parser_check_pipe(t_mshell *mshell, t_cmd **result,
+		size_t *cmd_count)
 {
 	if ((*result)[*cmd_count - 1].pipe == false)
 		return (false);
@@ -31,7 +44,7 @@ void		parser_check(t_mshell *mshell, t_cmd **result, size_t *cmd_count)
 			free_cmds(*result, *cmd_count);
 			*result = NULL;
 			*cmd_count = 0;
-			return;
+			return ;
 		}
 		i++;
 	}

@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/31 22:26:06 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/10/28 14:43:00 by aaugusti      ########   odam.nl         */
+/*   Created: 2020/10/29 13:29:40 by aaugusti      #+#    #+#                 */
+/*   Updated: 2020/10/29 13:30:14 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,10 @@ static bool	builtin_cd_other(t_mshell *mshell, t_string arg, t_string *path)
 			if (string_pushc(path, '/'))
 				error(E_ALLOC "'builtin_cd'", mshell);
 		if (string_push(path, arg.str))
-				error(E_ALLOC "'builtin_cd'", mshell);
-	}
-	else
-		if (string_from(arg.str, path))
 			error(E_ALLOC "'builtin_cd'", mshell);
+	}
+	else if (string_from(arg.str, path))
+		error(E_ALLOC "'builtin_cd'", mshell);
 	return (false);
 }
 
@@ -69,7 +68,7 @@ static bool	builtin_cd_other(t_mshell *mshell, t_string arg, t_string *path)
 **	@return {bool} - true if there is an error
 */
 
-bool	builtin_cd(t_mshell *mshell, t_cmd cmd)
+bool		builtin_cd(t_mshell *mshell, t_cmd cmd)
 {
 	char		*cwd;
 	int			chdir_ret;

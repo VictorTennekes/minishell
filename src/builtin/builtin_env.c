@@ -5,12 +5,11 @@
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/31 22:00:32 by aaugusti      #+#   #+#                  */
-/*   Updated: 2020/04/28 16:38:48 by aaugusti      ########   odam.nl         */
+/*   Created: 2020/10/29 13:29:15 by aaugusti      #+#    #+#                 */
+/*   Updated: 2020/10/29 13:29:16 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <bssert.h>
 #include <env.h>
 #include <libftprintf.h>
 #include <minishell.h>
@@ -22,7 +21,6 @@ void	print_env(t_mshell *mshell, char *prefix)
 	t_string	buf;
 
 	cur = mshell->env;
-	bssert(cur);
 	if (string_init(ENV_PRINT_INIT_CAP, NULL, &buf))
 		error(E_ALLOC "'builtin_env'", mshell);
 	while (cur)

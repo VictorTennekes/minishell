@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtin_pwd.c                                      :+:    :+:            */
+/*   parser_case_squote.c                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/29 13:30:29 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:30:29 by aaugusti      ########   odam.nl         */
+/*   Created: 2020/10/29 13:40:25 by aaugusti      #+#    #+#                 */
+/*   Updated: 2020/10/29 13:43:35 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <env.h>
-#include <libftprintf.h>
 #include <minishell.h>
+#include "../parser.h"
 
-/*
-**	Print the current working directory.
-**
-**	@param {t_mshell *} mshell
-**	@param {t_cmd} cmd
-**
-**	@return {bool}
-*/
-
-bool	builtin_pwd(t_mshell *mshell, t_cmd cmd)
+bool	parser_case_squote(t_mshell *mshell, t_parser *parser, char c)
 {
-	t_env	*pwd_env;
-
-	(void)cmd;
-	pwd_env = env_get(mshell, "PWD");
-	ft_printf("%s\n", pwd_env->value.str);
+	if (parser->in_dquote || parser->escaped)
+	{
+		if (parser->in_dquote)
+			parser_push(mshell, parser, '\\');
+		parser_push(mshell, parser, c);
+		parser->escaped = false;
+	}
+	else if (parser->in_squote)
+	{
+		parser->end_word = true;
+		parser->in_squote = false;
+	}
+	else if (!parser->in_word)
+	{
+		parser->new_word = true;
+		parser->in_squote = true;
+	}
 	return (false);
 }
