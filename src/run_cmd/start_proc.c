@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/15 16:37:27 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 15:36:06 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/10/29 16:04:31 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
-
-	#include <stdio.h>
 
 static void	free_and_exit(t_mshell *mshell, char *path, char *procname)
 {
