@@ -21,7 +21,7 @@ bool	parser_case_write(t_mshell *mshell, t_parser *parser, char c)
 	{
 		if (parser->in_word)
 			parser->end_word = true;
-		if (parser->redir == true && parser->redir_type == APPEND)
+		if (parser->redir == true && (parser->redir_type == APPEND || parser->redir_type == INPUT))
 		{
 			ms_set_error(mshell, ENO_UNEXTOK, "");
 			return (true);
