@@ -84,7 +84,8 @@ static t_cmd	*parser_free(t_mshell *mshell, t_parser *parser)
 	result = parser_return(mshell, parser, &cmd_count);
 	if (result)
 		free_cmds(result, cmd_count);
-	free(parser->result.vla);
+	if (parser->result.size > 0)
+		free(parser->result.vla);
 	return (NULL);
 }
 

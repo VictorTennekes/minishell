@@ -17,6 +17,11 @@ bool	parser_case_input(t_mshell *mshell, t_parser *parser, char c)
 {
 	if (parser->in_squote || parser->in_dquote)
 		parser_push(mshell, parser, c);
+	else if (parser->redir == true)
+	{
+		ms_set_error(mshell, ENO_UNEXTOK, "");
+		return (true);
+	}
 	else
 	{
 		if (parser->in_word)
