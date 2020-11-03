@@ -13,12 +13,13 @@
 #include <minishell.h>
 #include "../parser.h"
 
+#include <stdio.h>
+
 bool	parser_case_dquote(t_mshell *mshell, t_parser *parser, char c)
 {
 	if (parser->in_squote || parser->escaped)
 	{
-		if (parser->in_squote)
-			parser_push(mshell, parser, '\\');
+		printf("char: {%c}\n", c);
 		parser_push(mshell, parser, c);
 		parser->escaped = false;
 	}

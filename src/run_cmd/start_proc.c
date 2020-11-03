@@ -69,7 +69,10 @@ static void	start_proc_parent(t_mshell *mshell, pid_t pid, char *path)
 	if (waitpid(pid, &exit_status, 0) == -1)
 		error(E_WAITPID "'start_proc_parent'", mshell);
 	free(path);
-	mshell->last_exit = exit_status;
+	if (WIFEXITED(exit_status))
+		mshell->last_exit = WEXITSTATUS(exit_status);
+	else if (WIFSIGNALED(exit_status))
+		mshell->last_exit = 128 + WTERMSIG(exit_status);
 }
 
 static void	start_proc_child(t_mshell *mshell, t_cmd cmd, char *path)

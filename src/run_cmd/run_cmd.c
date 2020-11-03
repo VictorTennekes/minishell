@@ -90,6 +90,8 @@ static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 			close(pipe_data.pfds[1]);
 			pipe_data.prev_pipe = pipe_data.pfds[0];
 		}
+		else
+			run_cmd_single(mshell, cmds[i], cmds, cmd_count);
 		i++;
 	}
 	std_in = dup(STDIN_FILENO);

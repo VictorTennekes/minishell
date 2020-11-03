@@ -15,8 +15,14 @@
 
 bool	parser_case_escape(t_mshell *mshell, t_parser *parser, char c)
 {
-	if (parser->in_dquote)
+	else if (!parser->in_squote)
 	{
+		if (parser->escaped)
+		{
+			parser_push(mshell, parser, c);
+			parser->escaped = false;
+			return (false);
+		}
 		parser->escaped = true;
 		return (false);
 	}

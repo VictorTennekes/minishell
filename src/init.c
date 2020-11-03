@@ -84,6 +84,7 @@ static void	init_path(t_mshell *mshell)
 void		init(t_mshell *mshell)
 {
 	ft_bzero(mshell, sizeof(t_mshell));
+	env_set(mshell, "?", "0", false);
 	init_signal(mshell);
 	init_env(mshell);
 	init_path(mshell);

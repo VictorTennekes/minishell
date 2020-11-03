@@ -18,8 +18,12 @@
 **	Prints the prompt to stdout.
 */
 
+#include <stdio.h>
+
 void	prompt(t_mshell *mshell)
 {
-	ft_printf("\e[1;34m%s\e[0m \e[1;32m>\e[0m ",
+	dprintf(2, "\e[1;34m%s\e[0m \e[1;32m>\e[0m ",
 		env_get(mshell, "PWD")->value.str);
+	// ft_printf("\e[1;34m%s\e[0m \e[1;32m>\e[0m ",
+	// 	env_get(mshell, "PWD")->value.str);
 }
