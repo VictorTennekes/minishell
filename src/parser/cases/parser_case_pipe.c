@@ -15,8 +15,8 @@
 
 bool	parser_case_pipe(t_mshell *mshell, t_parser *parser, size_t i)
 {
-	if (parser->in_squote || parser->in_dquote)
-		parser_push(mshell, parser, parser->input[i]);
+	if (parser->in_squote || parser->in_dquote || parser->escaped)
+		parser_case_rest(mshell, parser, i);
 	else
 	{
 		if (parser->in_word)

@@ -21,10 +21,11 @@ bool	parser_case_escape(t_mshell *mshell, t_parser *parser, size_t i)
 		{
 			parser_push(mshell, parser, parser->input[i]);
 			parser->escaped = false;
-			return (false);
 		}
-		parser->escaped = true;
-		return (false);
+		else
+			parser->escaped = true;
 	}
-	return (parser_case_rest(mshell, parser, parser->input[i]));
+	else
+		parser_push(mshell, parser, parser->input[i]);
+	return (false);
 }

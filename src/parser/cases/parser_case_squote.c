@@ -17,9 +17,7 @@ bool	parser_case_squote(t_mshell *mshell, t_parser *parser, size_t i)
 {
 	if (parser->in_dquote || parser->escaped)
 	{
-		if (parser->in_dquote)
-			parser_push(mshell, parser, '\\');
-		parser_push(mshell, parser, parser->input[i]);
+		parser_case_rest(mshell, parser, i);
 		parser->escaped = false;
 	}
 	else if (parser->in_squote)

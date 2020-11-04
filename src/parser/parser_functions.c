@@ -18,6 +18,8 @@
 
 void		parser_push(t_mshell *mshell, t_parser *parser, char c)
 {
+	if (parser->curr_word == NULL)
+		parser_new_word(mshell, parser);
 	if (string_pushc(parser->curr_word, c))
 		error(E_ALLOC "'parser_push'", mshell);
 }

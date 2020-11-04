@@ -18,7 +18,7 @@ bool	parser_case_env(t_mshell *mshell, t_parser *parser, size_t i)
 {
 	char	next_char;
 	
-	if (parser->escaped)
+	if (parser->escaped || parser->in_squote)
 	{
 		parser_push(mshell, parser, parser->input[i]);
 		return (false);
