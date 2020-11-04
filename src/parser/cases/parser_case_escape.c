@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 13:42:26 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:42:32 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/04 15:16:22 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 bool	parser_case_escape(t_mshell *mshell, t_parser *parser, char c)
 {
-	else if (!parser->in_squote)
+	if (!parser->in_squote)
 	{
 		if (parser->escaped)
 		{
