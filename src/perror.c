@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 16:49:01 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:51:13 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/04 15:57:48 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,17 @@ char				*g_ermsgs[] = {
 	[ENO_UNEXTOK] = "unexpected token",
 	[ENO_UNEXEOF] = "unexpected end of file",
 	[ENO_NOFILE] = "No such file or directory",
+	[ENO_DEFAULT] = "Error",
 };
 
 static t_string	ms_strerror(t_mshell *mshell)
 {
 	t_string	res;
+	char		*msg;
 
-	if (string_from(g_ermsgs[mshell->ms_errno], &res))
+	//msg = g_ermsgs[mshell->ms_errno == 0 ? ENO_DEFAULT : mshell->ms_errno];
+	msg = g_ermsgs[mshell->ms_errno];
+	if (string_from(msg, &res))
 		error(E_ALLOC "'ms_strerror'", mshell);
 	return (res);
 }

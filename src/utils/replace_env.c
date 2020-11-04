@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 19:07:02 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:10:44 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/04 15:40:02 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,11 @@ void		replace_env(t_mshell *mshell, t_string *str)
 	char	*pos;
 	char	*to_find;
 
-	to_find = malloc(sizeof(char) * str->len + 1);
+	to_find = malloc(sizeof(char) * (str->len + 1));
 	pos = ft_strchr(str->str, '$');
 	while (pos)
 		pos = subst_env(mshell, &str->str, pos, to_find);
+	str->len = ft_strlen(str->str);
+	str->cap = str->len;
 	free(to_find);
 }

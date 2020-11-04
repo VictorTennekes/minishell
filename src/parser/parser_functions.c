@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 14:02:02 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:32:23 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/04 15:34:57 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ void		parser_new_word(t_mshell *mshell, t_parser *parser)
 			error(E_ALLOC "'parser_new_word'", mshell);
 		parser->redir = false;
 	}
-	else
+	else if (!parser->curr_word)
 	{
 		if (string_init(PARSER_INIT_WORD_CAP, NULL, &new))
 			error(E_ALLOC "'parser_new_word'", mshell);
 		if (vla_push(&parser->curr_cmd, &new, (void **)&new_loc))
 			error(E_ALLOC "'parser_new_word'", mshell);
 	}
-	parser->curr_word = new_loc;
+	if (!parser->curr_word)
+		parser->curr_word = new_loc;
 	parser->new_word = false;
 }
 
@@ -56,7 +57,8 @@ void		parser_end_word(t_mshell *mshell, t_parser *parser)
 	if (parser->expand_env)
 		replace_env(mshell, parser->curr_word);
 	parser->expand_env = false;
-	parser->curr_word = NULL;
+	if (parser->curr_word->len > 0)
+		parser->curr_word = NULL;
 	parser->end_word = false;
 	parser->in_word = false;
 }

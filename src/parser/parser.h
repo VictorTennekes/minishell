@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 11:11:18 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:36:16 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/04 15:50:31 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct	s_parser {
 	bool		pipe;
 	bool		expand_env;
 	bool		escaped;
+	char		*input;
 	t_string	*curr_word;
 	t_vla		redir_files;
 	t_vla		curr_cmd;
@@ -93,23 +94,23 @@ void			parser_check(t_mshell *mshell, t_cmd **result,
 **	@return {bool} true if an error is encountered
 */
 
-bool			parser_case_end(t_mshell *mshell, t_parser *parser, char c);
-bool			parser_case_rest(t_mshell *mshell, t_parser *parser, char c);
+bool			parser_case_end(t_mshell *mshell, t_parser *parser, size_t i);
+bool			parser_case_rest(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_whitespace(t_mshell *mshell, t_parser *parser,
-					char c);
-bool			parser_case_squote(t_mshell *mshell, t_parser *parser, char c);
-bool			parser_case_dquote(t_mshell *mshell, t_parser *parser, char c);
+					size_t i);
+bool			parser_case_squote(t_mshell *mshell, t_parser *parser, size_t i);
+bool			parser_case_dquote(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_semicolon(t_mshell *mshell, t_parser *parser,
-					char c);
-bool			parser_case_pipe(t_mshell *mshell, t_parser *parser, char c);
-bool			parser_case_write(t_mshell *mshell, t_parser *parser, char c);
-bool			parser_case_input(t_mshell *mshell, t_parser *parser, char c);
-bool			parser_case_env(t_mshell *mshell, t_parser *parser, char c);
-bool			parser_case_escape(t_mshell *mshell, t_parser *parser, char c);
+					size_t i);
+bool			parser_case_pipe(t_mshell *mshell, t_parser *parser, size_t i);
+bool			parser_case_write(t_mshell *mshell, t_parser *parser, size_t i);
+bool			parser_case_input(t_mshell *mshell, t_parser *parser, size_t i);
+bool			parser_case_env(t_mshell *mshell, t_parser *parser, size_t i);
+bool			parser_case_escape(t_mshell *mshell, t_parser *parser, size_t i);
 
 typedef struct	s_parser_case {
 	char	c;
-	bool	(*func)(t_mshell *, t_parser *, char);
+	bool	(*func)(t_mshell *, t_parser *, size_t);
 }				t_parser_case;
 
 #endif
