@@ -6,10 +6,11 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 14:02:02 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/05 13:07:12 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/05 13:45:56 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libvla.h"
 #include "parser.h"
 #include <libft.h>
 #include <libstring.h>
@@ -61,8 +62,12 @@ void		parser_end_word(t_mshell *mshell, t_parser *parser)
 	}
 	if (string_shrink(parser->curr_word))
 		error(E_ALLOC "'parser_end_word'", mshell);
-	if (parser->curr_word->len > 0)
-		parser->curr_word = NULL;
+	if (parser->curr_word->len == 0)
+	{
+		string_free(parser->curr_word);
+		parser->curr_cmd.size--;
+	}
+	parser->curr_word = NULL;
 	parser->end_word = false;
 	parser->in_word = false;
 }
