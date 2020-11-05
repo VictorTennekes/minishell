@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 19:07:02 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/11/04 15:40:02 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/05 13:01:28 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*loop_env(t_mshell *mshell, char *str)
 	while (env_vars)
 	{
 		env_tmp = env_vars->content;
-		if (!ft_strncmp(str, env_tmp->name.str, ft_strlen(str)))
+		if (!ft_strncmp(str, env_tmp->name.str, env_tmp->name.len))
 		{
 			res = malloc(sizeof(char) * env_tmp->value.len + 1);
 			ft_strlcpy(res, env_tmp->value.str, env_tmp->value.len + 1);
