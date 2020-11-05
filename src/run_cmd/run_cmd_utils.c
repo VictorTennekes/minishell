@@ -23,6 +23,10 @@ static void	run_child_builtin(t_mshell *mshell, t_builtin_func builtin,
 
 	handle_redirs(mshell, cmd);
 	exit_status = builtin(mshell, cmd);
+	if (WIFEXITED(exit_status))
+		exit_status = WEXITSTATUS(exit_status);
+	else if (WIFSIGNALED(exit_status))
+		exit_status = WTERMSIG(exit_status) - 128;
 	if (exit_status)
 		ms_perror(mshell);
 	ms_free(mshell);

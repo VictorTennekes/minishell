@@ -72,7 +72,7 @@ static void	start_proc_parent(t_mshell *mshell, pid_t pid, char *path)
 	if (WIFEXITED(exit_status))
 		mshell->last_exit = WEXITSTATUS(exit_status);
 	else if (WIFSIGNALED(exit_status))
-		mshell->last_exit = 128 + WTERMSIG(exit_status);
+		mshell->last_exit = WTERMSIG(exit_status) - 128;
 }
 
 static void	start_proc_child(t_mshell *mshell, t_cmd cmd, char *path)
