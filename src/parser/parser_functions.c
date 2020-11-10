@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 14:02:02 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/05 13:45:56 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/05 14:09:43 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,17 @@ void		parser_new_word(t_mshell *mshell, t_parser *parser)
 
 void		parser_end_word(t_mshell *mshell, t_parser *parser)
 {
+	if (string_shrink(parser->curr_word))
+		error(E_ALLOC "'parser_end_word'", mshell);
 	if (parser->expand_env)
 	{
 		replace_env(mshell, parser->curr_word);
 		parser->expand_env = false;
-	}
-	if (string_shrink(parser->curr_word))
-		error(E_ALLOC "'parser_end_word'", mshell);
-	if (parser->curr_word->len == 0)
-	{
-		string_free(parser->curr_word);
-		parser->curr_cmd.size--;
+		if (parser->curr_word->len == 0)
+		{
+			string_free(parser->curr_word);
+			parser->curr_cmd.size--;
+		}
 	}
 	parser->curr_word = NULL;
 	parser->end_word = false;
