@@ -80,6 +80,7 @@ void		parser_push_cmd(t_mshell *mshell, t_parser *parser)
 		error(E_ALLOC "'parser_push_cmd'", mshell);
 	if (vla_shrink(&parser->redir_files))
 		error(E_ALLOC "'parser_push_cmd'", mshell);
+	
 	to_push.argv = parser->curr_cmd.vla;
 	to_push.argc = parser->curr_cmd.size;
 	to_push.redir_count = parser->redir_files.size;
