@@ -15,12 +15,12 @@
 
 bool	parser_case_whitespace(t_mshell *mshell, t_parser *parser, size_t i)
 {
-	if (parser->in_word)
+	if (parser->in_dquote || parser->in_squote)
+		parser_push(mshell, parser, parser->input[i]);
+	else if (parser->in_word)
 	{
 		parser->end_word = true;
 		parser->in_word = false;
 	}
-	else if (parser->in_dquote || parser->in_squote)
-		parser_push(mshell, parser, parser->input[i]);
 	return (false);
 }

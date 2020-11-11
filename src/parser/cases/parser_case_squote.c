@@ -28,7 +28,10 @@ bool	parser_case_squote(t_mshell *mshell, t_parser *parser, size_t i)
 	else if (!parser->in_word)
 	{
 		parser->new_word = true;
+		parser->in_word = true;
 		parser->in_squote = true;
 	}
+	else
+		parser->in_dquote = true;
 	return (false);
 }

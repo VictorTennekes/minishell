@@ -22,6 +22,7 @@ bool	parser_case_end(t_mshell *mshell, t_parser *parser, size_t i)
 	if (parser->in_dquote || parser->in_squote)
 	{
 		mshell->ms_errno = ENO_UNEXEOF;
+		mshell->last_exit = 2;
 		return (true);
 	}
 	parser->done = true;

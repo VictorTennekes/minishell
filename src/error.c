@@ -27,5 +27,5 @@ void	error(char *msg, t_mshell *mshell)
 	ft_putstr_fd(msg, 2);
 	ft_putchar_fd('\n', 2);
 	ms_free(mshell);
-	exit(1);
+	exit(mshell->last_exit);
 }

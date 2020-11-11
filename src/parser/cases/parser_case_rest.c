@@ -22,7 +22,7 @@ bool	parser_case_rest(t_mshell *mshell, t_parser *parser, size_t i)
 	}
 	if (parser->escaped)
 	{
-		if ((parser->in_dquote || parser->in_squote) && parser->input[i] != '`')
+		if ((parser->in_dquote || parser->in_squote))
 			if (parser->input[i] != '$')
 				parser_push(mshell, parser, '\\');
 		parser->escaped = false;
