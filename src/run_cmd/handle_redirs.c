@@ -58,7 +58,7 @@ void	open_files(t_mshell *mshell, t_cmd cmd, t_cmd_directions *directions)
 		{
 			ms_set_error(mshell, ENO_NOFILE, cur_redir.redir_filename.str);
 			ms_perror(mshell);
-			exit(1);
+			exit(mshell->last_exit);
 		}
 		i++;
 	}

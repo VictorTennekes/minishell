@@ -36,7 +36,6 @@ static t_string	ms_strerror(t_mshell *mshell)
 	t_string	res;
 	char		*msg;
 
-	//msg = g_ermsgs[mshell->ms_errno == 0 ? ENO_DEFAULT : mshell->ms_errno];
 	msg = g_ermsgs[mshell->ms_errno];
 	if (string_from(msg, &res))
 		error(E_ALLOC "'ms_strerror'", mshell);

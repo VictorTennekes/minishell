@@ -29,7 +29,10 @@ static void	free_and_exit(t_mshell *mshell, char *path, char *procname)
 	is_relative = ft_strchr(procname, '/') == NULL;
 	free(path);
 	if (is_relative)
+	{
 		ms_set_error(mshell, ENO_INVCMD, procname);
+		mshell->last_exit = 127;
+	}
 	else
 	{
 		mshell->ms_stderrno = true;
@@ -38,7 +41,7 @@ static void	free_and_exit(t_mshell *mshell, char *path, char *procname)
 	free(procname);
 	ms_perror(mshell);
 	ms_free(mshell);
-	exit(1);
+	exit(mshell->last_exit);
 }
 
 static void	run_child_file(t_mshell *mshell, char *path, t_cmd cmd)
