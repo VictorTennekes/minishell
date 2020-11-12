@@ -68,7 +68,10 @@ bool		builtin_export(t_mshell *mshell, t_cmd cmd)
 	while (i < cmd.argc)
 	{
 		if (export_single(mshell, cmd.argv[i].str))
+		{
+			mshell->last_exit = 1;
 			ms_perror(mshell);
+		}
 		i++;
 	}
 	return (false);

@@ -29,7 +29,10 @@ static void	free_and_exit(t_mshell *mshell, char *path, char *procname)
 	is_relative = ft_strchr(procname, '/') == NULL;
 	free(path);
 	if (is_relative)
+	{
 		ms_set_error(mshell, ENO_INVCMD, procname);
+		mshell->last_exit = 127;
+	}
 	else
 	{
 		mshell->ms_stderrno = true;
@@ -38,7 +41,7 @@ static void	free_and_exit(t_mshell *mshell, char *path, char *procname)
 	free(procname);
 	ms_perror(mshell);
 	ms_free(mshell);
-	exit(1);
+	exit(mshell->last_exit);
 }
 
 static void	run_child_file(t_mshell *mshell, char *path, t_cmd cmd)
@@ -69,7 +72,10 @@ static void	start_proc_parent(t_mshell *mshell, pid_t pid, char *path)
 	if (waitpid(pid, &exit_status, 0) == -1)
 		error(E_WAITPID "'start_proc_parent'", mshell);
 	free(path);
-	mshell->last_exit = exit_status;
+	if (WIFEXITED(exit_status))
+		mshell->last_exit = WEXITSTATUS(exit_status);
+	else if (WIFSIGNALED(exit_status))
+		mshell->last_exit = WTERMSIG(exit_status) - 128;
 }
 
 static void	start_proc_child(t_mshell *mshell, t_cmd cmd, char *path)

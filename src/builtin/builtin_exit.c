@@ -24,22 +24,31 @@
 **	@return {bool}
 */
 
+#include <stdio.h>
+
 bool	builtin_exit(t_mshell *mshell, t_cmd cmd)
 {
 	int		tmp;
 	uint8_t	exit_status;
 
 	(void)mshell;
-	if (cmd.argc > 2)
-		return (ms_set_error(mshell, ENO_TMA, "exit"));
 	exit_status = mshell->last_exit;
 	if (cmd.argc == 2)
 	{
-		tmp = ft_atoi(cmd.argv[1].str);
-		if (tmp >= 0 && tmp <= 255)
-			exit_status = (uint8_t)tmp;
+		if (!ft_isdigit(cmd.argv[1].str[0]))
+			tmp = 2;
+		else
+			tmp = ft_atoi(cmd.argv[1].str);
+		exit_status = (uint8_t)tmp % 256;
 	}
-	ft_printf("exit\n");
+	else if (cmd.argc > 2)
+	{
+		if (!ft_isdigit(cmd.argv[1].str[0]))
+			exit_status = 2;
+		else
+			exit_status = 1;
+	}
+	// ft_printf("exit\n");
 	ms_free(mshell);
 	exit(exit_status);
 	return (false);

@@ -6,20 +6,18 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 13:40:25 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:43:35 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/04 15:53:21 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include "../parser.h"
 
-bool	parser_case_squote(t_mshell *mshell, t_parser *parser, char c)
+bool	parser_case_squote(t_mshell *mshell, t_parser *parser, size_t i)
 {
 	if (parser->in_dquote || parser->escaped)
 	{
-		if (parser->in_dquote)
-			parser_push(mshell, parser, '\\');
-		parser_push(mshell, parser, c);
+		parser_case_rest(mshell, parser, i);
 		parser->escaped = false;
 	}
 	else if (parser->in_squote)
@@ -30,7 +28,10 @@ bool	parser_case_squote(t_mshell *mshell, t_parser *parser, char c)
 	else if (!parser->in_word)
 	{
 		parser->new_word = true;
+		parser->in_word = true;
 		parser->in_squote = true;
 	}
+	else
+		parser->in_squote = true;
 	return (false);
 }

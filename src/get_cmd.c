@@ -30,7 +30,7 @@ static bool	cmd_exit(t_mshell *mshell)
 	uint8_t	exit_status;
 
 	exit_status = mshell->last_exit;
-	ft_printf("\nexit\n");
+	ft_putstr_fd("\nexit\n", 2);
 	ms_free(mshell);
 	exit(exit_status);
 	return (false);

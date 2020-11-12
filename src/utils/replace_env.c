@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 19:07:02 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:10:44 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/05 13:01:28 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*loop_env(t_mshell *mshell, char *str)
 	while (env_vars)
 	{
 		env_tmp = env_vars->content;
-		if (!ft_strncmp(str, env_tmp->name.str, ft_strlen(str)))
+		if (!ft_strncmp(str, env_tmp->name.str, env_tmp->name.len))
 		{
 			res = malloc(sizeof(char) * env_tmp->value.len + 1);
 			ft_strlcpy(res, env_tmp->value.str, env_tmp->value.len + 1);
@@ -69,7 +69,7 @@ int			valid_env_size(char *str)
 	i = 1;
 	while (((str[i] >= 'a' && str[i] <= 'z') ||
 			(str[i] >= 'A' && str[i] <= 'Z') ||
-			(i != 0 && (str[i] >= '0' && str[i] <= '9')) ||
+			((str[i] >= '0' && str[i] <= '9')) ||
 			str[i] == '_') || str[i] == '?')
 		i++;
 	return (i);
@@ -106,9 +106,11 @@ void		replace_env(t_mshell *mshell, t_string *str)
 	char	*pos;
 	char	*to_find;
 
-	to_find = malloc(sizeof(char) * str->len + 1);
+	to_find = malloc(sizeof(char) * (str->len + 1));
 	pos = ft_strchr(str->str, '$');
 	while (pos)
 		pos = subst_env(mshell, &str->str, pos, to_find);
+	str->len = ft_strlen(str->str);
+	str->cap = str->len;
 	free(to_find);
 }

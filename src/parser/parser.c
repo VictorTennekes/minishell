@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 19:49:13 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:34:59 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/04 16:12:39 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,29 @@ t_parser_case	g_parser_cases[] = {
 	{ 42, NULL },
 };
 
-static t_parser	parser_new(t_mshell *mshell)
+static t_parser	parser_new(t_mshell *mshell, char *input)
 {
 	t_parser	res;
 
 	ft_bzero(&res, sizeof(t_parser));
 	if (vla_init(sizeof(t_cmd), PARSER_CMDS_INIT_CAP, &res.result))
 		error(E_ALLOC "'new_parser'", mshell);
+	res.input = input;
 	return (res);
 }
 
-static bool		parser_step(t_mshell *mshell, t_parser *parser, char c)
+static bool		parser_step(t_mshell *mshell, t_parser *parser, size_t i)
 {
-	uint32_t	i;
+	uint32_t	j;
 
-	i = 0;
-	while (g_parser_cases[i].func != NULL)
+	j = 0;
+	while (g_parser_cases[j].func != NULL)
 	{
-		if (g_parser_cases[i].c == c)
-			return (g_parser_cases[i].func(mshell, parser, c));
-		i++;
+		if (g_parser_cases[j].c == parser->input[i])
+			return (g_parser_cases[j].func(mshell, parser, i));
+		j++;
 	}
-	return (parser_case_rest(mshell, parser, c));
+	return (parser_case_rest(mshell, parser, i));
 }
 
 static t_cmd	*parser_return(t_mshell *mshell, t_parser *parser,
@@ -94,12 +95,12 @@ t_cmd			*parser(t_mshell *mshell, char *cmd, size_t *cmd_count)
 	t_parser	parser;
 	size_t		i;
 
-	parser = parser_new(mshell);
+	parser = parser_new(mshell, cmd);
 	parser_new_cmd(mshell, &parser, true);
 	i = 0;
 	while (42)
 	{
-		if (parser_step(mshell, &parser, cmd[i]))
+		if (parser_step(mshell, &parser, i))
 			return (parser_free(mshell, &parser));
 		if (parser.new_word)
 			parser_new_word(mshell, &parser);
