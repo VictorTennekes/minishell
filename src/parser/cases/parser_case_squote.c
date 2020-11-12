@@ -21,10 +21,7 @@ bool	parser_case_squote(t_mshell *mshell, t_parser *parser, size_t i)
 		parser->escaped = false;
 	}
 	else if (parser->in_squote)
-	{
-		parser->end_word = true;
 		parser->in_squote = false;
-	}
 	else if (!parser->in_word)
 	{
 		parser->new_word = true;

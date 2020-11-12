@@ -21,10 +21,7 @@ bool	parser_case_dquote(t_mshell *mshell, t_parser *parser, size_t i)
 		parser->escaped = false;
 	}
 	else if (parser->in_dquote)
-	{
-		parser->end_word = true;
 		parser->in_dquote = false;
-	}
 	else if (!parser->in_word)
 	{
 		parser->new_word = true;

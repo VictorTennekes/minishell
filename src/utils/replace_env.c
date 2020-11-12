@@ -50,7 +50,7 @@ static char	*loop_env(t_mshell *mshell, char *str)
 	while (env_vars)
 	{
 		env_tmp = env_vars->content;
-		if (!ft_strncmp(str, env_tmp->name.str, env_tmp->name.len))
+		if (!ft_strncmp(str, env_tmp->name.str, env_tmp->name.len + 1))
 		{
 			res = malloc(sizeof(char) * env_tmp->value.len + 1);
 			ft_strlcpy(res, env_tmp->value.str, env_tmp->value.len + 1);

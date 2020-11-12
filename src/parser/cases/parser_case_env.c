@@ -13,19 +13,20 @@
 #include <minishell.h>
 #include "../parser.h"
 #include "libft.h"
+#include "env.h"
 
 bool	parser_case_env(t_mshell *mshell, t_parser *parser, size_t i)
 {
 	char	next_char;
 	
-	if (parser->escaped || parser->in_squote)
+	next_char = parser->input[i + 1];
+	if ((next_char == '"' || next_char == '\'') && !(parser->in_squote || parser->in_dquote))
+		return (false);
+	if (parser->escaped || parser->in_squote || (next_char == '"' && parser->in_dquote))
 	{
 		parser_case_rest(mshell, parser, i);
 		return (false);
 	}
-	next_char = parser->input[i + 1];
-	if (next_char == '\'' || next_char == '"')
-		return false;
 	parser->expand_env = !parser->in_squote;
 	parser_case_rest(mshell, parser, i);
 	return (false);
