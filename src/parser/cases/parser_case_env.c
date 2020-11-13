@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 13:42:02 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/13 10:39:23 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 14:59:40 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 bool	parser_case_env(t_mshell *mshell, t_parser *parser, size_t i)
 {
 	char	next_char;
-	
+
 	next_char = parser->input[i + 1];
 	if ((next_char == '"' || next_char == '\'') &&
 			!(parser->in_squote || parser->in_dquote))

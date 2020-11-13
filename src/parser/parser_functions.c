@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 14:02:02 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/13 10:42:04 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 15:00:20 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void		parser_push_cmd(t_mshell *mshell, t_parser *parser)
 		error(E_ALLOC "'parser_push_cmd'", mshell);
 	if (vla_shrink(&parser->redir_files))
 		error(E_ALLOC "'parser_push_cmd'", mshell);
-	
 	to_push.argv = parser->curr_cmd.vla;
 	to_push.argc = parser->curr_cmd.size;
 	to_push.redir_count = parser->redir_files.size;

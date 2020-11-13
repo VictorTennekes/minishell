@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 13:29:22 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:29:22 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 14:59:33 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ bool	builtin_exit(t_mshell *mshell, t_cmd cmd)
 		else
 			exit_status = 1;
 	}
-	// ft_printf("exit\n");
 	ms_free(mshell);
 	exit(exit_status);
 	return (false);

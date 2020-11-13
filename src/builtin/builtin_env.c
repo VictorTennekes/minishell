@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 13:29:15 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/13 14:49:41 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 14:59:23 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	print_env(t_mshell *mshell, char *prefix)
 			if (prefix && string_push(&buf, prefix))
 				error(E_ALLOC "'builtin_env'", mshell);
 			if (string_push(&buf, env->name.str) || string_pushc(&buf, '=') ||
-					string_push(&buf, env->value.str) || string_pushc(&buf, '\n'))
+					string_push(&buf, env->value.str) ||
+					string_pushc(&buf, '\n'))
 				error(E_ALLOC "'builtin_env'", mshell);
 		}
 		cur = cur->next;

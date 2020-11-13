@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/20 13:27:35 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/11/13 13:01:47 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 15:04:09 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static bool check_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
+static bool	check_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
 {
 	size_t i;
 
@@ -89,22 +89,20 @@ void		if_pipe(t_mshell *mshell, t_pipe_info *pipe_data,
 	}
 }
 
-static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
+static void	run_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count, size_t i)
 {
-	size_t		i;
 	t_pipe_info	pipe_data;
 	int			std_in;
 
-	i = 0;
 	pipe_data.prev_pipe = STDIN_FILENO;
 	while (i < cmd_count - 1)
 	{
 		pipe_data.cmd = cmds[i];
-		if (cmds[i].pipe == true)
+		if (cmds[i].pipe)
 			if_pipe(mshell, &pipe_data, cmds, cmd_count);
 		if (pipe_data.prev_pipe != STDIN_FILENO)
 			close(pipe_data.prev_pipe);
-		if (cmds[i].pipe == true)
+		if (cmds[i].pipe)
 		{
 			close(pipe_data.pfds[1]);
 			pipe_data.prev_pipe = pipe_data.pfds[0];
@@ -129,7 +127,7 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	if (cmds == NULL)
 		return ;
 	if (!check_cmds(mshell, cmds, cmd_count))
-		run_cmds(mshell, cmds, cmd_count);
+		run_cmds(mshell, cmds, cmd_count, 0);
 	free_cmds(cmds, cmd_count);
 	free(cmds);
 }
