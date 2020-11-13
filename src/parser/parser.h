@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 11:11:18 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/13 10:36:19 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 14:41:42 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ bool			parser_case_escape(t_mshell *mshell, t_parser *parser, size_t i);
 */
 
 void			parser_replace_env(t_mshell *mshell, t_parser *parser);
+void			parser_free_redir_files(t_parser *parser);
 
 typedef struct	s_parser_case {
 	char	c;
