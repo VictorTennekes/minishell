@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 13:40:43 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/13 10:36:25 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 11:06:21 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ bool	parser_case_dquote(t_mshell *mshell, t_parser *parser, size_t i)
 		return (false);
 	}
 	if (parser->in_dquote)
+	{
+		parser_replace_env(mshell, parser);
 		parser->in_dquote = false;
+	}
 	else if (!parser->in_word)
 	{
 		parser->new_word = true;
