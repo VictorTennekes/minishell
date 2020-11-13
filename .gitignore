@@ -12,3 +12,4 @@ note*
 compile_commands.json
 a.out
 test.c
+tmp

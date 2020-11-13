@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 19:07:02 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/11/05 13:01:28 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 10:33:15 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,14 @@ static char	*replace_str_single(char *src, char *to_find, char *start,
 
 static char	*loop_env(t_mshell *mshell, char *str)
 {
-	t_list	*env_vars;
-	t_env	*env_tmp;
+	t_env	*env;
 	char	*res;
 
-	env_vars = mshell->env;
-	while (env_vars)
-	{
-		env_tmp = env_vars->content;
-		if (!ft_strncmp(str, env_tmp->name.str, env_tmp->name.len + 1))
-		{
-			res = malloc(sizeof(char) * env_tmp->value.len + 1);
-			ft_strlcpy(res, env_tmp->value.str, env_tmp->value.len + 1);
-			return (res);
-		}
-		env_vars = env_vars->next;
-	}
-	res = "";
+	env = env_get(mshell, str);
+	if (!env)
+		return (ft_strdup(""));
+	res = malloc(sizeof(char) * env->value.len + 1);
+	ft_strlcpy(res, env->value.str, env->value.len + 1);
 	return (res);
 }
 
@@ -90,24 +81,23 @@ static char	*subst_env(t_mshell *mshell, char **command, char *pos,
 	len += pos - *command;
 	replace = loop_env(mshell, to_find + 1);
 	if (!replace)
-		error(SHELL "'subst_env'", mshell);
+		error(E_ALLOC "'subst_env'", mshell);
 	*command = replace_str_single(*command, to_find, pos, replace);
 	len = (len - ft_strlen(to_find)) + ft_strlen(replace);
-	if (ft_strlen(replace) > 0)
-		free(replace);
+	free(replace);
 	if (!ft_strchr(*command + len - 1, '$'))
 		return (NULL);
 	pos = ft_strchr(*command + len - 1, '$');
 	return (pos);
 }
 
-void		replace_env(t_mshell *mshell, t_string *str)
+void		replace_env(t_mshell *mshell, t_string *str, int32_t start)
 {
 	char	*pos;
 	char	*to_find;
 
 	to_find = malloc(sizeof(char) * (str->len + 1));
-	pos = ft_strchr(str->str, '$');
+	pos = ft_strchr(str->str + (start == -1 ? 0 : start), '$');
 	while (pos)
 		pos = subst_env(mshell, &str->str, pos, to_find);
 	str->len = ft_strlen(str->str);

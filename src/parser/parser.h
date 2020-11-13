@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 11:11:18 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/04 15:50:31 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 10:36:19 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <libvla.h>
 # include <minishell.h>
 # include <stdbool.h>
+#include <stdint.h>
 
 # define PARSER_INIT_WORD_CAP 100
 # define PARSER_ARGV_INIT_CAP 10
@@ -41,6 +42,7 @@ typedef struct	s_parser {
 	t_vla		redir_files;
 	t_vla		curr_cmd;
 	t_vla		result;
+	int32_t		first_env_i;
 }				t_parser;
 
 typedef bool	(*t_parser_check)(t_mshell *, t_cmd **, size_t *);
@@ -107,6 +109,12 @@ bool			parser_case_write(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_input(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_env(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_escape(t_mshell *mshell, t_parser *parser, size_t i);
+
+/*
+**	Utils
+*/
+
+void			parser_replace_env(t_mshell *mshell, t_parser *parser);
 
 typedef struct	s_parser_case {
 	char	c;
