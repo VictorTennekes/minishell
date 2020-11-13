@@ -6,7 +6,7 @@
 /*   By: vtenneke <vtenneke@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/20 13:27:35 by vtenneke      #+#    #+#                 */
-/*   Updated: 2020/10/29 13:59:53 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 13:01:47 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ void		if_pipe(t_mshell *mshell, t_pipe_info *pipe_data,
 
 	pipe_ret = pipe(pipe_data->pfds);
 	if (pipe_ret == -1)
-		error(E_PIPE "'run_cmds'", mshell);
+		error(E_PIPE "'if_pipe'", mshell);
 	pid = fork();
 	if (pid == -1)
-		error(E_FORK "'run_cmds'", mshell);
+		error(E_FORK "'if_pipe'", mshell);
 	if (pid == 0)
 	{
 		dupclose_fd(pipe_data->prev_pipe, STDIN_FILENO);
@@ -128,9 +128,8 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	free(cmd);
 	if (cmds == NULL)
 		return ;
-	if (check_cmds(mshell, cmds, cmd_count))
-		return ;
-	run_cmds(mshell, cmds, cmd_count);
+	if (!check_cmds(mshell, cmds, cmd_count))
+		run_cmds(mshell, cmds, cmd_count);
 	free_cmds(cmds, cmd_count);
 	free(cmds);
 }

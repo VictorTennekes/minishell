@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 19:49:13 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/13 10:25:58 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 13:15:38 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ static t_cmd	*parser_return(t_mshell *mshell, t_parser *parser,
 
 	if (parser->curr_cmd.size > 0)
 		parser_push_cmd(mshell, parser);
+	else
+	{
+		free(parser->curr_cmd.vla);
+		free(parser->redir_files.vla);
+	}
 	if (parser->result.size == 0)
 	{
 		free(parser->result.vla);
