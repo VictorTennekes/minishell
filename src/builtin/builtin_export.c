@@ -66,7 +66,7 @@ bool		builtin_export(t_mshell *mshell, t_cmd cmd)
 
 	if (cmd.argc == 1)
 	{
-		print_env(mshell, "export ");
+		print_env(mshell, "declare -x ");
 		return (false);
 	}
 	i = 1;
