@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 13:42:26 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/04 15:52:37 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 10:58:10 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ bool	parser_case_escape(t_mshell *mshell, t_parser *parser, size_t i)
 			parser->escaped = false;
 		}
 		else
+		{
+			parser_replace_env(mshell, parser);
 			parser->escaped = true;
+		}
 	}
 	else
 		parser_push(mshell, parser, parser->input[i]);
