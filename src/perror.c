@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 16:49:01 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/12 16:43:24 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 14:29:12 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,10 @@ void			ms_perror(t_mshell *mshell)
 	else
 		errstr = ms_strerror(mshell).str;
 	if (mshell->ms_err_procname.len > 0)
-	{
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", SHELL, mshell->ms_err_procname.str, errstr);
-		string_free(&mshell->ms_err_procname);
-	}
 	else
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", SHELL, errstr);
+	string_free(&mshell->ms_err_procname);
 	if (!mshell->ms_stderrno)
 		free(errstr);
 	else

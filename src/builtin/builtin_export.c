@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/02 17:36:49 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/06/03 20:53:04 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 12:43:16 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,12 @@ bool		export_single(t_mshell *mshell, char *arg)
 
 	eq_index = ft_strchr(arg, '=');
 	if (!eq_index)
-		return (false);
+	{
+		if (env_check_name(arg) == -1)
+			return (false);
+		ms_set_error(mshell, ENO_INVID, arg);
+		return (true);
+	}
 	if (string_from_range(arg, 0, eq_index - arg, &name) ||
 			string_from(&eq_index[1], &value))
 		error(E_ALLOC "'export_single'", mshell);
@@ -61,18 +66,15 @@ bool		builtin_export(t_mshell *mshell, t_cmd cmd)
 
 	if (cmd.argc == 1)
 	{
-		print_env(mshell, "export ");
+		print_env(mshell, "declare -x ");
 		return (false);
 	}
 	i = 1;
 	while (i < cmd.argc)
 	{
 		if (export_single(mshell, cmd.argv[i].str))
-		{
 			mshell->last_exit = 1;
-			ms_perror(mshell);
-		}
 		i++;
 	}
-	return (false);
+	return (mshell->last_exit == 1);
 }

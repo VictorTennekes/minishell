@@ -28,11 +28,9 @@ static void	free_and_exit(t_mshell *mshell, char *path, char *procname)
 
 	is_relative = ft_strchr(procname, '/') == NULL;
 	free(path);
+	mshell->last_exit = 127;
 	if (is_relative)
-	{
 		ms_set_error(mshell, ENO_INVCMD, procname);
-		mshell->last_exit = 127;
-	}
 	else
 	{
 		mshell->ms_stderrno = true;

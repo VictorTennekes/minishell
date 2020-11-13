@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/23 13:07:19 by aaugusti      #+#    #+#                  #
-#    Updated: 2020/10/29 15:39:38 by aaugusti      ########   odam.nl          #
+#    Updated: 2020/11/13 10:29:32 by aaugusti      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS			=	\
 					get_cmd\
 					init\
 					parser/parser\
+					parser/parser_utils\
 					parser/cases/parser_case_dquote\
 					parser/cases/parser_case_end\
 					parser/cases/parser_case_env\

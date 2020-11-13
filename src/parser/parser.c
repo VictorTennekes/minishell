@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/23 19:49:13 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/04 16:12:39 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 14:41:49 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static t_parser	parser_new(t_mshell *mshell, char *input)
 	if (vla_init(sizeof(t_cmd), PARSER_CMDS_INIT_CAP, &res.result))
 		error(E_ALLOC "'new_parser'", mshell);
 	res.input = input;
+	res.first_env_i = -1;
 	return (res);
 }
 
@@ -64,6 +65,11 @@ static t_cmd	*parser_return(t_mshell *mshell, t_parser *parser,
 
 	if (parser->curr_cmd.size > 0)
 		parser_push_cmd(mshell, parser);
+	else
+	{
+		free(parser->curr_cmd.vla);
+		parser_free_redir_files(parser);
+	}
 	if (parser->result.size == 0)
 	{
 		free(parser->result.vla);

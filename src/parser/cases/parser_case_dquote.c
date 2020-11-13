@@ -6,12 +6,13 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 13:40:43 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/04 15:51:54 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 11:06:21 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include "../parser.h"
+#include <env.h>
 
 bool	parser_case_dquote(t_mshell *mshell, t_parser *parser, size_t i)
 {
@@ -19,10 +20,11 @@ bool	parser_case_dquote(t_mshell *mshell, t_parser *parser, size_t i)
 	{
 		parser_push(mshell, parser, parser->input[i]);
 		parser->escaped = false;
+		return (false);
 	}
-	else if (parser->in_dquote)
+	if (parser->in_dquote)
 	{
-		parser->end_word = true;
+		parser_replace_env(mshell, parser);
 		parser->in_dquote = false;
 	}
 	else if (!parser->in_word)
@@ -32,6 +34,9 @@ bool	parser_case_dquote(t_mshell *mshell, t_parser *parser, size_t i)
 		parser->in_dquote = true;
 	}
 	else
+	{
+		parser_replace_env(mshell, parser);
 		parser->in_dquote = true;
+	}
 	return (false);
 }
