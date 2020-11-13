@@ -1,0 +1,722 @@
+[
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/handle_format.o",
+   "-c",
+   "src/handle_format.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/handle_format.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/main.o",
+   "-c",
+   "src/main.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/main.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/output.o",
+   "-c",
+   "src/output.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/output.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/t_format_info/t_fi_check_width_precision.o",
+   "-c",
+   "src/t_format_info/t_fi_check_width_precision.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/t_format_info/t_fi_check_width_precision.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/t_format_info/t_fi_get_info.o",
+   "-c",
+   "src/t_format_info/t_fi_get_info.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/t_format_info/t_fi_get_info.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/t_format_info/t_fi_handle_zero_minus.o",
+   "-c",
+   "src/t_format_info/t_fi_handle_zero_minus.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/t_format_info/t_fi_handle_zero_minus.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/t_format_info/t_fi_parse_functions.o",
+   "-c",
+   "src/t_format_info/t_fi_parse_functions.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/t_format_info/t_fi_parse_functions.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/formats/f_char.o",
+   "-c",
+   "src/formats/f_char.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/formats/f_char.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/formats/f_int.o",
+   "-c",
+   "src/formats/f_int.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/formats/f_int.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/formats/f_string.o",
+   "-c",
+   "src/formats/f_string.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/formats/f_string.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/formats/f_percentage.o",
+   "-c",
+   "src/formats/f_percentage.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/formats/f_percentage.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/formats/f_hex.o",
+   "-c",
+   "src/formats/f_hex.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/formats/f_hex.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/formats/f_pointer.o",
+   "-c",
+   "src/formats/f_pointer.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/formats/f_pointer.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/formats/f_unsigned.o",
+   "-c",
+   "src/formats/f_unsigned.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/formats/f_unsigned.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/formats/f_n.o",
+   "-c",
+   "src/formats/f_n.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/formats/f_n.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/utils/ft_putchar_fd_count.o",
+   "-c",
+   "src/utils/ft_putchar_fd_count.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/utils/ft_putchar_fd_count.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/utils/ft_putstr_fd_count.o",
+   "-c",
+   "src/utils/ft_putstr_fd_count.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/utils/ft_putstr_fd_count.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/utils/ft_putstr_n_fd_count.o",
+   "-c",
+   "src/utils/ft_putstr_n_fd_count.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/utils/ft_putstr_n_fd_count.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/utils/ft_putnbr_ll_fd_count.o",
+   "-c",
+   "src/utils/ft_putnbr_ll_fd_count.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/utils/ft_putnbr_ll_fd_count.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/utils/ft_putunsigned_fd_count.o",
+   "-c",
+   "src/utils/ft_putunsigned_fd_count.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/utils/ft_putunsigned_fd_count.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/utils/ft_puthex_fd_count.o",
+   "-c",
+   "src/utils/ft_puthex_fd_count.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/utils/ft_puthex_fd_count.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/utils/ftp_write.o",
+   "-c",
+   "src/utils/ftp_write.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/utils/ftp_write.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/utils/write_string.o",
+   "-c",
+   "src/utils/write_string.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/utils/write_string.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/sizes/sz_int.o",
+   "-c",
+   "src/sizes/sz_int.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/sizes/sz_int.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "src/sizes/sz_hex.o",
+   "-c",
+   "src/sizes/sz_hex.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "src/sizes/sz_hex.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_atoi.o",
+   "-c",
+   "libft/ft_atoi.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_atoi.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_atoi_ul.o",
+   "-c",
+   "libft/ft_atoi_ul.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_atoi_ul.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_hexlen.o",
+   "-c",
+   "libft/ft_hexlen.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_hexlen.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_intlen.o",
+   "-c",
+   "libft/ft_intlen.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_intlen.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_isdigit.o",
+   "-c",
+   "libft/ft_isdigit.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_isdigit.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_strchr.o",
+   "-c",
+   "libft/ft_strchr.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_strchr.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_strlen.o",
+   "-c",
+   "libft/ft_strlen.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_strlen.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_unsignedlen.o",
+   "-c",
+   "libft/ft_unsignedlen.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_unsignedlen.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_bzero.o",
+   "-c",
+   "libft/ft_bzero.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_bzero.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_memcpy.o",
+   "-c",
+   "libft/ft_memcpy.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_memcpy.c"
+ },
+ {
+  "directory": "/home/abe/projects/ft_printf",
+  "arguments": [
+   "cc",
+   "-o",
+   "libft/ft_memset.o",
+   "-c",
+   "libft/ft_memset.c",
+   "-Wall",
+   "-Werror",
+   "-Wextra",
+   "-Og",
+   "-g",
+   "-I",
+   "include",
+   "-I",
+   "libft"
+  ],
+  "file": "libft/ft_memset.c"
+ }
+]

@@ -6,7 +6,7 @@
 #    By: aaugusti <aaugusti@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/23 13:07:19 by aaugusti      #+#    #+#                  #
-#    Updated: 2020/11/13 10:29:32 by aaugusti      ########   odam.nl          #
+#    Updated: 2020/11/13 15:34:16 by aaugusti      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ FLAGS			=	-Wall -Werror -Wextra -DNOLIST
 # Ability to compile with maximum optimization
 ifeq ($(DEBUG),1)
 FLAGS			+= -g -Og -fno-stack-protector
-ifneq ($(NOASAN),1)
+ifeq ($(ASAN),1)
 FLAGS			+= -fsanitize=address
 endif #noasan
 else

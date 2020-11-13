@@ -1,0 +1,14 @@
+coverage
+.vscode
+*.a
+*.o
+*.out*
+
+.ccls
+
+pft/
+test.c
+*test*
+*main*
+debug*
+bonus
