@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/02 17:36:49 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/13 12:38:39 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 12:43:16 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,8 @@ bool		builtin_export(t_mshell *mshell, t_cmd cmd)
 	while (i < cmd.argc)
 	{
 		if (export_single(mshell, cmd.argv[i].str))
-		{
 			mshell->last_exit = 1;
-			ms_perror(mshell);
-		}
 		i++;
 	}
-	return (false);
+	return (mshell->last_exit == 1);
 }
