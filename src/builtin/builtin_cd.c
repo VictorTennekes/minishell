@@ -76,7 +76,8 @@ bool		builtin_cd(t_mshell *mshell, t_cmd cmd)
 
 	if (cmd.argc > 2)
 		return (ms_set_error(mshell, ENO_TMA, "cd"));
-	if (cmd.argc == 1)
+	if (cmd.argc == 1 || (cmd.argc == 2 &&
+		ft_strcmp(cmd.argv[1].str, "~") == 0))
 	{
 		if (builtin_cd_home(mshell, &path))
 			return (true);
