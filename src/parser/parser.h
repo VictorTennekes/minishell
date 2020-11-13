@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/31 11:11:18 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/13 14:41:42 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 15:00:48 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <libvla.h>
 # include <minishell.h>
 # include <stdbool.h>
-#include <stdint.h>
+# include <stdint.h>
 
 # define PARSER_INIT_WORD_CAP 100
 # define PARSER_ARGV_INIT_CAP 10
@@ -100,15 +100,18 @@ bool			parser_case_end(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_rest(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_whitespace(t_mshell *mshell, t_parser *parser,
 					size_t i);
-bool			parser_case_squote(t_mshell *mshell, t_parser *parser, size_t i);
-bool			parser_case_dquote(t_mshell *mshell, t_parser *parser, size_t i);
+bool			parser_case_squote(t_mshell *mshell, t_parser *parser,
+		size_t i);
+bool			parser_case_dquote(t_mshell *mshell, t_parser *parser,
+		size_t i);
 bool			parser_case_semicolon(t_mshell *mshell, t_parser *parser,
 					size_t i);
 bool			parser_case_pipe(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_write(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_input(t_mshell *mshell, t_parser *parser, size_t i);
 bool			parser_case_env(t_mshell *mshell, t_parser *parser, size_t i);
-bool			parser_case_escape(t_mshell *mshell, t_parser *parser, size_t i);
+bool			parser_case_escape(t_mshell *mshell, t_parser *parser,
+		size_t i);
 
 /*
 **	Utils

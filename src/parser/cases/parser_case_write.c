@@ -6,7 +6,7 @@
 /*   By: aaugusti <aaugusti@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 13:41:34 by aaugusti      #+#    #+#                 */
-/*   Updated: 2020/11/04 15:53:33 by aaugusti      ########   odam.nl         */
+/*   Updated: 2020/11/13 14:59:58 by aaugusti      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ bool	parser_case_write(t_mshell *mshell, t_parser *parser, size_t i)
 	{
 		if (parser->in_word)
 			parser->end_word = true;
-		if (parser->redir == true && (parser->redir_type == APPEND || parser->redir_type == INPUT))
+		if (parser->redir == true && (parser->redir_type == APPEND ||
+					parser->redir_type == INPUT))
 		{
 			ms_set_error(mshell, ENO_UNEXTOK, "");
 			return (true);
