@@ -58,6 +58,8 @@ int			valid_env_size(char *str)
 	int i;
 
 	i = 1;
+	if (str[i] >= '0' && str[i] <= '9')
+		return (2);
 	while (((str[i] >= 'a' && str[i] <= 'z') ||
 			(str[i] >= 'A' && str[i] <= 'Z') ||
 			((str[i] >= '0' && str[i] <= '9')) ||

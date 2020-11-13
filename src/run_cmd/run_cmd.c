@@ -19,6 +19,24 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+static bool check_cmds(t_mshell *mshell, t_cmd *cmds, size_t cmd_count)
+{
+	size_t i;
+
+	i = 0;
+	while (i < cmd_count)
+	{
+		if (cmds[i].argc == 0)
+		{
+			ms_set_error(mshell, ENO_UNEXTOK, "");
+			ms_perror(mshell);
+			return (true);
+		}
+		i++;
+	}
+	return (false);
+}
+
 static void	run_cmd_single(t_mshell *mshell, t_cmd cmd,
 		t_cmd *cmds, size_t cmd_count)
 {
@@ -43,6 +61,7 @@ static void	run_cmd_single(t_mshell *mshell, t_cmd cmd,
 	else
 		start_proc(mshell, cmd, path);
 	exit_status = (builtin == NULL) ? mshell->last_exit : exit_status;
+	mshell->last_exit = exit_status;
 	exit_string = ft_itoa(exit_status);
 	env_set(mshell, "?", exit_string, false);
 	free(exit_string);
@@ -108,10 +127,9 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	cmds = parser(mshell, cmd, &cmd_count);
 	free(cmd);
 	if (cmds == NULL)
-	{
-		ms_perror(mshell);
 		return ;
-	}
+	if (check_cmds(mshell, cmds, cmd_count))
+		return ;
 	run_cmds(mshell, cmds, cmd_count);
 	free_cmds(cmds, cmd_count);
 	free(cmds);
