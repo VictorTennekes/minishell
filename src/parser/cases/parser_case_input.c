@@ -19,7 +19,7 @@ bool	parser_case_input(t_mshell *mshell, t_parser *parser, size_t i)
 		parser_case_rest(mshell, parser, i);
 	else if (parser->redir == true)
 	{
-		ms_set_error(mshell, ENO_UNEXTOK, "");
+		ms_set_error(mshell, ENO_UNEXTOK, "<");
 		return (true);
 	}
 	else

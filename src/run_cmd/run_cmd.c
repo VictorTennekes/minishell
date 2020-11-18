@@ -125,7 +125,10 @@ void		run_cmd(t_mshell *mshell, char *cmd)
 	cmds = parser(mshell, cmd, &cmd_count);
 	free(cmd);
 	if (cmds == NULL)
+	{
+		ms_perror(mshell);
 		return ;
+	}
 	if (!check_cmds(mshell, cmds, cmd_count))
 		run_cmds(mshell, cmds, cmd_count, 0);
 	free_cmds(cmds, cmd_count);
